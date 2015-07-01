@@ -43,7 +43,6 @@ public class RestClientUtil {
   public static Map<String, Object> doPostJSON(final String url, String sJsonText)
       throws  IOException, URISyntaxException {
     LOGGER.log(Level.INFO, "Post Url is -> " + url);
-    LOGGER.log(Level.INFO, "Post json is -> " + sJsonText);
     PostMethod method = new PostMethod(url);
     if (sJsonText != null) {
       StringRequestEntity reqEntity = new StringRequestEntity(sJsonText,
@@ -56,7 +55,6 @@ public class RestClientUtil {
   public static Map<String, Object> doPutJson(final String url, String jsonStr) throws
       IOException, URISyntaxException {
     LOGGER.log(Level.INFO, "Put Url is -> " + url);
-    LOGGER.log(Level.INFO, "Put jsonStr is -> " + jsonStr);
     PutMethod method = new PutMethod(url);
     if (jsonStr != null){
       StringRequestEntity reqEntity = new StringRequestEntity(jsonStr,
