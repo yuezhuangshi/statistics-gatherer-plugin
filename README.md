@@ -1,5 +1,5 @@
-Jenkins Github Plugin
-=====================
+Jenkins Statistics notification Plugin
+======================================
 
 Read more:
 
