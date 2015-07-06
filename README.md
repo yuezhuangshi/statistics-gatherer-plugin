@@ -1,7 +1,7 @@
 Jenkins Statistics notification Plugin
 ======================================
 
-Read more:
+Read more: https://wiki.jenkins-ci.org/display/JENKINS/Statistics+Notification+Plugin
 
 Development
 ===========
