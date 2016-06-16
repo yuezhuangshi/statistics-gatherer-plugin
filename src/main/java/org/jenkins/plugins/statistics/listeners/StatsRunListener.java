@@ -48,6 +48,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
       build.setStartTime(run.getTimestamp().getTime());
       build.setCiUrl(Jenkins.getInstance().getRootUrl());
       build.setJobName(run.getParent().getName());
+      build.setJobFullName(run.getParent().getFullName());
       build.setNumber(run.getNumber());
       build.setResult(buildResult);
       build.setQueueTime(run.getExecutor() != null ?
@@ -209,6 +210,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
       StatsBuild build = new StatsBuild();
       build.setCiUrl(Jenkins.getInstance().getRootUrl());
       build.setJobName(run.getParent().getName());
+      build.setJobFullName(run.getParent().getFullName());
       build.setNumber(run.getNumber());
       build.setResult(buildResult);
       // Capture duration in milliseconds.

@@ -12,6 +12,8 @@ public class StatsBuild {
 
   private String jobName;
 
+  private String jobFullName;
+
   private int number;
 
   private SlaveInfo slaveInfo;
@@ -48,6 +50,14 @@ public class StatsBuild {
 
   public void setJobName(String jobName) {
     this.jobName = jobName;
+  }
+
+  public String getJobFullName() {
+    return jobFullName;
+  }
+
+  public void setJobFullName(String jobFullName) {
+    this.jobFullName = jobFullName;
   }
 
   public int getNumber() {
