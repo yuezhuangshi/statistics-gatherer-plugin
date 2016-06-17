@@ -1,7 +1,7 @@
 package org.jenkins.plugins.statistics.listeners;
 
 import org.jenkins.plugins.statistics.model.StatsQueue;
-import org.jenkins.plugins.statistics.model.QueueCauase;
+import org.jenkins.plugins.statistics.model.QueueCause;
 import org.jenkins.plugins.statistics.util.*;
 import hudson.Extension;
 import hudson.model.Cause;
@@ -53,11 +53,11 @@ public class StatsQueueListener extends QueueListener {
 
   private void addEntryQueueCause(String name, Item wi,
                                   StatsQueue queue) {
-    QueueCauase cause = new QueueCauase();
+    QueueCause cause = new QueueCause();
     cause.setEntryTime(new Date());
     cause.setExitTime(null);
     cause.setReasonForWaiting(wi.getCauseOfBlockage().getShortDescription());
-    Map<String, QueueCauase> map = new HashMap<String, QueueCauase>();
+    Map<String, QueueCause> map = new HashMap<String, QueueCause>();
     map.put(name, cause);
     queue.setQueueCauses(map);
   }
@@ -83,11 +83,11 @@ public class StatsQueueListener extends QueueListener {
   }
 
   private void addExitQueueCause(String name, Item wi, StatsQueue queue) {
-    QueueCauase cause = new QueueCauase();
+    QueueCause cause = new QueueCause();
     cause.setEntryTime(null);
     cause.setExitTime(new Date());
     cause.setReasonForWaiting(wi.getCauseOfBlockage().getShortDescription());
-    Map<String, QueueCauase> map = new HashMap<String, QueueCauase>();
+    Map<String, QueueCause> map = new HashMap<String, QueueCause>();
     map.put(name, cause);
     queue.setQueueCauses(map);
   }

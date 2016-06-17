@@ -26,7 +26,7 @@ public class StatsQueue {
 
   private String durationStr;
 
-  private Map<String, QueueCauase> queueCauses;
+  private Map<String, QueueCause> queueCauses;
 
   public String getCiUrl() {
     return ciUrl;
@@ -100,11 +100,11 @@ public class StatsQueue {
     this.durationStr = durationStr;
   }
 
-  public Map<String, QueueCauase> getQueueCauses() {
+  public Map<String, QueueCause> getQueueCauses() {
     return queueCauses;
   }
 
-  public void setQueueCauses(Map<String, QueueCauase> queueCauses) {
+  public void setQueueCauses(Map<String, QueueCause> queueCauses) {
     this.queueCauses = queueCauses;
   }
 }
