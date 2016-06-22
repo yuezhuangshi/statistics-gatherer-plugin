@@ -165,10 +165,7 @@ public class StatsQueueListener extends QueueListener {
    * @return
    */
   private String getRestUrl() {
-    String endPoint = PropertyLoader.getStatsEndPoint();
-    String queueRes = PropertyLoader.getEnvironmentProperty(
-        "statistics.resource.queue");
-    return endPoint + queueRes;
+   return PropertyLoader.getQueueEndPoint();
   }
 
   /**

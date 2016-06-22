@@ -89,13 +89,33 @@ public class PropertyLoader {
     return getInstance().getProperty(key);
   }
 
-  public static String getStatsEndPoint() {
+  public static String getQueueEndPoint() {
 //    String endPoint = StatsPlugin.DescriptorImpl.getNotificationUrl();
-    String endPoint = StatisticsConfiguration.get().getNotificationUrl();
+    String endPoint = StatisticsConfiguration.get().getQueueUrl();
     if (endPoint !=null && !endPoint.isEmpty()) {
       return endPoint;
     }
-    endPoint = getEnvironmentProperty("statistics.endpoint.url");
+    endPoint = getEnvironmentProperty("statistics.endpoint.queueUrl");
+    return endPoint == null ? "" : endPoint;
+  }
+
+  public static String getBuildEndPoint() {
+//    String endPoint = StatsPlugin.DescriptorImpl.getNotificationUrl();
+    String endPoint = StatisticsConfiguration.get().getBuildUrl();
+    if (endPoint !=null && !endPoint.isEmpty()) {
+      return endPoint;
+    }
+    endPoint = getEnvironmentProperty("statistics.endpoint.buildUrl");
+    return endPoint == null ? "" : endPoint;
+  }
+
+  public static String getProjectEndPoint() {
+//    String endPoint = StatsPlugin.DescriptorImpl.getNotificationUrl();
+    String endPoint = StatisticsConfiguration.get().getProjectUrl();
+    if (endPoint !=null && !endPoint.isEmpty()) {
+      return endPoint;
+    }
+    endPoint = getEnvironmentProperty("statistics.endpoint.projectUrl");
     return endPoint == null ? "" : endPoint;
   }
 }

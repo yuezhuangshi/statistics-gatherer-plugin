@@ -49,10 +49,7 @@ public class StatsItemListener extends ItemListener {
    * @return
    */
   private String getRestUrl() {
-    String endPoint = PropertyLoader.getStatsEndPoint();
-    String projRes = PropertyLoader.getEnvironmentProperty(
-        "statistics.resource.project");
-    return endPoint + projRes;
+    return PropertyLoader.getProjectEndPoint();
   }
   /**
    * Construct CIJob model and populate common data in helper method.

@@ -73,10 +73,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
    * @return API end point url.
    */
   private String getRestUrl() {
-    String endPoint = PropertyLoader.getStatsEndPoint();
-    String buildResource = PropertyLoader.getEnvironmentProperty(
-        "statistics.resource.build");
-    return endPoint + buildResource;
+    return PropertyLoader.getBuildEndPoint();
   }
   /**
    * Add the slave info to build model.

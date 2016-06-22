@@ -15,7 +15,9 @@ public class StatisticsConfiguration extends GlobalConfiguration {
 
   private static final String SLASH = "/";
 
-  private String notificationUrl;
+  private String queueUrl;
+  private String buildUrl;
+  private String projectUrl;
   private int connectionTimeout;
   private int socketTimeout;
 
@@ -27,18 +29,48 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     load();
   }
 
-  public String getNotificationUrl() {
-    if (notificationUrl != null && !notificationUrl.isEmpty()) {
-      if (notificationUrl.endsWith(SLASH)) {
-        return notificationUrl;
+  public String getQueueUrl() {
+    if (queueUrl != null && !queueUrl.isEmpty()) {
+      if (queueUrl.endsWith(SLASH)) {
+        return queueUrl;
       }
-      return notificationUrl + SLASH;
+      return queueUrl + SLASH;
     }
-    return notificationUrl;
+    return queueUrl;
   }
 
-  public void setNotificationUrl(String notificationUrl) {
-    this.notificationUrl = notificationUrl;
+  public void setQueueUrl(String queueUrl) {
+    this.queueUrl = queueUrl;
+    save();
+  }
+
+  public String getBuildUrl() {
+    if (buildUrl != null && !buildUrl.isEmpty()) {
+      if (buildUrl.endsWith(SLASH)) {
+        return buildUrl;
+      }
+      return buildUrl + SLASH;
+    }
+    return buildUrl;
+  }
+
+  public void setBuildUrl(String buildUrl) {
+    this.buildUrl = buildUrl;
+    save();
+  }
+
+  public String getProjectUrl() {
+    if (projectUrl != null && !projectUrl.isEmpty()) {
+      if (projectUrl.endsWith(SLASH)) {
+        return projectUrl;
+      }
+      return projectUrl + SLASH;
+    }
+    return projectUrl;
+  }
+
+  public void setProjectUrl(String projectUrl) {
+    this.projectUrl = projectUrl;
     save();
   }
 
@@ -77,16 +109,40 @@ public class StatisticsConfiguration extends GlobalConfiguration {
   /**
    * Validate notificationUrl is filled correctly.
    *
-   * @param notificationUrl
+   * @param buildUrl
    * @return
    */
-  public FormValidation doCheckNotificationUrl(
-      @QueryParameter("notificationUrl") final String notificationUrl) {
-    if (notificationUrl == null || notificationUrl.isEmpty()) {
-      return FormValidation.error("Provide valid Notification URL. " +
-          "For ex: \"http://ci.mycompany.com/api/\"");
+  public FormValidation doCheckBuildUrl(
+          @QueryParameter("buildUrl") final String buildUrl) {
+    if (buildUrl == null || buildUrl.isEmpty()) {
+      return FormValidation.error("Provide valid Build URL. " +
+              "For ex: \"http://ci.mycompany.com/api/builds\"");
     }
-    if (!(notificationUrl.startsWith("http://") || notificationUrl.startsWith("https://"))) {
+    if (!(buildUrl.startsWith("http://") || buildUrl.startsWith("https://"))) {
+      return FormValidation.error("Only http and https protocols are supported");
+    }
+    return FormValidation.ok();
+  }
+
+  public FormValidation doCheckQueueUrl(
+          @QueryParameter("queueUrl") final String queueUrl) {
+    if (queueUrl == null || queueUrl.isEmpty()) {
+      return FormValidation.error("Provide valid Build URL. " +
+              "For ex: \"http://ci.mycompany.com/api/queues\"");
+    }
+    if (!(queueUrl.startsWith("http://") || queueUrl.startsWith("https://"))) {
+      return FormValidation.error("Only http and https protocols are supported");
+    }
+    return FormValidation.ok();
+  }
+
+  public FormValidation doCheckProjectUrl(
+          @QueryParameter("projectUrl") final String projectUrl) {
+    if (projectUrl == null || projectUrl.isEmpty()) {
+      return FormValidation.error("Provide valid Build URL. " +
+              "For ex: \"http://ci.mycompany.com/api/\"");
+    }
+    if (!(projectUrl.startsWith("http://") || projectUrl.startsWith("https://"))) {
       return FormValidation.error("Only http and https protocols are supported");
     }
     return FormValidation.ok();
