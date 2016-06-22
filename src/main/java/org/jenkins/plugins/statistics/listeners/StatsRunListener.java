@@ -146,12 +146,16 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
     if (environment != null) {
       if (environment.get("GIT_URL") != null) {
         scmInfo.setUrl(environment.get("GIT_URL"));
+      } else if (environment.get("SVN_URL") != null){
+          scmInfo.setUrl(environment.get("SVN_URL"));
       }
       if (environment.get("GIT_BRANCH") != null) {
         scmInfo.setBranch(environment.get("GIT_BRANCH"));
       }
       if (environment.get("GIT_COMMIT") != null) {
         scmInfo.setCommit(environment.get("GIT_COMMIT"));
+      } else if (environment.get("SVN_REVISION") != null){
+          scmInfo.setUrl(environment.get("SVN_REVISION"));
       }
     }
     build.setScmInfo(scmInfo);
