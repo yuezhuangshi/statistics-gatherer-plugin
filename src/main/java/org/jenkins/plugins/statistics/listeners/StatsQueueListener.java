@@ -51,15 +51,14 @@ public class StatsQueueListener extends QueueListener {
     }
   }
 
-  private void addEntryQueueCause(String name, Item wi,
+  private void addEntryQueueCause(String type, Item wi,
                                   StatsQueue queue) {
     QueueCause cause = new QueueCause();
+    cause.setType(type);
     cause.setEntryTime(new Date());
     cause.setExitTime(null);
     cause.setReasonForWaiting(wi.getCauseOfBlockage().getShortDescription());
-    Map<String, QueueCause> map = new HashMap<String, QueueCause>();
-    map.put(name, cause);
-    queue.setQueueCauses(map);
+    queue.addQueueCause(cause);
   }
 
   @Override
@@ -70,11 +69,7 @@ public class StatsQueueListener extends QueueListener {
       if (wi.getCauseOfBlockage() != null) {
         addExitQueueCause("waiting", wi, queue);
       }
-      //PUT URL is pointing to /api/queues instead of/api/queues/id
-      // as id will be reset to 1 each time you restart the Jenkins CI.
-      // Hence the logic to update the correct queue record should be handled
-      // at client side.
-      RestClientUtil.putToService(getRestUrl(), queue);
+      RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
           "job "+wi.task.getFullDisplayName()+
@@ -82,14 +77,13 @@ public class StatsQueueListener extends QueueListener {
     }
   }
 
-  private void addExitQueueCause(String name, Item wi, StatsQueue queue) {
+  private void addExitQueueCause(String type, Item wi, StatsQueue queue) {
     QueueCause cause = new QueueCause();
+    cause.setType(type);
     cause.setEntryTime(null);
     cause.setExitTime(new Date());
     cause.setReasonForWaiting(wi.getCauseOfBlockage().getShortDescription());
-    Map<String, QueueCause> map = new HashMap<String, QueueCause>();
-    map.put(name, cause);
-    queue.setQueueCauses(map);
+    queue.addQueueCause(cause);
   }
 
   /**
@@ -105,11 +99,7 @@ public class StatsQueueListener extends QueueListener {
       if (bi.getCauseOfBlockage() != null) {
         addEntryQueueCause("blocked", bi, queue);
       }
-      //PUT URL is pointing to /api/queues instead of/api/queues/id
-      // as id will be reset to 1 each time you restart the Jenkins CI.
-      // Hence the logic to update the correct queue record should be handled
-      // at client side.
-      RestClientUtil.putToService(getRestUrl(), queue);
+      RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "JOb "+bi.task.getFullDisplayName()+
           " with queue id "+bi.id+
@@ -124,11 +114,8 @@ public class StatsQueueListener extends QueueListener {
       if (bi.getCauseOfBlockage() != null) {
         addExitQueueCause("blocked", bi, queue);
       }
-      //PUT URL is pointing to /api/queues instead of/api/queues/id
-      // as id will be reset to 1 each time you restart the Jenkins CI.
-      // Hence the logic to update the correct queue record should be handled
-      // at client side.
-      RestClientUtil.putToService(getRestUrl(), queue);
+
+      RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "JOb "+bi.task.getFullDisplayName()+
           " with queue id "+bi.id+
@@ -149,11 +136,7 @@ public class StatsQueueListener extends QueueListener {
       if (bi.getCauseOfBlockage() != null) {
         addEntryQueueCause("buildable", bi, queue);
       }
-      //PUT URL is pointing to /api/queues instead of/api/queues/id
-      // as id will be reset to 1 each time you restart the Jenkins CI.
-      // Hence the logic to update the correct queue record should be handled
-      // at client side.
-      RestClientUtil.putToService(getRestUrl(), queue);
+      RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "JOb "+bi.task.getFullDisplayName()+
           " with queue id "+bi.id+
@@ -168,11 +151,7 @@ public class StatsQueueListener extends QueueListener {
       if (bi.getCauseOfBlockage() != null) {
         addExitQueueCause("buildable", bi, queue);
       }
-      //PUT URL is pointing to /api/queues instead of/api/queues/id
-      // as id will be reset to 1 each time you restart the Jenkins CI.
-      // Hence the logic to update the correct queue record should be handled
-      // at client side.
-      RestClientUtil.putToService(getRestUrl(), queue);
+      RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "JOb "+bi.task.getFullDisplayName()+
           " with queue id "+bi.id+
@@ -251,7 +230,7 @@ public class StatsQueueListener extends QueueListener {
       // as id will be reset to 1 each time you restart the Jenkins CI.
       // Hence the logic to update the correct queue record should be handled
       // at client side.
-      RestClientUtil.putToService(getRestUrl(), queue);
+      RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
           "job "+li.task.getFullDisplayName()+

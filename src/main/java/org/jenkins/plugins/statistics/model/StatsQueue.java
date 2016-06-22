@@ -1,7 +1,6 @@
 package org.jenkins.plugins.statistics.model;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hthakkallapally on 3/16/2015.
@@ -26,7 +25,7 @@ public class StatsQueue {
 
   private String durationStr;
 
-  private Map<String, QueueCause> queueCauses;
+  private List<QueueCause> queueCauses = new ArrayList<QueueCause>();
 
   public String getCiUrl() {
     return ciUrl;
@@ -100,11 +99,15 @@ public class StatsQueue {
     this.durationStr = durationStr;
   }
 
-  public Map<String, QueueCause> getQueueCauses() {
+  public List<QueueCause> getQueueCauses() {
     return queueCauses;
   }
 
-  public void setQueueCauses(Map<String, QueueCause> queueCauses) {
+  public void setQueueCauses(List<QueueCause> queueCauses) {
     this.queueCauses = queueCauses;
+  }
+
+  public void addQueueCause(QueueCause queueCause) {
+    this.queueCauses.add(queueCause);
   }
 }

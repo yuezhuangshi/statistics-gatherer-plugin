@@ -13,6 +13,8 @@ public class QueueCause {
 
   private String reasonForWaiting;
 
+  private String type;
+
   public Date getEntryTime() {
     return entryTime;
   }
@@ -35,5 +37,13 @@ public class QueueCause {
 
   public void setReasonForWaiting(String reasonForWaiting) {
     this.reasonForWaiting = reasonForWaiting;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 }
