@@ -48,12 +48,11 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
       build.setStartTime(run.getTimestamp().getTime());
       build.setCiUrl(Jenkins.getInstance().getRootUrl());
       build.setJobName(run.getParent().getName());
-      build.setJobFullName(run.getParent().getFullName());
+      build.setFullJobName(run.getParent().getFullName());
       build.setNumber(run.getNumber());
       build.setResult(buildResult);
       build.setQueueTime(run.getExecutor() != null ?
           run.getExecutor().getTimeSpentInQueue() : 0);
-      String userName = Jenkins.getAuthentication().getName();
       addUserDetails(run, build);
       addSCMInfo(run, listener, build);
       addParameters(run, build);
@@ -211,12 +210,13 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
       StatsBuild build = new StatsBuild();
       build.setCiUrl(Jenkins.getInstance().getRootUrl());
       build.setJobName(run.getParent().getName());
-      build.setJobFullName(run.getParent().getFullName());
+      build.setFullJobName(run.getParent().getFullName());
       build.setNumber(run.getNumber());
       build.setResult(buildResult);
       // Capture duration in milliseconds.
       build.setDuration(run.getDuration());
       build.setEndTime(Calendar.getInstance().getTime());
+
       RestClientUtil.putToService(getRestUrl(), build);
       LOGGER.log(Level.INFO, run.getParent().getName()+" build is completed " +
           "its status is : " + buildResult +

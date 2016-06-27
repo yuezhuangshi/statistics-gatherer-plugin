@@ -12,7 +12,7 @@ public class StatsBuild {
 
   private String jobName;
 
-  private String jobFullName;
+  private String fullJobName;
 
   private int number;
 
@@ -52,12 +52,12 @@ public class StatsBuild {
     this.jobName = jobName;
   }
 
-  public String getJobFullName() {
-    return jobFullName;
+  public String getFullJobName() {
+    return fullJobName;
   }
 
-  public void setJobFullName(String jobFullName) {
-    this.jobFullName = jobFullName;
+  public void setFullJobName(String fullJobName) {
+    this.fullJobName = fullJobName;
   }
 
   public int getNumber() {

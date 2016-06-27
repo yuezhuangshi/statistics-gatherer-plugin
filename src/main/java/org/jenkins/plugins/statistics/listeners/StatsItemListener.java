@@ -95,7 +95,7 @@ public class StatsItemListener extends ItemListener {
       ciJob.setUpdatedDate(new Date());
       ciJob.setStatus(project.isDisabled() ? Constants.DISABLED : Constants.ACTIVE);
       setConfig(project, ciJob);
-      RestClientUtil.putToService(getRestUrl(), ciJob);
+      RestClientUtil.postToService(getRestUrl(), ciJob);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "Failed to call API " + getRestUrl()+
           " for job " + item.getDisplayName(), e);

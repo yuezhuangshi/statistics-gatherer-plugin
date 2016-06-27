@@ -223,10 +223,6 @@ public class StatsQueueListener extends QueueListener {
       queue.setStatus(Constants.LEFT);
       queue.setDurationStr(li.getInQueueForString());
       queue.setDuration(System.currentTimeMillis() - li.getInQueueSince());
-      //PUT URL is pointing to /api/queues instead of/api/queues/id
-      // as id will be reset to 1 each time you restart the Jenkins CI.
-      // Hence the logic to update the correct queue record should be handled
-      // at client side.
       RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
