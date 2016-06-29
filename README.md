@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/maximecharron/statistics-notification-plugin.svg?branch=master)](https://travis-ci.org/maximecharron/statistics-notification-plugin)   [![codecov](https://codecov.io/gh/maximecharron/statistics-notification-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/maximecharron/statistics-notification-plugin)
+[![Build Status](https://travis-ci.org/maximecharron/statistics-notification-plugin.svg?branch=master)](https://travis-ci.org/maximecharron/statistics-notification-plugin)   [![Coverage Status](https://coveralls.io/repos/github/maximecharron/statistics-notification-plugin/badge.svg?branch=master)](https://coveralls.io/github/maximecharron/statistics-notification-plugin?branch=master)
 
 
 Jenkins Statistics notification Plugin
