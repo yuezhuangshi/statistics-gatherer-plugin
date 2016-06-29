@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by mcharron on 2016-06-29.
@@ -33,6 +35,22 @@ public class StatsJobTest {
                 UPDATED_DATE,
                 STATUS,
                 CONFIG_FILE);
+    }
+
+    @Test
+    public void givenNothing_whenConstruct_thenValuesAreSet(){
+        //when
+        StatsJob statsJob = new StatsJob();
+        //then
+        Date compareDate =new Date();
+        assertEquals("", statsJob.getName());
+        assertTrue(statsJob.getCreatedDate().before(compareDate)|| statsJob.getCreatedDate().equals(compareDate));
+        assertEquals("", statsJob.getUserId());
+        assertEquals("", statsJob.getUserName());
+        assertEquals("", statsJob.getCiUrl());
+        assertTrue(statsJob.getUpdatedDate().before(compareDate)|| statsJob.getUpdatedDate().equals(compareDate));
+        assertEquals("", statsJob.getStatus());
+        assertEquals("", statsJob.getConfigFile());
     }
 
     @Test
@@ -217,5 +235,29 @@ public class StatsJobTest {
         //then
         Date actualUpdatedDate = statsJob.getUpdatedDate();
         assertEquals(expectedUpdatedDate, actualUpdatedDate);
+    }
+
+    @Test
+    public void givenNullEntryTime_whenSetEntryTime_thenEntryTimeIsNull() {
+        //given
+
+        //when
+        statsJob.setCreatedDate(null);
+
+        //then
+        Date createdDate = statsJob.getCreatedDate();
+        assertNull(createdDate);
+    }
+
+    @Test
+    public void givenNullExitTime_whenSetExitTime_thenExitTimeIsNull() {
+        //given
+
+        //when
+        statsJob.setUpdatedDate(null);
+
+        //then
+        Date updatedDate = statsJob.getUpdatedDate();
+        assertNull(updatedDate);
     }
 }

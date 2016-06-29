@@ -6,6 +6,7 @@ import org.junit.Before;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by mcharron on 2016-06-27.
@@ -24,6 +25,18 @@ public class QueueCauseTest {
                 EXIT_TIME,
                 REASON_FOR_WAITING,
                 TYPE);
+    }
+
+    @Test
+    public void givenNothing_whenConstruct_thenValuesAreSet(){
+        //when
+        QueueCause queueCause = new QueueCause();
+        //then
+        Date compareDate =new Date();
+        assertTrue(queueCause.getEntryTime().before(compareDate)|| queueCause.getEntryTime().equals(compareDate));
+        assertTrue(queueCause.getExitTime().before(compareDate)|| queueCause.getExitTime().equals(compareDate));
+        assertEquals("", queueCause.getReasonForWaiting());
+        assertEquals("", queueCause.getType());
     }
 
     @Test

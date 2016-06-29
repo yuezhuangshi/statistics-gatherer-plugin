@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by mcharron on 2016-06-29.
@@ -47,6 +48,28 @@ public class StatsBuildTest {
                 PARAMETERS,
                 SCM_INFO,
                 QUEUE_TIME);
+    }
+
+    @Test
+    public void givenNothing_whenConstruct_thenValuesAreSet(){
+        //when
+        StatsBuild statsBuild = new StatsBuild();
+        //then
+        Date compareDate =new Date();
+        assertTrue(statsBuild.getStartTime().before(compareDate)|| statsBuild.getStartTime().equals(compareDate));
+        assertTrue(statsBuild.getEndTime().before(compareDate)|| statsBuild.getEndTime().equals(compareDate));
+        assertEquals("", statsBuild.getCiUrl());
+        assertEquals("", statsBuild.getJobName());
+        assertEquals("", statsBuild.getFullJobName());
+        assertEquals(0, statsBuild.getNumber());
+        assertEquals("", statsBuild.getSlaveInfo().getSlaveName());
+        assertEquals("", statsBuild.getStartedUserId());
+        assertEquals("", statsBuild.getStartedUserName());
+        assertEquals("", statsBuild.getResult());
+        assertEquals(0, statsBuild.getDuration());
+        assertEquals(new HashMap<String,String>(), statsBuild.getParameters());
+        assertEquals("", statsBuild.getScmInfo().getUrl());
+        assertEquals(0, statsBuild.getQueueTime());
     }
 
     @Test
