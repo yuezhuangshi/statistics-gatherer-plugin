@@ -33,7 +33,7 @@ public class SCMInfoTest {
     }
 
     @Test
-    public void givenStatsQueue_whenSetUrl_thenUrlIsSet() {
+    public void givenScmInfo_whenSetUrl_thenUrlIsSet() {
         //given
         String expectedUrl = "IHazURL!";
         //when
@@ -56,7 +56,7 @@ public class SCMInfoTest {
     }
 
     @Test
-    public void givenStatsQueue_whenSetBranch_thenBranchIsSet() {
+    public void givenScmInfo_whenSetBranch_thenBranchIsSet() {
         //given
         String expectedBranch = "IHazBranch!";
         //when
@@ -79,7 +79,7 @@ public class SCMInfoTest {
     }
 
     @Test
-    public void givenStatsQueue_whenSetCommit_thenCommitIsSet() {
+    public void givenScmInfo_whenSetCommit_thenCommitIsSet() {
         //given
         String expectedCommit = "IHazCommit!";
         //when
