@@ -32,57 +32,57 @@ public class StatsQueueListener extends QueueListener {
   }
 
   @Override
-  public void onEnterWaiting(Queue.WaitingItem wi) {
+  public void onEnterWaiting(Queue.WaitingItem waitingItemi) {
     try {
-      wi.getInQueueSince();
-      StatsQueue queue = getCiQueue(wi);
-      addStartedBy(wi, queue);
+      waitingItemi.getInQueueSince();
+      StatsQueue queue = getCiQueue(waitingItemi);
+      addStartedBy(waitingItemi, queue);
       queue.setEntryTime(new Date());
       queue.setExitTime(null);
       queue.setStatus(Constants.ENTERED);
-      if (wi.getCauseOfBlockage() != null) {
-        addEntryQueueCause("waiting", wi, queue);
+      if (waitingItemi.getCauseOfBlockage() != null) {
+        addEntryQueueCause("waiting", waitingItemi, queue);
       }
       RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
-          "job "+wi.task.getFullDisplayName()+
-          " with queue id "+wi.id + " using "+ getRestUrl(), e);
+          "job "+waitingItemi.task.getFullDisplayName()+
+          " with queue id "+waitingItemi.getId() + " using "+ getRestUrl(), e);
     }
   }
 
-  private void addEntryQueueCause(String type, Item wi,
+  private void addEntryQueueCause(String type, Item item,
                                   StatsQueue queue) {
     QueueCause cause = new QueueCause();
     cause.setType(type);
     cause.setEntryTime(new Date());
     cause.setExitTime(null);
-    cause.setReasonForWaiting(wi.getCauseOfBlockage().getShortDescription());
+    cause.setReasonForWaiting(item.getCauseOfBlockage().getShortDescription());
     queue.addQueueCause(cause);
   }
 
   @Override
-  public void onLeaveWaiting(Queue.WaitingItem wi) {
+  public void onLeaveWaiting(Queue.WaitingItem waitingItem) {
     try {
-      wi.getInQueueSince();
-      StatsQueue queue = getCiQueue(wi);
-      if (wi.getCauseOfBlockage() != null) {
-        addExitQueueCause("waiting", wi, queue);
+      waitingItem.getInQueueSince();
+      StatsQueue queue = getCiQueue(waitingItem);
+      if (waitingItem.getCauseOfBlockage() != null) {
+        addExitQueueCause("waiting", waitingItem, queue);
       }
       RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
-          "job "+wi.task.getFullDisplayName()+
-          " with queue id "+wi.id + " using "+ getRestUrl(), e);
+          "job "+waitingItem.task.getFullDisplayName()+
+          " with queue id "+waitingItem.getId() + " using "+ getRestUrl(), e);
     }
   }
 
-  private void addExitQueueCause(String type, Item wi, StatsQueue queue) {
+  private void addExitQueueCause(String type, Item item, StatsQueue queue) {
     QueueCause cause = new QueueCause();
     cause.setType(type);
     cause.setEntryTime(null);
     cause.setExitTime(new Date());
-    cause.setReasonForWaiting(wi.getCauseOfBlockage().getShortDescription());
+    cause.setReasonForWaiting(item.getCauseOfBlockage().getShortDescription());
     queue.addQueueCause(cause);
   }
 
@@ -90,35 +90,35 @@ public class StatsQueueListener extends QueueListener {
    * onEnterBlocked is used to update Reason for waiting in Queue.
    * for ex. "Build #35 is already in progress (ETA:9 min 3 sec)"
    *
-   * @param bi
+   * @param blockedItem
    */
   @Override
-  public void onEnterBlocked(Queue.BlockedItem bi) {
+  public void onEnterBlocked(Queue.BlockedItem blockedItem) {
     try {
-      StatsQueue queue = getCiQueue(bi);
-      if (bi.getCauseOfBlockage() != null) {
-        addEntryQueueCause("blocked", bi, queue);
+      StatsQueue queue = getCiQueue(blockedItem);
+      if (blockedItem.getCauseOfBlockage() != null) {
+        addEntryQueueCause("blocked", blockedItem, queue);
       }
       RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "JOb "+bi.task.getFullDisplayName()+
-          " with queue id "+bi.id+
+      LOGGER.log(Level.WARNING, "JOb "+blockedItem.task.getFullDisplayName()+
+          " with queue id "+blockedItem.getId()+
           "failed with exception : " + e);
     }
   }
 
   @Override
-  public void onLeaveBlocked(Queue.BlockedItem bi) {
+  public void onLeaveBlocked(Queue.BlockedItem blockedItem) {
     try {
-      StatsQueue queue = getCiQueue(bi);
-      if (bi.getCauseOfBlockage() != null) {
-        addExitQueueCause("blocked", bi, queue);
+      StatsQueue queue = getCiQueue(blockedItem);
+      if (blockedItem.getCauseOfBlockage() != null) {
+        addExitQueueCause("blocked", blockedItem, queue);
       }
 
       RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "JOb "+bi.task.getFullDisplayName()+
-          " with queue id "+bi.id+
+      LOGGER.log(Level.WARNING, "JOb "+blockedItem.task.getFullDisplayName()+
+          " with queue id "+blockedItem.getId()+
           "failed with exception : " + e);
     }
   }
@@ -127,34 +127,34 @@ public class StatsQueueListener extends QueueListener {
    * onEnterBlocked is used to update Reason for waiting in Queue.
    * for ex. "Waiting for next available executor"
    *
-   * @param bi
+   * @param buildableItem
    */
   @Override
-  public void onEnterBuildable(Queue.BuildableItem bi) {
+  public void onEnterBuildable(Queue.BuildableItem buildableItem) {
     try {
-      StatsQueue queue = getCiQueue(bi);
-      if (bi.getCauseOfBlockage() != null) {
-        addEntryQueueCause("buildable", bi, queue);
+      StatsQueue queue = getCiQueue(buildableItem);
+      if (buildableItem.getCauseOfBlockage() != null) {
+        addEntryQueueCause("buildable", buildableItem, queue);
       }
       RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "JOb "+bi.task.getFullDisplayName()+
-          " with queue id "+bi.id+
+      LOGGER.log(Level.WARNING, "JOb "+buildableItem.task.getFullDisplayName()+
+          " with queue id "+buildableItem.getId()+
           "failed with exception : " + e);
     }
   }
 
   @Override
-  public void onLeaveBuildable(Queue.BuildableItem bi) {
+  public void onLeaveBuildable(Queue.BuildableItem buildableItem) {
     try {
-      StatsQueue queue = getCiQueue(bi);
-      if (bi.getCauseOfBlockage() != null) {
-        addExitQueueCause("buildable", bi, queue);
+      StatsQueue queue = getCiQueue(buildableItem);
+      if (buildableItem.getCauseOfBlockage() != null) {
+        addExitQueueCause("buildable", buildableItem, queue);
       }
       RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "JOb "+bi.task.getFullDisplayName()+
-          " with queue id "+bi.id+
+      LOGGER.log(Level.WARNING, "JOb "+buildableItem.task.getFullDisplayName()+
+          " with queue id "+buildableItem.getId()+
           "failed with exception : " + e);
     }
   }
@@ -171,28 +171,28 @@ public class StatsQueueListener extends QueueListener {
   /**
    * Returns a queue model object from Jenkins queue.
    *
-   * @param wi
+   * @param item
    * @return
    */
-  private StatsQueue getCiQueue(Item wi) {
+  private StatsQueue getCiQueue(Item item) {
     StatsQueue queue = new StatsQueue();
     String ciUrl = Jenkins.getInstance() != null
         ? Jenkins.getInstance().getRootUrl()
         : "";
     queue.setCiUrl(ciUrl);
-    queue.setJobName(wi.task.getFullDisplayName());
-    queue.setJenkinsQueueId(wi.id);
+    queue.setJobName(item.task.getFullDisplayName());
+    queue.setJenkinsQueueId((int)item.getId());
     return queue;
   }
 
   /**
    * Adds the Started By information to the Queue.
    *
-   * @param wi
+   * @param item
    * @param queue
    */
-  private void addStartedBy(Item wi, StatsQueue queue) {
-    List<Cause> causes = wi.getCauses();
+  private void addStartedBy(Item item, StatsQueue queue) {
+    List<Cause> causes = item.getCauses();
     for (Cause cause : causes) {
      if (cause instanceof Cause.UserIdCause
          || cause instanceof Cause.UserCause) {
@@ -213,21 +213,21 @@ public class StatsQueueListener extends QueueListener {
 
 
   @Override
-  public void onLeft(Queue.LeftItem li) {
+  public void onLeft(Queue.LeftItem leftItem) {
     try {
-      StatsQueue queue = getCiQueue(li);
+      StatsQueue queue = getCiQueue(leftItem);
       // We have already set entry time in onEnterWaiting(). No need
       // to set it again.
       queue.setEntryTime(null);
       queue.setExitTime(new Date());
       queue.setStatus(Constants.LEFT);
-      queue.setDurationStr(li.getInQueueForString());
-      queue.setDuration(System.currentTimeMillis() - li.getInQueueSince());
+      queue.setDurationStr(leftItem.getInQueueForString());
+      queue.setDuration(System.currentTimeMillis() - leftItem.getInQueueSince());
       RestClientUtil.postToService(getRestUrl(), queue);
     } catch (Exception e) {
       LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
-          "job "+li.task.getFullDisplayName()+
-          " with queue id "+li.id + " using "+ getRestUrl(), e);
+          "job "+leftItem.task.getFullDisplayName()+
+          " with queue id "+leftItem.getId() + " using "+ getRestUrl(), e);
     }
   }
 }

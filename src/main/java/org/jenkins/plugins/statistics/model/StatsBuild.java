@@ -1,6 +1,7 @@
 package org.jenkins.plugins.statistics.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -8,143 +9,190 @@ import java.util.Map;
  */
 public class StatsBuild {
 
-  private String ciUrl;
+    public StatsBuild(String ciUrl,
+                      String jobName,
+                      String fullJobName,
+                      int number,
+                      SlaveInfo slaveInfo,
+                      Date startTime,
+                      Date endTime,
+                      String startedUserId,
+                      String startedUserName,
+                      String result,
+                      long duration,
+                      Map<String, String> parameters,
+                      SCMInfo scmInfo,
+                      long queueTime) {
+        this.ciUrl = ciUrl;
+        this.jobName = jobName;
+        this.fullJobName = fullJobName;
+        this.number = number;
+        this.slaveInfo = slaveInfo;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.startedUserId = startedUserId;
+        this.startedUserName = startedUserName;
+        this.result = result;
+        this.duration = duration;
+        this.parameters = parameters;
+        this.scmInfo = scmInfo;
+        this.queueTime = queueTime;
+    }
 
-  private String jobName;
+    public StatsBuild() {
+        this.ciUrl = "";
+        this.jobName = "";
+        this.fullJobName = "";
+        this.number = 0;
+        this.slaveInfo = new SlaveInfo();
+        this.startTime = new Date();
+        this.endTime = new Date();
+        this.startedUserId = "";
+        this.startedUserName = "";
+        this.result = "";
+        this.duration = 0;
+        this.parameters = new HashMap<String,String>();
+        this.scmInfo = new SCMInfo();
+        this.queueTime = 0;
+    }
 
-  private String fullJobName;
+    private String ciUrl;
 
-  private int number;
+    private String jobName;
 
-  private SlaveInfo slaveInfo;
+    private String fullJobName;
 
-  private Date startTime;
+    private int number;
 
-  private Date endTime;
+    private SlaveInfo slaveInfo;
 
-  private String startedUserId;
+    private Date startTime;
 
-  private String startedUserName;
+    private Date endTime;
 
-  private String result;
+    private String startedUserId;
 
-  private long duration;
+    private String startedUserName;
 
-  private Map<String, String> parameters;
+    private String result;
 
-  private SCMInfo scmInfo;
+    private long duration;
 
-  private long queueTime;
+    private Map<String, String> parameters;
 
-  public String getCiUrl() {
-    return ciUrl;
-  }
+    private SCMInfo scmInfo;
 
-  public void setCiUrl(String ciUrl) {
-    this.ciUrl = ciUrl;
-  }
+    private long queueTime;
 
-  public String getJobName() {
-    return jobName;
-  }
+    public String getCiUrl() {
+        return ciUrl;
+    }
 
-  public void setJobName(String jobName) {
-    this.jobName = jobName;
-  }
+    public void setCiUrl(String ciUrl) {
+        this.ciUrl = ciUrl;
+    }
 
-  public String getFullJobName() {
-    return fullJobName;
-  }
+    public String getJobName() {
+        return jobName;
+    }
 
-  public void setFullJobName(String fullJobName) {
-    this.fullJobName = fullJobName;
-  }
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
 
-  public int getNumber() {
-    return number;
-  }
+    public String getFullJobName() {
+        return fullJobName;
+    }
 
-  public void setNumber(int number) {
-    this.number = number;
-  }
+    public void setFullJobName(String fullJobName) {
+        this.fullJobName = fullJobName;
+    }
 
-  public SlaveInfo getSlaveInfo() {
-    return slaveInfo;
-  }
+    public int getNumber() {
+        return number;
+    }
 
-  public void setSlaveInfo(SlaveInfo slaveInfo) {
-    this.slaveInfo = slaveInfo;
-  }
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
-  public Date getStartTime() {
-    return startTime;
-  }
+    public SlaveInfo getSlaveInfo() {
+        return slaveInfo;
+    }
 
-  public void setStartTime(Date startTime) {
-    this.startTime = startTime;
-  }
+    public void setSlaveInfo(SlaveInfo slaveInfo) {
+        this.slaveInfo = slaveInfo;
+    }
 
-  public Date getEndTime() {
-    return endTime;
-  }
+    public Date getStartTime() {
+        return startTime;
+    }
 
-  public void setEndTime(Date endTime) {
-    this.endTime = endTime;
-  }
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
 
-  public String getStartedUserId() {
-    return startedUserId;
-  }
+    public Date getEndTime() {
+        return endTime;
+    }
 
-  public void setStartedUserId(String startedUserId) {
-    this.startedUserId = startedUserId;
-  }
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 
-  public String getStartedUserName() {
-    return startedUserName;
-  }
+    public String getStartedUserId() {
+        return startedUserId;
+    }
 
-  public void setStartedUserName(String startedUserName) {
-    this.startedUserName = startedUserName;
-  }
+    public void setStartedUserId(String startedUserId) {
+        this.startedUserId = startedUserId;
+    }
 
-  public String getResult() {
-    return result;
-  }
+    public String getStartedUserName() {
+        return startedUserName;
+    }
 
-  public void setResult(String result) {
-    this.result = result;
-  }
+    public void setStartedUserName(String startedUserName) {
+        this.startedUserName = startedUserName;
+    }
 
-  public long getDuration() {
-    return duration;
-  }
+    public String getResult() {
+        return result;
+    }
 
-  public void setDuration(long duration) {
-    this.duration = duration;
-  }
+    public void setResult(String result) {
+        this.result = result;
+    }
 
-  public Map<String, String> getParameters() {
-    return parameters;
-  }
+    public long getDuration() {
+        return duration;
+    }
 
-  public void setParameters(Map<String, String> parameters) {
-    this.parameters = parameters;
-  }
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
 
-  public SCMInfo getScmInfo() {
-    return scmInfo;
-  }
+    public Map<String, String> getParameters() {
+        return parameters;
+    }
 
-  public void setScmInfo(SCMInfo scmInfo) {
-    this.scmInfo = scmInfo;
-  }
+    public void setParameters(Map<String, String> parameters) {
+        this.parameters = parameters;
+    }
 
-  public long getQueueTime() {
-    return queueTime;
-  }
+    public SCMInfo getScmInfo() {
+        return scmInfo;
+    }
 
-  public void setQueueTime(long queueTime) {
-    this.queueTime = queueTime;
-  }
+    public void setScmInfo(SCMInfo scmInfo) {
+        this.scmInfo = scmInfo;
+    }
+
+    public long getQueueTime() {
+        return queueTime;
+    }
+
+    public void setQueueTime(long queueTime) {
+        this.queueTime = queueTime;
+    }
 }

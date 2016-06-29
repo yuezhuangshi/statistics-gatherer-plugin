@@ -5,40 +5,48 @@ package org.jenkins.plugins.statistics.model;
  */
 public class SCMInfo {
 
-  private String url;
+    public SCMInfo(String url,
+                   String branch,
+                   String commit) {
+        this.url = url;
+        this.branch = branch;
+        this.commit = commit;
+    }
 
-  private String branch;
+    public SCMInfo() {
+        this.url = "";
+        this.branch ="";
+        this.commit = "";
+    }
 
-  private String commit;
+    private String url;
 
-  public String getUrl ()
-  {
-    return url;
-  }
+    private String branch;
 
-  public void setUrl ( String url )
-  {
-    this.url = url;
-  }
+    private String commit;
 
-  public String getBranch ()
-  {
-    return branch;
-  }
+    public String getUrl() {
+        return url;
+    }
 
-  public void setBranch ( String branch )
-  {
-    this.branch = branch;
-  }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-  public String getCommit ()
-  {
-    return commit;
-  }
+    public String getBranch() {
+        return branch;
+    }
 
-  public void setCommit ( String commit )
-  {
-    this.commit = commit;
-  }
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getCommit() {
+        return commit;
+    }
+
+    public void setCommit(String commit) {
+        this.commit = commit;
+    }
 
 }

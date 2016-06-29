@@ -11,7 +11,6 @@ import org.jenkins.plugins.statistics.StatisticsConfiguration;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -23,7 +22,6 @@ import java.util.logging.Logger;
 public class RestClientUtil {
   private static final Logger LOGGER  = Logger.getLogger(
       RestClientUtil.class.getName());
-  public static final int HTTP_OK_BEGIN = 200;
   public static final String RESPONSE_BODY = "RESPONSE_BODY";
   public static final String RESPONSE_STATUS = "RESPONSE_STATUS";
 

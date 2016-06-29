@@ -7,83 +7,112 @@ import java.util.Date;
  */
 public class StatsJob {
 
-  private String name;
+    public StatsJob(String name,
+                    Date createdDate,
+                    String userId,
+                    String userName,
+                    String ciUrl,
+                    Date updatedDate,
+                    String status,
+                    String configFile) {
+        this.name = name;
+        this.createdDate = createdDate;
+        this.userId = userId;
+        this.userName = userName;
+        this.ciUrl = ciUrl;
+        this.updatedDate = updatedDate;
+        this.status = status;
+        this.configFile = configFile;
+    }
 
-  private Date createdDate;
+    public StatsJob() {
+        this.name = "";
+        this.createdDate = new Date();
+        this.userId = "";
+        this.userName = "";
+        this.ciUrl = "";
+        this.updatedDate = new Date();
+        this.status = "";
+        this.configFile = "";
+    }
 
-  private String userId;
+    private String name;
 
-  private String userName;
+    private Date createdDate;
 
-  private String ciUrl;
+    private String userId;
 
-  private Date updatedDate;
+    private String userName;
 
-  private String status;
+    private String ciUrl;
 
-  private String configFile;
+    private Date updatedDate;
 
-  public String getName() {
-    return name;
-  }
+    private String status;
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    private String configFile;
 
-  public Date getCreatedDate() {
-    return createdDate == null ? null : new Date(createdDate.getTime());
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setCreatedDate(Date createdDate) {
-    this.createdDate = createdDate == null ? null : new Date(createdDate.getTime());
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getUserId() {
-    return userId;
-  }
+    public Date getCreatedDate() {
+        return createdDate == null ? null : new Date(createdDate.getTime());
+    }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate == null ? null : new Date(createdDate.getTime());
+    }
 
-  public String getUserName() {
-    return userName;
-  }
+    public String getUserId() {
+        return userId;
+    }
 
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-  public String getCiUrl() {
-    return ciUrl;
-  }
+    public String getUserName() {
+        return userName;
+    }
 
-  public void setCiUrl(String ciUrl) {
-    this.ciUrl = ciUrl;
-  }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-  public Date getUpdatedDate() {
-    return updatedDate == null ? null : new Date(updatedDate.getTime());
-  }
+    public String getCiUrl() {
+        return ciUrl;
+    }
 
-  public void setUpdatedDate(Date updatedDate) {
-    this.updatedDate = updatedDate == null ? null : new Date(updatedDate.getTime()) ;
-  }
+    public void setCiUrl(String ciUrl) {
+        this.ciUrl = ciUrl;
+    }
 
-  public String getStatus() {
-    return status;
-  }
+    public Date getUpdatedDate() {
+        return updatedDate == null ? null : new Date(updatedDate.getTime());
+    }
 
-  public void setStatus(String status) {
-    this.status = status;
-  }
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate == null ? null : new Date(updatedDate.getTime());
+    }
 
-  public String getConfigFile() {
-    return configFile;
-  }
+    public String getStatus() {
+        return status;
+    }
 
-  public void setConfigFile(String configFile) {
-    this.configFile = configFile;
-  }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getConfigFile() {
+        return configFile;
+    }
+
+    public void setConfigFile(String configFile) {
+        this.configFile = configFile;
+    }
 }

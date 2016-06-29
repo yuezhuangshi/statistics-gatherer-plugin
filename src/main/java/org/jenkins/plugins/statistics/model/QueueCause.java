@@ -7,43 +7,60 @@ import java.util.Date;
  */
 public class QueueCause {
 
-  private Date entryTime;
+    public QueueCause(Date entryTime,
+                      Date exitTime,
+                      String reasonForWaiting,
+                      String type) {
+        this.entryTime = entryTime;
+        this.exitTime = exitTime;
+        this.reasonForWaiting = reasonForWaiting;
+        this.type = type;
+    }
 
-  private Date exitTime;
+    public QueueCause() {
+        this.entryTime = new Date();
+        this.exitTime = new Date();
+        this.reasonForWaiting = "";
+        this.type = "";
+    }
 
-  private String reasonForWaiting;
+    private Date entryTime;
 
-  private String type;
+    private Date exitTime;
 
-  public Date getEntryTime() {
-    return entryTime;
-  }
+    private String reasonForWaiting;
 
-  public void setEntryTime(Date entryTime) {
-    this.entryTime = entryTime;
-  }
+    private String type;
 
-  public Date getExitTime() {
-    return exitTime;
-  }
+    public Date getEntryTime() {
+        return entryTime;
+    }
 
-  public void setExitTime(Date exitTime) {
-    this.exitTime = exitTime;
-  }
+    public void setEntryTime(Date entryTime) {
+        this.entryTime = entryTime;
+    }
 
-  public String getReasonForWaiting() {
-    return reasonForWaiting;
-  }
+    public Date getExitTime() {
+        return exitTime;
+    }
 
-  public void setReasonForWaiting(String reasonForWaiting) {
-    this.reasonForWaiting = reasonForWaiting;
-  }
+    public void setExitTime(Date exitTime) {
+        this.exitTime = exitTime;
+    }
 
-  public String getType() {
-    return type;
-  }
+    public String getReasonForWaiting() {
+        return reasonForWaiting;
+    }
 
-  public void setType(String type) {
-    this.type = type;
-  }
+    public void setReasonForWaiting(String reasonForWaiting) {
+        this.reasonForWaiting = reasonForWaiting;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

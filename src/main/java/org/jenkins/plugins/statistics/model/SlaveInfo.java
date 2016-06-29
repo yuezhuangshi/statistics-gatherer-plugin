@@ -5,63 +5,86 @@ package org.jenkins.plugins.statistics.model;
  */
 public class SlaveInfo {
 
-  private String slaveName;
+    public SlaveInfo(String slaveName,
+                     String vmName,
+                     String executor,
+                     String label,
+                     String description,
+                     String remoteFs) {
+        this.slaveName = slaveName;
+        this.vmName = vmName;
+        this.executor = executor;
+        this.label = label;
+        this.description = description;
+        this.remoteFs = remoteFs;
+    }
 
-  private String vmName;
+    public SlaveInfo() {
+        this.slaveName = "";
+        this.vmName = "";
+        this.executor = "";
+        this.label = "";
+        this.description = "";
+        this.remoteFs = "";
+    }
 
-  private String executor;
+    private String slaveName;
 
-  private String label;
+    private String vmName;
 
-  private String description;
+    private String executor;
 
-  private String remoteFs;
+    private String label;
 
-  public String getSlaveName() {
-    return slaveName;
-  }
+    private String description;
 
-  public void setSlaveName(String slaveName) {
-    this.slaveName = slaveName;
-  }
+    private String remoteFs;
 
-  public String getVmName() {
-    return vmName;
-  }
+    public String getSlaveName() {
+        return slaveName;
+    }
 
-  public void setVmName(String vmName) {
-    this.vmName = vmName;
-  }
+    public void setSlaveName(String slaveName) {
+        this.slaveName = slaveName;
+    }
 
-  public String getExecutor() {
-    return executor;
-  }
+    public String getVmName() {
+        return vmName;
+    }
 
-  public void setExecutor(String executor) {
-    this.executor = executor;
-  }
+    public void setVmName(String vmName) {
+        this.vmName = vmName;
+    }
 
-  public String getLabel() {
-    return label;
-  }
+    public String getExecutor() {
+        return executor;
+    }
 
-  public void setLabel(String label) {
-    this.label = label;
-  }
+    public void setExecutor(String executor) {
+        this.executor = executor;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getLabel() {
+        return label;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-  public String getRemoteFs() {
-    return remoteFs;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setRemoteFs(String remoteFs) {
-    this.remoteFs = remoteFs;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getRemoteFs() {
+        return remoteFs;
+    }
+
+    public void setRemoteFs(String remoteFs) {
+        this.remoteFs = remoteFs;
+    }
 }

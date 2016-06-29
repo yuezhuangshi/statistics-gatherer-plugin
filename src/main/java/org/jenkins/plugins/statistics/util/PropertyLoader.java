@@ -14,18 +14,18 @@ import java.util.ResourceBundle;
 
 public class PropertyLoader {
   public static final String DEFAULT_PROPERTY_FILE_NAME = "statistics";
-  private static PropertyLoader s_instance = null;
-  private final ResourceBundle rb;
+  private static PropertyLoader instance = null;
+  private final ResourceBundle resourceBundle;
 
   private PropertyLoader() {
-    rb = ResourceBundle.getBundle(DEFAULT_PROPERTY_FILE_NAME);
+    resourceBundle = ResourceBundle.getBundle(DEFAULT_PROPERTY_FILE_NAME);
   }
 
   public synchronized static final PropertyLoader getInstance() {
-    if (s_instance == null) {
-      s_instance = new PropertyLoader();
+    if (instance == null) {
+      instance = new PropertyLoader();
     }
-    return s_instance;
+    return instance;
   }
 
   /**
@@ -34,11 +34,11 @@ public class PropertyLoader {
    */
   public synchronized static final void setInstance(
       final PropertyLoader propertyLoader) {
-    s_instance = propertyLoader;
+    instance = propertyLoader;
   }
 
   protected String getResourceBundleProperty(String keyProperty) {
-    return rb.getString(keyProperty);
+    return resourceBundle.getString(keyProperty);
   }
 
   /**
@@ -90,7 +90,6 @@ public class PropertyLoader {
   }
 
   public static String getQueueEndPoint() {
-//    String endPoint = StatsPlugin.DescriptorImpl.getNotificationUrl();
     String endPoint = StatisticsConfiguration.get().getQueueUrl();
     if (endPoint !=null && !endPoint.isEmpty()) {
       return endPoint;
@@ -100,7 +99,6 @@ public class PropertyLoader {
   }
 
   public static String getBuildEndPoint() {
-//    String endPoint = StatsPlugin.DescriptorImpl.getNotificationUrl();
     String endPoint = StatisticsConfiguration.get().getBuildUrl();
     if (endPoint !=null && !endPoint.isEmpty()) {
       return endPoint;
@@ -110,7 +108,6 @@ public class PropertyLoader {
   }
 
   public static String getProjectEndPoint() {
-//    String endPoint = StatsPlugin.DescriptorImpl.getNotificationUrl();
     String endPoint = StatisticsConfiguration.get().getProjectUrl();
     if (endPoint !=null && !endPoint.isEmpty()) {
       return endPoint;
