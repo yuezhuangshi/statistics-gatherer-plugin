@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/maximecharron/statistics-notification-plugin.svg?branch=master)](https://travis-ci.org/maximecharron/statistics-notification-plugin)
+[![Build Status](https://travis-ci.org/maximecharron/statistics-notification-plugin.svg?branch=master)](https://travis-ci.org/maximecharron/statistics-notification-plugin)   [![codecov](https://codecov.io/gh/maximecharron/statistics-notification-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/maximecharron/statistics-notification-plugin)
+
 
 Jenkins Statistics notification Plugin
 ======================================
