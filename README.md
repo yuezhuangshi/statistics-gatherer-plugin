@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/maximecharron/statistics-notification-plugin.svg?branch=master)](https://travis-ci.org/maximecharron/statistics-notification-plugin)
+
 Jenkins Statistics notification Plugin
 ======================================
 
