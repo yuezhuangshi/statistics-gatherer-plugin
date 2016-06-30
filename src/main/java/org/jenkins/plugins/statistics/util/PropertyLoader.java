@@ -60,15 +60,15 @@ public class PropertyLoader {
     if (key.length() <= 0) {
       return null;
     }
-    final EnvVars vars = new EnvVars();
-    DescribableList<NodeProperty<?>, NodePropertyDescriptor> globalProps =
+    final EnvVars environmentVariables = new EnvVars();
+    DescribableList<NodeProperty<?>, NodePropertyDescriptor> globalNodeProperties =
         Jenkins.getInstance().getGlobalNodeProperties();
     List<EnvironmentVariablesNodeProperty> properties =
-        globalProps.getAll(EnvironmentVariablesNodeProperty.class);
+        globalNodeProperties.getAll(EnvironmentVariablesNodeProperty.class);
     for (EnvironmentVariablesNodeProperty environmentVariablesNodeProperty : properties) {
-      vars.putAll(environmentVariablesNodeProperty.getEnvVars());
+      environmentVariables.putAll(environmentVariablesNodeProperty.getEnvVars());
     }
-    final String value = vars.get(key);
+    final String value = environmentVariables.get(key);
     if (value == null || value.isEmpty()) {
       return getResourceBundleProperty(key);
     }
