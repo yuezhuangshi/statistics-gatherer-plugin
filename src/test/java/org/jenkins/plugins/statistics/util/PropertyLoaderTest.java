@@ -22,10 +22,10 @@ import static org.mockito.Mockito.mock;
  * Created by mcharron on 2016-06-29.
  */
 @RunWith(PowerMockRunner.class)
+@PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
 public class PropertyLoaderTest {
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenNoInstance_whenGetInstance_thenReturnInstance(){
         //given
         //when
@@ -36,7 +36,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenInstance_whenGetInstance_thenReturnInstance(){
         //given
         //To create instance
@@ -52,7 +51,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenResourceBundleProperty_whenGetKey_thenReturnKeyString(){
         //given
         //when
@@ -63,7 +61,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenQueueUrl_whenGetQueueUrlEndpoint_thenReturnQueueUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -78,7 +75,6 @@ public class PropertyLoaderTest {
 
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenNoQueueUrl_whenGetQueueUrlEndpoint_thenReturnQueueUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -98,7 +94,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEnvVars_whenGetQueueUrlEndpoint_thenReturnQueueUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -124,7 +119,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEmptyEnvVars_whenGetQueueUrlEndpoint_thenReturnQueueUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -150,7 +144,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEmptyQueueUrl_whenGetQueueUrlEndpoint_thenReturnQueueUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -170,7 +163,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenBuildUrl_whenGetBuildUrlEndpoint_thenReturnBuildUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -185,7 +177,6 @@ public class PropertyLoaderTest {
 
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenNoBuildUrl_whenGetBuildUrlEndpoint_thenReturnBuildUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -205,7 +196,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEnvVars_whenGetBuildUrlEndpoint_thenReturnBuildUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -231,7 +221,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEmptyEnvVars_whenGetBuildUrlEndpoint_thenReturnBuildUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -257,7 +246,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEmptyBuildUrl_whenGetBuildUrlEndpoint_thenReturnBuildUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -277,7 +265,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenProjectUrl_whenGetProjectUrlEndpoint_thenReturnProjectUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -292,7 +279,6 @@ public class PropertyLoaderTest {
 
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenNoProjectUrl_whenGetProjectUrlEndpoint_thenReturnProjectUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -312,7 +298,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEnvVars_whenGetProjectUrlEndpoint_thenReturnProjectUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -338,7 +323,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEmptyEnvVars_whenGetProjectUrlEndpoint_thenReturnProjectUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -364,7 +348,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEmptyProjectUrl_whenGetProjectUrlEndpoint_thenReturnProjectUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);
@@ -384,7 +367,6 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenNoKey_whenGetProperty_thenReturnNull(){
         //given
         //when
@@ -394,93 +376,11 @@ public class PropertyLoaderTest {
     }
 
     @Test
-    @PrepareForTest({StatisticsConfiguration.class, ResourceBundle.class, Jenkins.class})
     public void givenEmptyKey_whenGetProperty_thenReturnNull(){
         //given
         //when
         String property = PropertyLoader.getInstance().getProperty("");
         //then
         assertNull(property);
-    }
-
-    @Test
-    @PrepareForTest({StatisticsConfiguration.class, PropertyLoader.class, Jenkins.class})
-    public void givenNullEnvProperty_whenGetQueueUrlEndpoint_thenReturnEmpty(){
-        //given
-        PowerMockito.mockStatic(StatisticsConfiguration.class);
-        PowerMockito.mockStatic(Jenkins.class);
-        Mockito.when(StatisticsConfiguration.get()).thenReturn(mock(StatisticsConfiguration.class));
-        Mockito.when(StatisticsConfiguration.get().getQueueUrl()).thenReturn(null);
-        PowerMockito.spy(PropertyLoader.class);
-        Mockito.when(PropertyLoader.getEnvironmentProperty(Mockito.anyString())).thenReturn(null);
-        //when
-        String url = PropertyLoader.getQueueEndPoint();
-
-        //then
-        assertEquals("", url);
-    }
-
-    @Test
-    @PrepareForTest({StatisticsConfiguration.class, PropertyLoader.class, Jenkins.class})
-    public void givenNullEnvProperty_whenGetBuildUrlEndpoint_thenReturnEmpty(){
-        //given
-        PowerMockito.mockStatic(StatisticsConfiguration.class);
-        PowerMockito.mockStatic(Jenkins.class);
-        Mockito.when(StatisticsConfiguration.get()).thenReturn(mock(StatisticsConfiguration.class));
-        Mockito.when(StatisticsConfiguration.get().getBuildUrl()).thenReturn(null);
-        PowerMockito.spy(PropertyLoader.class);
-        Mockito.when(PropertyLoader.getEnvironmentProperty(Mockito.anyString())).thenReturn(null);
-        //when
-        String url = PropertyLoader.getBuildEndPoint();
-
-        //then
-        assertEquals("", url);
-    }
-
-    @Test
-    @PrepareForTest({StatisticsConfiguration.class, PropertyLoader.class, Jenkins.class})
-    public void givenNullEnvProperty_whenGetJobUrlEndpoint_thenReturnEmpty(){
-        //given
-        PowerMockito.mockStatic(StatisticsConfiguration.class);
-        PowerMockito.mockStatic(Jenkins.class);
-        Mockito.when(StatisticsConfiguration.get()).thenReturn(mock(StatisticsConfiguration.class));
-        Mockito.when(StatisticsConfiguration.get().getProjectUrl()).thenReturn(null);
-        PowerMockito.spy(PropertyLoader.class);
-        Mockito.when(PropertyLoader.getEnvironmentProperty(Mockito.anyString())).thenReturn(null);
-        //when
-        String url = PropertyLoader.getProjectEndPoint();
-
-        //then
-        assertEquals("", url);
-    }
-
-    @Test
-    @PrepareForTest({StatisticsConfiguration.class, PropertyLoader.class, Jenkins.class})
-    public void givenEmptyEnvProperty_whenGetJobUrlEndpoint_thenReturnEmpty(){
-        //given
-        PowerMockito.mockStatic(StatisticsConfiguration.class);
-        PowerMockito.mockStatic(Jenkins.class);
-        Mockito.when(StatisticsConfiguration.get()).thenReturn(mock(StatisticsConfiguration.class));
-        Mockito.when(StatisticsConfiguration.get().getProjectUrl()).thenReturn(null);
-        PowerMockito.spy(PropertyLoader.class);
-        Mockito.when(PropertyLoader.getEnvironmentProperty(Mockito.anyString())).thenReturn("");
-        //when
-        String url = PropertyLoader.getProjectEndPoint();
-
-        //then
-        assertEquals("", url);
-    }
-
-    @Test
-    @PrepareForTest({StatisticsConfiguration.class, PropertyLoader.class, Jenkins.class})
-    public void givenPropertyLoader_whenSetInstance_thenInstanceIsSet(){
-        //given
-        PropertyLoader propertyLoader = mock(PropertyLoader.class);
-        //when
-        PropertyLoader.setInstance(propertyLoader);
-
-        //then
-        PropertyLoader actualPropertyLoader = PropertyLoader.getInstance();
-        assertEquals(propertyLoader, actualPropertyLoader);
     }
 }
