@@ -38,40 +38,28 @@ public class RestClientUtil {
     return client;
   }
 
-  public static Map<String, Object> doPostJSON(final String url, String sJsonText)
+  public static Map<String, Object> doPostJSON(final String url, String jsonStringToPost)
       throws  IOException, URISyntaxException {
     LOGGER.log(Level.INFO, "Post Url is -> " + url);
     PostMethod method = new PostMethod(url);
-    if (sJsonText != null) {
-      StringRequestEntity reqEntity = new StringRequestEntity(sJsonText,
+    if (jsonStringToPost != null) {
+      StringRequestEntity requestEntity = new StringRequestEntity(jsonStringToPost,
           "application/json; charset=utf-8", null);
-      method.setRequestEntity(reqEntity);
-    }
-    return execute(method);
-  }
-
-  public static Map<String, Object> doPutJson(final String url, String jsonStr) throws
-      IOException, URISyntaxException {
-    LOGGER.log(Level.INFO, "Put Url is -> " + url);
-    PutMethod method = new PutMethod(url);
-    if (jsonStr != null){
-      StringRequestEntity reqEntity = new StringRequestEntity(jsonStr,
-          "application/json; charset=utf-8", null);
-      method.setRequestEntity(reqEntity);
+      method.setRequestEntity(requestEntity);
     }
     return execute(method);
   }
 
   private static String responseAsString(HttpMethod method)
       throws IOException {
-    String s = null;
+    String response = null;
     if (method != null) {
-      InputStream in = method.getResponseBodyAsStream();
-      if (in != null) {
-        s = read(new InputStreamReader(in, StandardCharsets.UTF_8));
+      InputStream inputStream = method.getResponseBodyAsStream();
+      if (inputStream != null) {
+        response = read(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
       }
     }
-    return s;
+    return response;
   }
 
   private static Map<String, Object> execute(HttpMethod method)
@@ -79,8 +67,8 @@ public class RestClientUtil {
     Map<String, Object> map = new HashMap<String, Object>();
     if (method != null) {
       try {
-        int i = getHttpClient().executeMethod(method);
-        map.put(RESPONSE_STATUS, i);//important to keep it as a first statement
+        int response_code = getHttpClient().executeMethod(method);
+        map.put(RESPONSE_STATUS, response_code);//important to keep it as a first statement
         map.put(RESPONSE_BODY, responseAsString(method));
         return map;
       } finally {
@@ -91,20 +79,21 @@ public class RestClientUtil {
   }
 
   private static String read(InputStreamReader in) {
-    StringBuilder sb = new StringBuilder();
-    String s = null;
+    StringBuilder stringBuilder = new StringBuilder();
+    String response = null;
     if (in != null) {
-      BufferedReader r = new BufferedReader(in, 8192);
+      BufferedReader reader = new BufferedReader(in, 8192);
       try {
-        for (String line = r.readLine(); line != null; line = r.readLine()) {
-          sb.append(line);
+        for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+          stringBuilder.append(line);
         }
-        s = sb.toString();
+        response = stringBuilder.toString();
+        reader.close();
       } catch (IOException e) {
         LOGGER.log(Level.WARNING, "Failed reading Input stream", e);
       }
     }
-    return s;
+    return response;
   }
 
   /**
@@ -114,35 +103,16 @@ public class RestClientUtil {
    * @param modelObj
    */
   public static void postToService(final String url, Object modelObj) {
-    String jsonStr = JSONUtil.convertToJsonStr(modelObj);
+    String json = JSONUtil.convertToJsonStr(modelObj);
     try {
-      Map<String, Object> responseMap = RestClientUtil.doPostJSON(url, jsonStr);
+      Map<String, Object> responseMap = RestClientUtil.doPostJSON(url, json);
       LOGGER.log(Level.INFO, "Status code: "+ responseMap.get(RESPONSE_STATUS));
     } catch (IOException e) {
       LOGGER.log(Level.WARNING, "Failed during POST call to "+ url +" url " +
-          " with JSON " +jsonStr , e);
+          " with JSON " +json , e);
     } catch (URISyntaxException e) {
       LOGGER.log(Level.WARNING, "Failed during POST call to "+ url +" url " +
-          " with JSON " +jsonStr , e);
-    }
-  }
-
-  /**
-   *
-   * @param url
-   * @param modelObj
-   */
-  public static void putToService(final String url, Object modelObj) {
-    String jsonStr = JSONUtil.convertToJsonStr(modelObj);
-    try {
-      Map<String, Object> responseMap = RestClientUtil.doPutJson(url, jsonStr);
-      LOGGER.log(Level.INFO, "Status code: "+ responseMap.get(RESPONSE_STATUS));
-    } catch (IOException e) {
-      LOGGER.log(Level.WARNING, "Failed during PUT call to "+ url +" url " +
-          " with JSON " +jsonStr, e);
-    } catch (URISyntaxException e) {
-      LOGGER.log(Level.WARNING, "Failed during PUT call to "+ url +" url " +
-          " with JSON " +jsonStr, e);
+          " with JSON " +json , e);
     }
   }
 }

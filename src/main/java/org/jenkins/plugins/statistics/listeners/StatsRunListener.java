@@ -217,7 +217,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
       build.setDuration(run.getDuration());
       build.setEndTime(Calendar.getInstance().getTime());
 
-      RestClientUtil.putToService(getRestUrl(), build);
+      RestClientUtil.postToService(getRestUrl(), build);
       LOGGER.log(Level.INFO, run.getParent().getName()+" build is completed " +
           "its status is : " + buildResult +
           " at time : " + new Date());
