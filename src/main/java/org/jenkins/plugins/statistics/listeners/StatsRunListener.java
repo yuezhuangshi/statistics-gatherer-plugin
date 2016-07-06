@@ -13,6 +13,7 @@ import hudson.triggers.TimerTrigger;
 import jenkins.model.Jenkins;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -80,7 +81,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
    * @param run
    * @param build
    */
-  private void addSlaveInfo(Run<?, ?> run, StatsBuild build) {
+  private void addSlaveInfo(Run<?, ?> run, StatsBuild build) throws InterruptedException{
     SlaveInfo slaveInfo = new SlaveInfo();
     if (run.getExecutor() != null) {
       try {
@@ -95,6 +96,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
       } catch (InterruptedException e) {
         LOGGER.log(Level.WARNING, "Failed to retrieve hostname of Slave " +
             " for " + run.getUrl(), e);
+        throw e;
       }
       build.setSlaveInfo(slaveInfo);
     }
@@ -127,7 +129,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
    * @param build
    */
   private void addSCMInfo(Run<?, ?> run, TaskListener listener,
-                          StatsBuild build) {
+                          StatsBuild build) throws InterruptedException{
     EnvVars environment = null;
     SCMInfo scmInfo = new SCMInfo();
     try {
@@ -138,6 +140,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
     } catch (InterruptedException e) {
       LOGGER.log(Level.WARNING, "Failed to retrieve environment" +
           " for " + run.getUrl(), e);
+      throw e;
     }
     if (environment != null) {
       if (environment.get("GIT_URL") != null) {
