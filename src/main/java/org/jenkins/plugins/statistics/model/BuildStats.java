@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by hthakkallapally on 3/16/2015.
  */
-public class StatsBuild {
+public class BuildStats {
 
     private String ciUrl;
 
@@ -37,7 +37,7 @@ public class StatsBuild {
 
     private long queueTime;
 
-    public StatsBuild(String ciUrl,
+    public BuildStats(String ciUrl,
                       String jobName,
                       String fullJobName,
                       int number,
@@ -67,7 +67,7 @@ public class StatsBuild {
         this.queueTime = queueTime;
     }
 
-    public StatsBuild() {
+    public BuildStats() {
         this.ciUrl = "";
         this.jobName = "";
         this.fullJobName = "";

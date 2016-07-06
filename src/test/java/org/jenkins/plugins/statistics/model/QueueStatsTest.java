@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by mcharron on 2016-06-27.
  */
-public class StatsQueueTest {
+public class QueueStatsTest {
 
     private static final String CI_URL = "http://url.com";
     private static final String JOB_NAME = "aName";
@@ -26,11 +26,11 @@ public class StatsQueueTest {
     private static final int DURATION = 2000;
     private static final String DURATION_STR = "2000";
     private static final ArrayList<QueueCause> QUEUE_CAUSES = new ArrayList<QueueCause>();
-    private StatsQueue statsQueue;
+    private QueueStats queueStats;
 
     @Before
     public void initBaseObject() {
-        statsQueue = new StatsQueue(CI_URL,
+        queueStats = new QueueStats(CI_URL,
                 JOB_NAME,
                 ENTRY_TIME,
                 EXIT_TIME,
@@ -47,7 +47,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        String url = statsQueue.getCiUrl();
+        String url = queueStats.getCiUrl();
 
         //then
         assertEquals(CI_URL, url);
@@ -56,20 +56,20 @@ public class StatsQueueTest {
     @Test
     public void givenNothing_whenConstructEmpty_thenAllValuesAreSet() {
         //when
-        StatsQueue statsQueue = new StatsQueue();
+        QueueStats queueStats = new QueueStats();
 
         //then
-        assertEquals("", statsQueue.getCiUrl());
-        assertEquals("", statsQueue.getJobName());
+        assertEquals("", queueStats.getCiUrl());
+        assertEquals("", queueStats.getJobName());
         Date compareDate =new Date();
-        assertTrue(statsQueue.getEntryTime().before(compareDate)|| statsQueue.getEntryTime().equals(compareDate));
-        assertTrue(statsQueue.getExitTime().before(compareDate) || statsQueue.getExitTime().equals(compareDate));
-        assertEquals("", statsQueue.getStartedBy());
-        assertEquals(0, statsQueue.getJenkinsQueueId());
-        assertEquals("", statsQueue.getStatus());
-        assertEquals(0, statsQueue.getDuration());
-        assertEquals("", statsQueue.getDurationStr());
-        assertEquals(new ArrayList<QueueCause>(), statsQueue.getQueueCauses());
+        assertTrue(queueStats.getEntryTime().before(compareDate)|| queueStats.getEntryTime().equals(compareDate));
+        assertTrue(queueStats.getExitTime().before(compareDate) || queueStats.getExitTime().equals(compareDate));
+        assertEquals("", queueStats.getStartedBy());
+        assertEquals(0, queueStats.getJenkinsQueueId());
+        assertEquals("", queueStats.getStatus());
+        assertEquals(0, queueStats.getDuration());
+        assertEquals("", queueStats.getDurationStr());
+        assertEquals(new ArrayList<QueueCause>(), queueStats.getQueueCauses());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        String jobName = statsQueue.getJobName();
+        String jobName = queueStats.getJobName();
 
         //then
         assertEquals(JOB_NAME, jobName);
@@ -88,7 +88,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        Date entryTime = statsQueue.getEntryTime();
+        Date entryTime = queueStats.getEntryTime();
 
         //then
         assertEquals(ENTRY_TIME, entryTime);
@@ -99,7 +99,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        Date exitTime = statsQueue.getExitTime();
+        Date exitTime = queueStats.getExitTime();
 
         //then
         assertEquals(EXIT_TIME, exitTime);
@@ -110,7 +110,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        String startedBy = statsQueue.getStartedBy();
+        String startedBy = queueStats.getStartedBy();
 
         //then
         assertEquals(STARTED_BY, startedBy);
@@ -121,7 +121,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        int jenkinsQueueId = statsQueue.getJenkinsQueueId();
+        int jenkinsQueueId = queueStats.getJenkinsQueueId();
 
         //then
         assertEquals(JENKINS_QUEUE_ID, jenkinsQueueId);
@@ -132,7 +132,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        String status = statsQueue.getStatus();
+        String status = queueStats.getStatus();
 
         //then
         assertEquals(STATUS, status);
@@ -143,7 +143,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        long duration = statsQueue.getDuration();
+        long duration = queueStats.getDuration();
 
         //then
         assertEquals(DURATION, duration);
@@ -154,7 +154,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        String durationStr = statsQueue.getDurationStr();
+        String durationStr = queueStats.getDurationStr();
 
         //then
         assertEquals(DURATION_STR, durationStr);
@@ -165,7 +165,7 @@ public class StatsQueueTest {
         //given
 
         //when
-        List<QueueCause> queueCauses = statsQueue.getQueueCauses();
+        List<QueueCause> queueCauses = queueStats.getQueueCauses();
 
         //then
         assertEquals(QUEUE_CAUSES, queueCauses);
@@ -178,10 +178,10 @@ public class StatsQueueTest {
         List<QueueCause> queueCausesToBeSet = new ArrayList<QueueCause>();
         queueCausesToBeSet.add(queueCause);
         //when
-        statsQueue.setQueueCauses(queueCausesToBeSet);
+        queueStats.setQueueCauses(queueCausesToBeSet);
 
         //then
-        List<QueueCause> queueCauses = statsQueue.getQueueCauses();
+        List<QueueCause> queueCauses = queueStats.getQueueCauses();
         assertEquals(queueCausesToBeSet, queueCauses);
     }
 
@@ -190,10 +190,10 @@ public class StatsQueueTest {
         //given
         String ciUrl = "aUrl";
         //when
-        statsQueue.setCiUrl(ciUrl);
+        queueStats.setCiUrl(ciUrl);
 
         //then
-        String url = statsQueue.getCiUrl();
+        String url = queueStats.getCiUrl();
         assertEquals(ciUrl, url);
     }
 
@@ -202,10 +202,10 @@ public class StatsQueueTest {
         //given
         Date expectedEntryTime = new Date(123456789);
         //when
-        statsQueue.setEntryTime(expectedEntryTime);
+        queueStats.setEntryTime(expectedEntryTime);
 
         //then
-        Date actualEntryTime = statsQueue.getEntryTime();
+        Date actualEntryTime = queueStats.getEntryTime();
         assertEquals(expectedEntryTime, actualEntryTime);
     }
     @Test
@@ -213,10 +213,10 @@ public class StatsQueueTest {
         //given
         Date expectedExitTime = new Date(123456789);
         //when
-        statsQueue.setExitTime(expectedExitTime);
+        queueStats.setExitTime(expectedExitTime);
 
         //then
-        Date actualExitTime = statsQueue.getExitTime();
+        Date actualExitTime = queueStats.getExitTime();
         assertEquals(expectedExitTime, actualExitTime);
     }
     @Test
@@ -224,10 +224,10 @@ public class StatsQueueTest {
         //given
         String expectedStartedBy = "IHazStartedIt!";
         //when
-        statsQueue.setStartedBy(expectedStartedBy);
+        queueStats.setStartedBy(expectedStartedBy);
 
         //then
-        String actualStartedBy = statsQueue.getStartedBy();
+        String actualStartedBy = queueStats.getStartedBy();
         assertEquals(expectedStartedBy, actualStartedBy);
     }
     @Test
@@ -235,10 +235,10 @@ public class StatsQueueTest {
         //given
         int expectedQueueId = 123456;
         //when
-        statsQueue.setJenkinsQueueId(expectedQueueId);
+        queueStats.setJenkinsQueueId(expectedQueueId);
 
         //then
-        int actualQueueId = statsQueue.getJenkinsQueueId();
+        int actualQueueId = queueStats.getJenkinsQueueId();
         assertEquals(expectedQueueId, actualQueueId);
     }
     @Test
@@ -246,10 +246,10 @@ public class StatsQueueTest {
         //given
         String expectedStatus = "WOOHOO";
         //when
-        statsQueue.setStatus(expectedStatus);
+        queueStats.setStatus(expectedStatus);
 
         //then
-        String actualStatus = statsQueue.getStatus();
+        String actualStatus = queueStats.getStatus();
         assertEquals(expectedStatus, actualStatus);
     }
     @Test
@@ -257,10 +257,10 @@ public class StatsQueueTest {
         //given
         long expectedDuration = 123456;
         //when
-        statsQueue.setDuration(expectedDuration);
+        queueStats.setDuration(expectedDuration);
 
         //then
-        long actualDuration = statsQueue.getDuration();
+        long actualDuration = queueStats.getDuration();
         assertEquals(expectedDuration, actualDuration);
     }
     @Test
@@ -268,10 +268,10 @@ public class StatsQueueTest {
         //given
         String expectedDurationString = "ThisIsAString";
         //when
-        statsQueue.setDurationStr(expectedDurationString);
+        queueStats.setDurationStr(expectedDurationString);
 
         //then
-        String actualUrl = statsQueue.getDurationStr();
+        String actualUrl = queueStats.getDurationStr();
         assertEquals(expectedDurationString, actualUrl);
     }
     @Test
@@ -279,10 +279,10 @@ public class StatsQueueTest {
         //given
         String expectedJobName = "ThisIsAName";
         //when
-        statsQueue.setJobName(expectedJobName);
+        queueStats.setJobName(expectedJobName);
 
         //then
-        String actualJobName = statsQueue.getJobName();
+        String actualJobName = queueStats.getJobName();
         assertEquals(expectedJobName, actualJobName);
     }
 
@@ -291,10 +291,10 @@ public class StatsQueueTest {
         //given
 
         //when
-        statsQueue.setEntryTime(null);
+        queueStats.setEntryTime(null);
 
         //then
-        Date actualEntryTime = statsQueue.getEntryTime();
+        Date actualEntryTime = queueStats.getEntryTime();
         assertNull(actualEntryTime);
     }
 
@@ -303,10 +303,10 @@ public class StatsQueueTest {
         //given
 
         //when
-        statsQueue.setExitTime(null);
+        queueStats.setExitTime(null);
 
         //then
-        Date actualExitTime = statsQueue.getExitTime();
+        Date actualExitTime = queueStats.getExitTime();
         assertNull(actualExitTime);
     }
 
@@ -317,10 +317,10 @@ public class StatsQueueTest {
         List<QueueCause> expectedQueueCauses = new ArrayList<QueueCause>();
         expectedQueueCauses.add(queueCause);
         //when
-        statsQueue.addQueueCause(queueCause);
+        queueStats.addQueueCause(queueCause);
 
         //then
-        List<QueueCause> queueCauses = statsQueue.getQueueCauses();
+        List<QueueCause> queueCauses = queueStats.getQueueCauses();
         assertEquals(expectedQueueCauses, queueCauses);
     }
 }

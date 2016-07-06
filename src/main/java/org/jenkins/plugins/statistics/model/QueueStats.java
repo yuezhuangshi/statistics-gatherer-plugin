@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by hthakkallapally on 3/16/2015.
  */
-public class StatsQueue {
+public class QueueStats {
 
     private String ciUrl;
 
@@ -29,7 +29,7 @@ public class StatsQueue {
 
     private List<QueueCause> queueCauses = new ArrayList<>();
 
-    public StatsQueue(String ciUrl,
+    public QueueStats(String ciUrl,
                       String jobName,
                       Date entryTime,
                       Date exitTime,
@@ -51,7 +51,7 @@ public class StatsQueue {
         this.queueCauses = queueCauses;
     }
 
-    public StatsQueue() {
+    public QueueStats() {
         this.ciUrl = "";
         this.jobName = "";
         this.entryTime = new Date();

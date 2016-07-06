@@ -1,6 +1,5 @@
 package org.jenkins.plugins.statistics.model;
 
-import hudson.util.CopyOnWriteMap;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by mcharron on 2016-06-29.
  */
-public class StatsBuildTest {
+public class BuildStatsTest {
 
     private static final String CI_URL = "http://url.com";
     private static final String JOB_NAME = "JOB";
@@ -30,11 +29,11 @@ public class StatsBuildTest {
     private static final SlaveInfo SLAVE_INFO = new SlaveInfo();
     private static final SCMInfo SCM_INFO = new SCMInfo();
     private static final Map<String, String> PARAMETERS = new HashMap<String, String>();
-    private StatsBuild statsBuild;
+    private BuildStats buildStats;
 
     @Before
     public void initBaseObject() {
-        statsBuild = new StatsBuild(CI_URL,
+        buildStats = new BuildStats(CI_URL,
                 JOB_NAME,
                 FULL_JOB_NAME,
                 NUMBER,
@@ -53,23 +52,23 @@ public class StatsBuildTest {
     @Test
     public void givenNothing_whenConstruct_thenValuesAreSet(){
         //when
-        StatsBuild statsBuild = new StatsBuild();
+        BuildStats buildStats = new BuildStats();
         //then
         Date compareDate =new Date();
-        assertTrue(statsBuild.getStartTime().before(compareDate)|| statsBuild.getStartTime().equals(compareDate));
-        assertTrue(statsBuild.getEndTime().before(compareDate)|| statsBuild.getEndTime().equals(compareDate));
-        assertEquals("", statsBuild.getCiUrl());
-        assertEquals("", statsBuild.getJobName());
-        assertEquals("", statsBuild.getFullJobName());
-        assertEquals(0, statsBuild.getNumber());
-        assertEquals("", statsBuild.getSlaveInfo().getSlaveName());
-        assertEquals("", statsBuild.getStartedUserId());
-        assertEquals("", statsBuild.getStartedUserName());
-        assertEquals("", statsBuild.getResult());
-        assertEquals(0, statsBuild.getDuration());
-        assertEquals(new HashMap<String,String>(), statsBuild.getParameters());
-        assertEquals("", statsBuild.getScmInfo().getUrl());
-        assertEquals(0, statsBuild.getQueueTime());
+        assertTrue(buildStats.getStartTime().before(compareDate)|| buildStats.getStartTime().equals(compareDate));
+        assertTrue(buildStats.getEndTime().before(compareDate)|| buildStats.getEndTime().equals(compareDate));
+        assertEquals("", buildStats.getCiUrl());
+        assertEquals("", buildStats.getJobName());
+        assertEquals("", buildStats.getFullJobName());
+        assertEquals(0, buildStats.getNumber());
+        assertEquals("", buildStats.getSlaveInfo().getSlaveName());
+        assertEquals("", buildStats.getStartedUserId());
+        assertEquals("", buildStats.getStartedUserName());
+        assertEquals("", buildStats.getResult());
+        assertEquals(0, buildStats.getDuration());
+        assertEquals(new HashMap<String,String>(), buildStats.getParameters());
+        assertEquals("", buildStats.getScmInfo().getUrl());
+        assertEquals(0, buildStats.getQueueTime());
     }
 
     @Test
@@ -77,7 +76,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        String ciUrl = statsBuild.getCiUrl();
+        String ciUrl = buildStats.getCiUrl();
 
         //then
         assertEquals(CI_URL, ciUrl);
@@ -88,10 +87,10 @@ public class StatsBuildTest {
         //given
         String expectedCiUrl = "IHazCiUrl!";
         //when
-        statsBuild.setCiUrl(expectedCiUrl);
+        buildStats.setCiUrl(expectedCiUrl);
 
         //then
-        String actualCiUrl = statsBuild.getCiUrl();
+        String actualCiUrl = buildStats.getCiUrl();
         assertEquals(expectedCiUrl, actualCiUrl);
     }
 
@@ -100,7 +99,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        String jobName = statsBuild.getJobName();
+        String jobName = buildStats.getJobName();
 
         //then
         assertEquals(JOB_NAME, jobName);
@@ -111,10 +110,10 @@ public class StatsBuildTest {
         //given
         String expectedJobName = "IHazJobName!";
         //when
-        statsBuild.setJobName(expectedJobName);
+        buildStats.setJobName(expectedJobName);
 
         //then
-        String actualJobName = statsBuild.getJobName();
+        String actualJobName = buildStats.getJobName();
         assertEquals(expectedJobName, actualJobName);
     }
 
@@ -123,7 +122,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        String fullJobName = statsBuild.getFullJobName();
+        String fullJobName = buildStats.getFullJobName();
 
         //then
         assertEquals(FULL_JOB_NAME, fullJobName);
@@ -134,10 +133,10 @@ public class StatsBuildTest {
         //given
         String expectedFullJobName = "IHazFullJobName!";
         //when
-        statsBuild.setFullJobName(expectedFullJobName);
+        buildStats.setFullJobName(expectedFullJobName);
 
         //then
-        String actualFullJobName = statsBuild.getFullJobName();
+        String actualFullJobName = buildStats.getFullJobName();
         assertEquals(expectedFullJobName, actualFullJobName);
     }
 
@@ -146,7 +145,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        String startedUserId = statsBuild.getStartedUserId();
+        String startedUserId = buildStats.getStartedUserId();
 
         //then
         assertEquals(STARTED_USER_ID, startedUserId);
@@ -157,10 +156,10 @@ public class StatsBuildTest {
         //given
         String expectedStartedUserId = "IHazStartedUserId!";
         //when
-        statsBuild.setStartedUserId(expectedStartedUserId);
+        buildStats.setStartedUserId(expectedStartedUserId);
 
         //then
-        String actualStartedUserId = statsBuild.getStartedUserId();
+        String actualStartedUserId = buildStats.getStartedUserId();
         assertEquals(expectedStartedUserId, actualStartedUserId);
     }
 
@@ -169,7 +168,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        String startedUserName = statsBuild.getStartedUserName();
+        String startedUserName = buildStats.getStartedUserName();
 
         //then
         assertEquals(STARTED_USER_NAME, startedUserName);
@@ -180,10 +179,10 @@ public class StatsBuildTest {
         //given
         String expectedStartedUserName = "IHazStartedUserName!";
         //when
-        statsBuild.setStartedUserName(expectedStartedUserName);
+        buildStats.setStartedUserName(expectedStartedUserName);
 
         //then
-        String actualStartedUserName = statsBuild.getStartedUserName();
+        String actualStartedUserName = buildStats.getStartedUserName();
         assertEquals(expectedStartedUserName, actualStartedUserName);
     }
 
@@ -192,7 +191,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        String result = statsBuild.getResult();
+        String result = buildStats.getResult();
 
         //then
         assertEquals(RESULT, result);
@@ -203,10 +202,10 @@ public class StatsBuildTest {
         //given
         String expectedResult = "IHazResult!";
         //when
-        statsBuild.setResult(expectedResult);
+        buildStats.setResult(expectedResult);
 
         //then
-        String actualResult = statsBuild.getResult();
+        String actualResult = buildStats.getResult();
         assertEquals(expectedResult, actualResult);
     }
 
@@ -215,7 +214,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        int number = statsBuild.getNumber();
+        int number = buildStats.getNumber();
 
         //then
         assertEquals(NUMBER, number);
@@ -226,10 +225,10 @@ public class StatsBuildTest {
         //given
         int expectedNumber = 123456789;
         //when
-        statsBuild.setNumber(expectedNumber);
+        buildStats.setNumber(expectedNumber);
 
         //then
-        int actualNumber = statsBuild.getNumber();
+        int actualNumber = buildStats.getNumber();
         assertEquals(expectedNumber, actualNumber);
     }
 
@@ -238,7 +237,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        long Duration = statsBuild.getDuration();
+        long Duration = buildStats.getDuration();
 
         //then
         assertEquals(DURATION, Duration);
@@ -249,10 +248,10 @@ public class StatsBuildTest {
         //given
         long expectedDuration = 123456789;
         //when
-        statsBuild.setDuration(expectedDuration);
+        buildStats.setDuration(expectedDuration);
 
         //then
-        long actualDuration = statsBuild.getDuration();
+        long actualDuration = buildStats.getDuration();
         assertEquals(expectedDuration, actualDuration);
     }
 
@@ -261,7 +260,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        long queueTime = statsBuild.getQueueTime();
+        long queueTime = buildStats.getQueueTime();
 
         //then
         assertEquals(QUEUE_TIME, queueTime);
@@ -272,10 +271,10 @@ public class StatsBuildTest {
         //given
         long expectedQueueTime = 123456789;
         //when
-        statsBuild.setQueueTime(expectedQueueTime);
+        buildStats.setQueueTime(expectedQueueTime);
 
         //then
-        long actualQueueTime = statsBuild.getQueueTime();
+        long actualQueueTime = buildStats.getQueueTime();
         assertEquals(expectedQueueTime, actualQueueTime);
     }
 
@@ -284,7 +283,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        SlaveInfo slaveInfo = statsBuild.getSlaveInfo();
+        SlaveInfo slaveInfo = buildStats.getSlaveInfo();
 
         //then
         assertEquals(SLAVE_INFO, slaveInfo);
@@ -295,10 +294,10 @@ public class StatsBuildTest {
         //given
         SlaveInfo expectedSlaveInfo = new SlaveInfo();
         //when
-        statsBuild.setSlaveInfo(expectedSlaveInfo);
+        buildStats.setSlaveInfo(expectedSlaveInfo);
 
         //then
-        SlaveInfo actualSlaveInfo = statsBuild.getSlaveInfo();
+        SlaveInfo actualSlaveInfo = buildStats.getSlaveInfo();
         assertEquals(expectedSlaveInfo, actualSlaveInfo);
     }
 
@@ -307,7 +306,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        SCMInfo scmInfo = statsBuild.getScmInfo();
+        SCMInfo scmInfo = buildStats.getScmInfo();
 
         //then
         assertEquals(SCM_INFO, scmInfo);
@@ -318,10 +317,10 @@ public class StatsBuildTest {
         //given
         SCMInfo expectedSCMInfo = new SCMInfo();
         //when
-        statsBuild.setScmInfo(expectedSCMInfo);
+        buildStats.setScmInfo(expectedSCMInfo);
 
         //then
-        SCMInfo actualSCMInfo = statsBuild.getScmInfo();
+        SCMInfo actualSCMInfo = buildStats.getScmInfo();
         assertEquals(expectedSCMInfo, actualSCMInfo);
     }
 
@@ -330,7 +329,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        Date startTime = statsBuild.getStartTime();
+        Date startTime = buildStats.getStartTime();
 
         //then
         assertEquals(START_TIME, startTime);
@@ -341,10 +340,10 @@ public class StatsBuildTest {
         //given
         Date expectedStartTime = new Date();
         //when
-        statsBuild.setStartTime(expectedStartTime);
+        buildStats.setStartTime(expectedStartTime);
 
         //then
-        Date actualStartTime = statsBuild.getStartTime();
+        Date actualStartTime = buildStats.getStartTime();
         assertEquals(expectedStartTime, actualStartTime);
     }
 
@@ -353,7 +352,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        Date endTime = statsBuild.getEndTime();
+        Date endTime = buildStats.getEndTime();
 
         //then
         assertEquals(END_TIME, endTime);
@@ -364,10 +363,10 @@ public class StatsBuildTest {
         //given
         Date expectedEndTime = new Date();
         //when
-        statsBuild.setEndTime(expectedEndTime);
+        buildStats.setEndTime(expectedEndTime);
 
         //then
-        Date actualEndTime = statsBuild.getEndTime();
+        Date actualEndTime = buildStats.getEndTime();
         assertEquals(expectedEndTime, actualEndTime);
     }
 
@@ -376,7 +375,7 @@ public class StatsBuildTest {
         //given
 
         //when
-        Map<String, String>  Parameters = statsBuild.getParameters();
+        Map<String, String>  Parameters = buildStats.getParameters();
 
         //then
         assertEquals(PARAMETERS, Parameters);
@@ -388,10 +387,10 @@ public class StatsBuildTest {
         Map<String, String>  expectedParameters = new HashMap<String, String>();
         expectedParameters.put("aKey", "something");
         //when
-        statsBuild.setParameters(expectedParameters);
+        buildStats.setParameters(expectedParameters);
 
         //then
-        Map<String, String> actualParameters = statsBuild.getParameters();
+        Map<String, String> actualParameters = buildStats.getParameters();
         assertEquals(expectedParameters, actualParameters);
     }
 }

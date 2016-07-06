@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by hthakkallapally on 3/16/2015.
  */
-public class StatsJob {
+public class JobStats {
 
     private String name;
 
@@ -23,7 +23,7 @@ public class StatsJob {
 
     private String configFile;
 
-    public StatsJob(String name,
+    public JobStats(String name,
                     Date createdDate,
                     String userId,
                     String userName,
@@ -41,7 +41,7 @@ public class StatsJob {
         this.configFile = configFile;
     }
 
-    public StatsJob() {
+    public JobStats() {
         this.name = "";
         this.createdDate = new Date();
         this.userId = "";

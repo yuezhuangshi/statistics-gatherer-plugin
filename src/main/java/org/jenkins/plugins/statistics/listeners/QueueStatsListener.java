@@ -9,7 +9,7 @@ import hudson.triggers.SCMTrigger;
 import hudson.triggers.TimerTrigger;
 import jenkins.model.Jenkins;
 import org.jenkins.plugins.statistics.model.QueueCause;
-import org.jenkins.plugins.statistics.model.StatsQueue;
+import org.jenkins.plugins.statistics.model.QueueStats;
 import org.jenkins.plugins.statistics.util.Constants;
 import org.jenkins.plugins.statistics.util.JenkinsCauses;
 import org.jenkins.plugins.statistics.util.PropertyLoader;
@@ -24,11 +24,11 @@ import java.util.logging.Logger;
  * Created by hthakkallapally on 3/13/2015.
  */
 @Extension
-public class StatsQueueListener extends QueueListener {
+public class QueueStatsListener extends QueueListener {
     private static final Logger LOGGER = Logger.getLogger(
-            StatsQueueListener.class.getName());
+            QueueStatsListener.class.getName());
 
-    public StatsQueueListener() {
+    public QueueStatsListener() {
         //Necessary for jenkins
     }
 
@@ -36,7 +36,7 @@ public class StatsQueueListener extends QueueListener {
     public void onEnterWaiting(Queue.WaitingItem waitingItemi) {
         try {
             waitingItemi.getInQueueSince();
-            StatsQueue queue = getCiQueue(waitingItemi);
+            QueueStats queue = getCiQueue(waitingItemi);
             addStartedBy(waitingItemi, queue);
             queue.setEntryTime(new Date());
             queue.setExitTime(null);
@@ -57,7 +57,7 @@ public class StatsQueueListener extends QueueListener {
     }
 
     private void addEntryQueueCause(String type, Item item,
-                                    StatsQueue queue) {
+                                    QueueStats queue) {
         QueueCause cause = new QueueCause();
         cause.setType(type);
         cause.setEntryTime(new Date());
@@ -70,7 +70,7 @@ public class StatsQueueListener extends QueueListener {
     public void onLeaveWaiting(Queue.WaitingItem waitingItem) {
         try {
             waitingItem.getInQueueSince();
-            StatsQueue queue = getCiQueue(waitingItem);
+            QueueStats queue = getCiQueue(waitingItem);
             if (waitingItem.getCauseOfBlockage() != null) {
                 addExitQueueCause("waiting", waitingItem, queue);
             }
@@ -80,7 +80,7 @@ public class StatsQueueListener extends QueueListener {
         }
     }
 
-    private void addExitQueueCause(String type, Item item, StatsQueue queue) {
+    private void addExitQueueCause(String type, Item item, QueueStats queue) {
         QueueCause cause = new QueueCause();
         cause.setType(type);
         cause.setEntryTime(null);
@@ -98,7 +98,7 @@ public class StatsQueueListener extends QueueListener {
     @Override
     public void onEnterBlocked(Queue.BlockedItem blockedItem) {
         try {
-            StatsQueue queue = getCiQueue(blockedItem);
+            QueueStats queue = getCiQueue(blockedItem);
             if (blockedItem.getCauseOfBlockage() != null) {
                 addEntryQueueCause("blocked", blockedItem, queue);
             }
@@ -117,7 +117,7 @@ public class StatsQueueListener extends QueueListener {
     @Override
     public void onLeaveBlocked(Queue.BlockedItem blockedItem) {
         try {
-            StatsQueue queue = getCiQueue(blockedItem);
+            QueueStats queue = getCiQueue(blockedItem);
             if (blockedItem.getCauseOfBlockage() != null) {
                 addExitQueueCause("blocked", blockedItem, queue);
             }
@@ -137,7 +137,7 @@ public class StatsQueueListener extends QueueListener {
     @Override
     public void onEnterBuildable(Queue.BuildableItem buildableItem) {
         try {
-            StatsQueue queue = getCiQueue(buildableItem);
+            QueueStats queue = getCiQueue(buildableItem);
             if (buildableItem.getCauseOfBlockage() != null) {
                 addEntryQueueCause("buildable", buildableItem, queue);
             }
@@ -150,7 +150,7 @@ public class StatsQueueListener extends QueueListener {
     @Override
     public void onLeaveBuildable(Queue.BuildableItem buildableItem) {
         try {
-            StatsQueue queue = getCiQueue(buildableItem);
+            QueueStats queue = getCiQueue(buildableItem);
             if (buildableItem.getCauseOfBlockage() != null) {
                 addExitQueueCause("buildable", buildableItem, queue);
             }
@@ -181,8 +181,8 @@ public class StatsQueueListener extends QueueListener {
      * @param item
      * @return
      */
-    private StatsQueue getCiQueue(Item item) {
-        StatsQueue queue = new StatsQueue();
+    private QueueStats getCiQueue(Item item) {
+        QueueStats queue = new QueueStats();
         String ciUrl = Jenkins.getInstance() != null
                 ? Jenkins.getInstance().getRootUrl()
                 : "";
@@ -198,7 +198,7 @@ public class StatsQueueListener extends QueueListener {
      * @param item
      * @param queue
      */
-    private void addStartedBy(Item item, StatsQueue queue) {
+    private void addStartedBy(Item item, QueueStats queue) {
         List<Cause> causes = item.getCauses();
         for (Cause cause : causes) {
             if (cause instanceof Cause.UserIdCause) {
@@ -217,7 +217,7 @@ public class StatsQueueListener extends QueueListener {
     @Override
     public void onLeft(Queue.LeftItem leftItem) {
         try {
-            StatsQueue queue = getCiQueue(leftItem);
+            QueueStats queue = getCiQueue(leftItem);
             // We have already set entry time in onEnterWaiting(). No need
             // to set it again.
             queue.setEntryTime(null);

@@ -6,7 +6,7 @@ import hudson.model.Item;
 import hudson.model.User;
 import hudson.model.listeners.ItemListener;
 import jenkins.model.Jenkins;
-import org.jenkins.plugins.statistics.model.StatsJob;
+import org.jenkins.plugins.statistics.model.JobStats;
 import org.jenkins.plugins.statistics.util.Constants;
 import org.jenkins.plugins.statistics.util.PropertyLoader;
 import org.jenkins.plugins.statistics.util.RestClientUtil;
@@ -20,10 +20,10 @@ import java.util.logging.Logger;
  * Created by hthakkallapally on 3/12/2015.
  */
 @Extension
-public class StatsItemListener extends ItemListener {
-    private static final Logger LOGGER = Logger.getLogger(StatsItemListener.class.getName());
+public class ItemStatsListener extends ItemListener {
+    private static final Logger LOGGER = Logger.getLogger(ItemStatsListener.class.getName());
 
-    public StatsItemListener() {
+    public ItemStatsListener() {
         //Necessary for jenkins
     }
 
@@ -34,7 +34,7 @@ public class StatsItemListener extends ItemListener {
                 return;
             }
             AbstractProject<?, ?> project = (AbstractProject<?, ?>) item;
-            StatsJob ciJob = addCIJobData(project);
+            JobStats ciJob = addCIJobData(project);
             ciJob.setCreatedDate(new Date());
             ciJob.setStatus(Constants.ACTIVE);
             setConfig(project, ciJob);
@@ -64,8 +64,8 @@ public class StatsItemListener extends ItemListener {
      * @param project
      * @return
      */
-    private StatsJob addCIJobData(AbstractProject<?, ?> project) {
-        StatsJob ciJob = new StatsJob();
+    private JobStats addCIJobData(AbstractProject<?, ?> project) {
+        JobStats ciJob = new JobStats();
         ciJob.setCiUrl(Jenkins.getInstance().getRootUrl());
         ciJob.setName(project.getName());
         String userName = Jenkins.getAuthentication().getName();
@@ -82,7 +82,7 @@ public class StatsItemListener extends ItemListener {
      * @param project
      * @param ciJob
      */
-    private void setConfig(AbstractProject<?, ?> project, StatsJob ciJob) {
+    private void setConfig(AbstractProject<?, ?> project, JobStats ciJob) {
         try {
             ciJob.setConfigFile(project.getConfigFile().asString());
         } catch (IOException e) {
@@ -98,7 +98,7 @@ public class StatsItemListener extends ItemListener {
             if (item == null) {
                 return;
             }
-            StatsJob ciJob = addCIJobData(project);
+            JobStats ciJob = addCIJobData(project);
             ciJob.setUpdatedDate(new Date());
             ciJob.setStatus(project.isDisabled() ? Constants.DISABLED : Constants.ACTIVE);
             setConfig(project, ciJob);
@@ -115,7 +115,7 @@ public class StatsItemListener extends ItemListener {
             if (item == null) {
                 return;
             }
-            StatsJob ciJob = addCIJobData(project);
+            JobStats ciJob = addCIJobData(project);
             ciJob.setUpdatedDate(new Date());
             ciJob.setStatus(Constants.DELETED);
             RestClientUtil.postToService(getRestUrl(), ciJob);

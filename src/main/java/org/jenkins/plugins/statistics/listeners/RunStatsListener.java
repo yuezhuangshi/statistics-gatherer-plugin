@@ -7,9 +7,9 @@ import hudson.model.listeners.RunListener;
 import hudson.triggers.SCMTrigger;
 import hudson.triggers.TimerTrigger;
 import jenkins.model.Jenkins;
+import org.jenkins.plugins.statistics.model.BuildStats;
 import org.jenkins.plugins.statistics.model.SCMInfo;
 import org.jenkins.plugins.statistics.model.SlaveInfo;
-import org.jenkins.plugins.statistics.model.StatsBuild;
 import org.jenkins.plugins.statistics.util.Constants;
 import org.jenkins.plugins.statistics.util.JenkinsCauses;
 import org.jenkins.plugins.statistics.util.PropertyLoader;
@@ -28,15 +28,15 @@ import java.util.logging.Logger;
  * @author hthakkallapally
  */
 @Extension
-public class StatsRunListener extends RunListener<Run<?, ?>> {
+public class RunStatsListener extends RunListener<Run<?, ?>> {
 
-    private static final Logger LOGGER = Logger.getLogger(StatsRunListener.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RunStatsListener.class.getName());
 
-    public StatsRunListener() {
+    public RunStatsListener() {
         //Necessary for jenkins
     }
 
-    public StatsRunListener(Class<Run<?, ?>> targetType) {
+    public RunStatsListener(Class<Run<?, ?>> targetType) {
         super(targetType);
     }
 
@@ -48,7 +48,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
             }
             final String buildResult = run.getResult() == null ?
                     "INPROGRESS" : run.getResult().toString();
-            StatsBuild build = new StatsBuild();
+            BuildStats build = new BuildStats();
             build.setStartTime(run.getTimestamp().getTime());
             build.setCiUrl(Jenkins.getInstance().getRootUrl());
             build.setJobName(run.getParent().getName());
@@ -85,7 +85,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
      * @param run
      * @param build
      */
-    private void addSlaveInfo(Run<?, ?> run, StatsBuild build) throws InterruptedException {
+    private void addSlaveInfo(Run<?, ?> run, BuildStats build) throws InterruptedException {
         SlaveInfo slaveInfo = new SlaveInfo();
         if (run.getExecutor() != null) {
             try {
@@ -112,7 +112,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
      * @param run
      * @param build
      */
-    private void addParameters(Run<?, ?> run, StatsBuild build) {
+    private void addParameters(Run<?, ?> run, BuildStats build) {
         ParametersAction paramsAction = run.getAction(ParametersAction.class);
         if (paramsAction != null) {
             EnvVars env = new EnvVars();
@@ -133,7 +133,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
      * @param build
      */
     private void addSCMInfo(Run<?, ?> run, TaskListener listener,
-                            StatsBuild build) throws InterruptedException {
+                            BuildStats build) throws InterruptedException {
         EnvVars environment = null;
         SCMInfo scmInfo = new SCMInfo();
         try {
@@ -170,7 +170,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
      * @param run
      * @param build
      */
-    private void addUserDetails(Run<?, ?> run, StatsBuild build) {
+    private void addUserDetails(Run<?, ?> run, BuildStats build) {
         List<Cause> causes = run.getCauses();
         for (Cause cause : causes) {
             if (cause instanceof Cause.UserIdCause) {
@@ -209,7 +209,7 @@ public class StatsRunListener extends RunListener<Run<?, ?>> {
 
             final String buildResult = run.getResult() == null ?
                     Constants.UNKNOWN : run.getResult().toString();
-            StatsBuild build = new StatsBuild();
+            BuildStats build = new BuildStats();
             build.setCiUrl(Jenkins.getInstance().getRootUrl());
             build.setJobName(run.getParent().getName());
             build.setFullJobName(run.getParent().getFullName());
