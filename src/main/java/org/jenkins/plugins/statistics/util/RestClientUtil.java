@@ -26,6 +26,10 @@ public class RestClientUtil {
     private static final String RESPONSE_BODY = "RESPONSE_BODY";
     private static final String RESPONSE_STATUS = "RESPONSE_STATUS";
 
+    private RestClientUtil(){
+        throw new IllegalAccessError("Utility class");
+    }
+
     private static HttpClient getHttpClient() {
         final HttpClient client = new HttpClient();
         client.getParams().setParameter("http.protocol.version",

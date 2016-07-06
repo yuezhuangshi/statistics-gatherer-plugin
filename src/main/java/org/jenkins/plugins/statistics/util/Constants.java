@@ -4,9 +4,6 @@ package org.jenkins.plugins.statistics.util;
  * Created by hthakkallapally on 3/16/2015.
  */
 public final class Constants {
-  private Constants(){
-    throw new IllegalAccessError("Utility class");
-  }
 
   public static final String ACTIVE = "ACTIVE";
   public static final String DELETED = "DELETED";
@@ -17,4 +14,7 @@ public final class Constants {
   public static final String ANONYMOUS = "anonymous";
   public static final String UNKNOWN = "UNKNOWN";
 
+  private Constants(){
+    throw new IllegalAccessError("Utility class");
+  }
 }
