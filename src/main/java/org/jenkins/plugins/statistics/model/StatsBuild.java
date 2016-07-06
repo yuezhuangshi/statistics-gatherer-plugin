@@ -9,6 +9,34 @@ import java.util.Map;
  */
 public class StatsBuild {
 
+    private String ciUrl;
+
+    private String jobName;
+
+    private String fullJobName;
+
+    private int number;
+
+    private SlaveInfo slaveInfo;
+
+    private Date startTime;
+
+    private Date endTime;
+
+    private String startedUserId;
+
+    private String startedUserName;
+
+    private String result;
+
+    private long duration;
+
+    private Map<String, String> parameters;
+
+    private SCMInfo scmInfo;
+
+    private long queueTime;
+
     public StatsBuild(String ciUrl,
                       String jobName,
                       String fullJobName,
@@ -51,38 +79,10 @@ public class StatsBuild {
         this.startedUserName = "";
         this.result = "";
         this.duration = 0;
-        this.parameters = new HashMap<String,String>();
+        this.parameters = new HashMap<>();
         this.scmInfo = new SCMInfo();
         this.queueTime = 0;
     }
-
-    private String ciUrl;
-
-    private String jobName;
-
-    private String fullJobName;
-
-    private int number;
-
-    private SlaveInfo slaveInfo;
-
-    private Date startTime;
-
-    private Date endTime;
-
-    private String startedUserId;
-
-    private String startedUserName;
-
-    private String result;
-
-    private long duration;
-
-    private Map<String, String> parameters;
-
-    private SCMInfo scmInfo;
-
-    private long queueTime;
 
     public String getCiUrl() {
         return ciUrl;

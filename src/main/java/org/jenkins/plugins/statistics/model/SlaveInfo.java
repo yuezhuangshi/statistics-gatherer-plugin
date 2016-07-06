@@ -5,6 +5,18 @@ package org.jenkins.plugins.statistics.model;
  */
 public class SlaveInfo {
 
+    private String slaveName;
+
+    private String vmName;
+
+    private String executor;
+
+    private String label;
+
+    private String description;
+
+    private String remoteFs;
+
     public SlaveInfo(String slaveName,
                      String vmName,
                      String executor,
@@ -27,18 +39,6 @@ public class SlaveInfo {
         this.description = "";
         this.remoteFs = "";
     }
-
-    private String slaveName;
-
-    private String vmName;
-
-    private String executor;
-
-    private String label;
-
-    private String description;
-
-    private String remoteFs;
 
     public String getSlaveName() {
         return slaveName;

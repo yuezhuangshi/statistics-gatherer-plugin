@@ -7,6 +7,26 @@ import java.util.*;
  */
 public class StatsQueue {
 
+    private String ciUrl;
+
+    private String jobName;
+
+    private Date entryTime;
+
+    private Date exitTime;
+
+    private String startedBy;
+
+    private int jenkinsQueueId;
+
+    private String status;
+
+    private long duration;
+
+    private String durationStr;
+
+    private List<QueueCause> queueCauses = new ArrayList<>();
+
     public StatsQueue(String ciUrl,
                       String jobName,
                       Date entryTime,
@@ -39,28 +59,9 @@ public class StatsQueue {
         this.status = "";
         this.duration = 0;
         this.durationStr = "";
-        this.queueCauses = new ArrayList<QueueCause>();
+        this.queueCauses = new ArrayList<>();
     }
 
-    private String ciUrl;
-
-    private String jobName;
-
-    private Date entryTime;
-
-    private Date exitTime;
-
-    private String startedBy;
-
-    private int jenkinsQueueId;
-
-    private String status;
-
-    private long duration;
-
-    private String durationStr;
-
-    private List<QueueCause> queueCauses = new ArrayList<QueueCause>();
 
     public String getCiUrl() {
         return ciUrl;

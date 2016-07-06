@@ -13,146 +13,150 @@ import org.kohsuke.stapler.StaplerRequest;
 @Extension
 public class StatisticsConfiguration extends GlobalConfiguration {
 
-  private static final String SLASH = "/";
+    private static final String SLASH = "/";
 
-  private String queueUrl;
-  private String buildUrl;
-  private String projectUrl;
-  private int connectionTimeout;
-  private int socketTimeout;
+    private String queueUrl;
+    private String buildUrl;
+    private String projectUrl;
+    private int connectionTimeout;
+    private int socketTimeout;
 
-  public static StatisticsConfiguration get() {
-    return GlobalConfiguration.all().get(StatisticsConfiguration.class);
-  }
+    public StatisticsConfiguration() {
+        load();
+    }
 
-  public StatisticsConfiguration() {
-    load();
-  }
+    public static StatisticsConfiguration get() {
+        return GlobalConfiguration.all().get(StatisticsConfiguration.class);
+    }
 
-  public String getQueueUrl() {
-    if (queueUrl != null && !queueUrl.isEmpty()) {
-      if (queueUrl.endsWith(SLASH)) {
+    public String getQueueUrl() {
+        if (queueUrl != null && !queueUrl.isEmpty()) {
+            if (queueUrl.endsWith(SLASH)) {
+                return queueUrl;
+            }
+            return queueUrl + SLASH;
+        }
         return queueUrl;
-      }
-      return queueUrl + SLASH;
     }
-    return queueUrl;
-  }
 
-  public void setQueueUrl(String queueUrl) {
-    this.queueUrl = queueUrl;
-    save();
-  }
+    public void setQueueUrl(String queueUrl) {
+        this.queueUrl = queueUrl;
+        save();
+    }
 
-  public String getBuildUrl() {
-    if (buildUrl != null && !buildUrl.isEmpty()) {
-      if (buildUrl.endsWith(SLASH)) {
+    public String getBuildUrl() {
+        if (buildUrl != null && !buildUrl.isEmpty()) {
+            if (buildUrl.endsWith(SLASH)) {
+                return buildUrl;
+            }
+            return buildUrl + SLASH;
+        }
         return buildUrl;
-      }
-      return buildUrl + SLASH;
     }
-    return buildUrl;
-  }
 
-  public void setBuildUrl(String buildUrl) {
-    this.buildUrl = buildUrl;
-    save();
-  }
+    public void setBuildUrl(String buildUrl) {
+        this.buildUrl = buildUrl;
+        save();
+    }
 
-  public String getProjectUrl() {
-    if (projectUrl != null && !projectUrl.isEmpty()) {
-      if (projectUrl.endsWith(SLASH)) {
+    public String getProjectUrl() {
+        if (projectUrl != null && !projectUrl.isEmpty()) {
+            if (projectUrl.endsWith(SLASH)) {
+                return projectUrl;
+            }
+            return projectUrl + SLASH;
+        }
         return projectUrl;
-      }
-      return projectUrl + SLASH;
     }
-    return projectUrl;
-  }
 
-  public void setProjectUrl(String projectUrl) {
-    this.projectUrl = projectUrl;
-    save();
-  }
-
-  public int getConnectionTimeout() {
-    return connectionTimeout;
-  }
-
-  public void setConnectionTimeout(int connectionTimeout) {
-    if (this.connectionTimeout <= 0) {
-      this.connectionTimeout = 1000;
-    } else {
-      this.connectionTimeout = connectionTimeout;
+    public void setProjectUrl(String projectUrl) {
+        this.projectUrl = projectUrl;
+        save();
     }
-    save();
-  }
 
-  public int getSocketTimeout() {
-    return socketTimeout;
-  }
+    public int getConnectionTimeout() {
+        return connectionTimeout;
+    }
 
-  public void setSocketTimeout(int socketTimeout) {
-    if (socketTimeout <= 0) {
-      this.socketTimeout = 1000;
-    } else {
-      this.socketTimeout = socketTimeout;
+    public void setConnectionTimeout(int connectionTimeout) {
+        if (this.connectionTimeout <= 0) {
+            this.connectionTimeout = 1000;
+        } else {
+            this.connectionTimeout = connectionTimeout;
+        }
+        save();
     }
-    save();
-  }
 
-  @Override
-  public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
-    req.bindJSON(this,json);
-    return true;
-  }
+    public int getSocketTimeout() {
+        return socketTimeout;
+    }
 
-  /**
-   * Validate notificationUrl is filled correctly.
-   *
-   * @param buildUrl
-   * @return
-   */
-  public FormValidation doCheckBuildUrl(
-          @QueryParameter("buildUrl") final String buildUrl) {
-    if (buildUrl == null || buildUrl.isEmpty()) {
-      return FormValidation.error("Provide valid Build URL. " +
-              "For ex: \"http://ci.mycompany.com/api/builds\"");
+    public void setSocketTimeout(int socketTimeout) {
+        if (socketTimeout <= 0) {
+            this.socketTimeout = 1000;
+        } else {
+            this.socketTimeout = socketTimeout;
+        }
+        save();
     }
-    if (!(buildUrl.startsWith("http://") || buildUrl.startsWith("https://"))) {
-      return FormValidation.error("Only http and https protocols are supported");
-    }
-    return FormValidation.ok();
-  }
 
-  public FormValidation doCheckQueueUrl(
-          @QueryParameter("queueUrl") final String queueUrl) {
-    if (queueUrl == null || queueUrl.isEmpty()) {
-      return FormValidation.error("Provide valid Build URL. " +
-              "For ex: \"http://ci.mycompany.com/api/queues\"");
+    @Override
+    public boolean configure(StaplerRequest request, JSONObject json) throws FormException {
+        request.bindJSON(this, json);
+        return true;
     }
-    if (!(queueUrl.startsWith("http://") || queueUrl.startsWith("https://"))) {
-      return FormValidation.error("Only http and https protocols are supported");
-    }
-    return FormValidation.ok();
-  }
 
-  public FormValidation doCheckProjectUrl(
-          @QueryParameter("projectUrl") final String projectUrl) {
-    if (projectUrl == null || projectUrl.isEmpty()) {
-      return FormValidation.error("Provide valid Build URL. " +
-              "For ex: \"http://ci.mycompany.com/api/\"");
+    /**
+     * Validate notificationUrl is filled correctly.
+     *
+     * @param buildUrl
+     * @return
+     */
+    public FormValidation doCheckBuildUrl(
+            @QueryParameter("buildUrl") final String buildUrl) {
+        if (buildUrl == null || buildUrl.isEmpty()) {
+            return FormValidation.error("Provide valid Build URL. " +
+                    "For ex: \"http://ci.mycompany.com/api/builds\"");
+        }
+        if (validateProtocolUsed(buildUrl))
+            return FormValidation.error("Only http and https protocols are supported");
+        return FormValidation.ok();
     }
-    if (!(projectUrl.startsWith("http://") || projectUrl.startsWith("https://"))) {
-      return FormValidation.error("Only http and https protocols are supported");
-    }
-    return FormValidation.ok();
-  }
 
-  public FormValidation doCheckSocketTimeout(
-      @QueryParameter("socketTimeout") final int socketTimeout) {
-    if (socketTimeout < 0) {
-      return FormValidation.error("Provide timeout in milli seconds. For ex. 2000");
+    public FormValidation doCheckQueueUrl(
+            @QueryParameter("queueUrl") final String queueUrl) {
+        if (queueUrl == null || queueUrl.isEmpty()) {
+            return FormValidation.error("Provide valid Queue URL. " +
+                    "For ex: \"http://ci.mycompany.com/api/queues\"");
+        }
+        if (validateProtocolUsed(queueUrl))
+            return FormValidation.error("Only http and https protocols are supported");
+        return FormValidation.ok();
     }
-    return FormValidation.ok();
-  }
+
+    public FormValidation doCheckProjectUrl(
+            @QueryParameter("projectUrl") final String projectUrl) {
+        if (projectUrl == null || projectUrl.isEmpty()) {
+            return FormValidation.error("Provide valid Project URL. " +
+                    "For ex: \"http://ci.mycompany.com/api/\"");
+        }
+        if (validateProtocolUsed(projectUrl))
+            return FormValidation.error("Only http and https protocols are supported");
+        return FormValidation.ok();
+    }
+
+    private boolean validateProtocolUsed(@QueryParameter("projectUrl") String projectUrl) {
+        if (!(projectUrl.startsWith("http://") || projectUrl.startsWith("https://"))) {
+            return true;
+        }
+        return false;
+    }
+
+    public FormValidation doCheckSocketTimeout(
+            @QueryParameter("socketTimeout") final int socketTimeout) {
+        if (socketTimeout < 0) {
+            return FormValidation.error("Provide timeout in milli seconds. For ex. 2000");
+        }
+        return FormValidation.ok();
+    }
 }

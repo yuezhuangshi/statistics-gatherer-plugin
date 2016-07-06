@@ -5,6 +5,12 @@ package org.jenkins.plugins.statistics.model;
  */
 public class SCMInfo {
 
+    private String url;
+
+    private String branch;
+
+    private String commit;
+
     public SCMInfo(String url,
                    String branch,
                    String commit) {
@@ -18,12 +24,6 @@ public class SCMInfo {
         this.branch ="";
         this.commit = "";
     }
-
-    private String url;
-
-    private String branch;
-
-    private String commit;
 
     public String getUrl() {
         return url;

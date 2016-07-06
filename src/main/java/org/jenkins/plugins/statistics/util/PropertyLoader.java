@@ -21,7 +21,7 @@ public class PropertyLoader {
     resourceBundle = ResourceBundle.getBundle(DEFAULT_PROPERTY_FILE_NAME);
   }
 
-  public synchronized static final PropertyLoader getInstance() {
+  public static final synchronized PropertyLoader getInstance() {
     if (instance == null) {
       instance = new PropertyLoader();
     }
@@ -32,7 +32,7 @@ public class PropertyLoader {
    * This should only be called when the process is being setup.  It
    * is not intended for general use.
    */
-  public synchronized static final void setInstance(
+  public static final synchronized void setInstance(
       final PropertyLoader propertyLoader) {
     instance = propertyLoader;
   }

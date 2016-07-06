@@ -7,6 +7,15 @@ import java.util.Date;
  */
 public class QueueCause {
 
+
+    private Date entryTime;
+
+    private Date exitTime;
+
+    private String reasonForWaiting;
+
+    private String type;
+
     public QueueCause(Date entryTime,
                       Date exitTime,
                       String reasonForWaiting,
@@ -23,14 +32,6 @@ public class QueueCause {
         this.reasonForWaiting = "";
         this.type = "";
     }
-
-    private Date entryTime;
-
-    private Date exitTime;
-
-    private String reasonForWaiting;
-
-    private String type;
 
     public Date getEntryTime() {
         return entryTime;

@@ -7,6 +7,22 @@ import java.util.Date;
  */
 public class StatsJob {
 
+    private String name;
+
+    private Date createdDate;
+
+    private String userId;
+
+    private String userName;
+
+    private String ciUrl;
+
+    private Date updatedDate;
+
+    private String status;
+
+    private String configFile;
+
     public StatsJob(String name,
                     Date createdDate,
                     String userId,
@@ -36,21 +52,6 @@ public class StatsJob {
         this.configFile = "";
     }
 
-    private String name;
-
-    private Date createdDate;
-
-    private String userId;
-
-    private String userName;
-
-    private String ciUrl;
-
-    private Date updatedDate;
-
-    private String status;
-
-    private String configFile;
 
     public String getName() {
         return name;

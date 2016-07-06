@@ -3,8 +3,8 @@ package org.jenkins.plugins.statistics.util;
 /**
  * Created by hthakkallapally on 4/6/2015.
  */
-public interface JenkinsCauses {
-  String UPSTREAM = "UPSTREAM";
-  String SCM = "SCM";
-  String TIMER = "TIMER";
+public final class JenkinsCauses {
+  public static final String UPSTREAM = "UPSTREAM";
+  public static final String SCM = "SCM";
+  public static final String TIMER = "TIMER";
 }

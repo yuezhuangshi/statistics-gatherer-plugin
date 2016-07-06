@@ -8,9 +8,13 @@ import com.google.gson.GsonBuilder;
  */
 public class JSONUtil {
 
-  public static String convertToJsonStr(Object obj) {
-    GsonBuilder builder = new GsonBuilder();
-    Gson gson = builder.create();
-    return gson.toJson(obj);
-  }
+    public JSONUtil() {
+        //Must
+    }
+
+    public static String convertToJsonStr(Object obj) {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        return gson.toJson(obj);
+    }
 }
