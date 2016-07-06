@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.util;
+package org.jenkins.plugins.statistics.gatherer.util;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
@@ -6,7 +6,7 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.*;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.jenkins.plugins.statistics.StatisticsConfiguration;
+import org.jenkins.plugins.statistics.gatherer.StatisticsConfiguration;
 
 import java.io.*;
 import java.net.URISyntaxException;

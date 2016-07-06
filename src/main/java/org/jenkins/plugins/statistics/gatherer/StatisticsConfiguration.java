@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics;
+package org.jenkins.plugins.statistics.gatherer;
 
 import hudson.Extension;
 import hudson.util.FormValidation;

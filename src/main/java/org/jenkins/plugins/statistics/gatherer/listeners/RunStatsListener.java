@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.listeners;
+package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import hudson.EnvVars;
 import hudson.Extension;
@@ -7,13 +7,13 @@ import hudson.model.listeners.RunListener;
 import hudson.triggers.SCMTrigger;
 import hudson.triggers.TimerTrigger;
 import jenkins.model.Jenkins;
-import org.jenkins.plugins.statistics.model.BuildStats;
-import org.jenkins.plugins.statistics.model.SCMInfo;
-import org.jenkins.plugins.statistics.model.SlaveInfo;
-import org.jenkins.plugins.statistics.util.Constants;
-import org.jenkins.plugins.statistics.util.JenkinsCauses;
-import org.jenkins.plugins.statistics.util.PropertyLoader;
-import org.jenkins.plugins.statistics.util.RestClientUtil;
+import org.jenkins.plugins.statistics.gatherer.util.JenkinsCauses;
+import org.jenkins.plugins.statistics.gatherer.model.BuildStats;
+import org.jenkins.plugins.statistics.gatherer.model.SCMInfo;
+import org.jenkins.plugins.statistics.gatherer.model.SlaveInfo;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
+import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
+import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
 import java.io.IOException;
 import java.util.Calendar;

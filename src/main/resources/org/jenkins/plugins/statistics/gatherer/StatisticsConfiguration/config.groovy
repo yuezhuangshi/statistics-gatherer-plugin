@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.StatisticsConfiguration
+package org.jenkins.plugins.statistics.gatherer.StatisticsConfiguration
 
 def f=namespace(lib.FormTagLib)
 

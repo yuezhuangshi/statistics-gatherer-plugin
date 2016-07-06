@@ -10,14 +10,14 @@
     <version>1.645</version>
     <relativePath/>
   </parent>
-  <groupId>org.jenkins.plugins.statistics</groupId>
-  <artifactId>statistics-notification</artifactId>
+  <groupId>org.jenkins.plugins.statistics.gatherer</groupId>
+  <artifactId>statistics-gatherer</artifactId>
   <version>1.0</version>
   <packaging>hpi</packaging>
 
-  <name>Statistics Notification Plugin</name>
-  <description>Captures Statistics related to CI system.</description>
-  <url>https://wiki.jenkins-ci.org/display/JENKINS/Statistics+Notification+Plugin</url>
+  <name>Statistics Gatherer Plugin</name>
+  <description>Captures Statistics related to Jenkins Builds, Jobs and Queue and sends them where you want.</description>
+  <url>https://wiki.jenkins-ci.org/display/JENKINS/Statistics+Gatherer+Plugin</url>
   <licenses>
     <license>
       <name>MIT License</name>

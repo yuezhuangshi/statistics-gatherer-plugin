@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.model;
+package org.jenkins.plugins.statistics.gatherer.model;
 
 import java.util.ArrayList;
 import java.util.Date;

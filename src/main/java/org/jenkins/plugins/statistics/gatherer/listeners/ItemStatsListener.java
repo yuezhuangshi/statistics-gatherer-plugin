@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.listeners;
+package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;
@@ -6,10 +6,10 @@ import hudson.model.Item;
 import hudson.model.User;
 import hudson.model.listeners.ItemListener;
 import jenkins.model.Jenkins;
-import org.jenkins.plugins.statistics.model.JobStats;
-import org.jenkins.plugins.statistics.util.Constants;
-import org.jenkins.plugins.statistics.util.PropertyLoader;
-import org.jenkins.plugins.statistics.util.RestClientUtil;
+import org.jenkins.plugins.statistics.gatherer.model.JobStats;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
+import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
+import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
 import java.io.IOException;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.model;
+package org.jenkins.plugins.statistics.gatherer.model;
 
 /**
  * Created by hthakkallapally on 3/16/2015.

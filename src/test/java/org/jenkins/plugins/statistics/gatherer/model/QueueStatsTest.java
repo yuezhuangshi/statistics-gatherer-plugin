@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.model;
+package org.jenkins.plugins.statistics.gatherer.model;
 
 import org.junit.Test;
 import org.junit.Before;

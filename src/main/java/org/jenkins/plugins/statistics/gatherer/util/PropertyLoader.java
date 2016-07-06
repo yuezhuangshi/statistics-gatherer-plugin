@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.util;
+package org.jenkins.plugins.statistics.gatherer.util;
 
 import hudson.EnvVars;
 import hudson.slaves.EnvironmentVariablesNodeProperty;
@@ -6,7 +6,7 @@ import hudson.slaves.NodeProperty;
 import hudson.slaves.NodePropertyDescriptor;
 import hudson.util.DescribableList;
 import jenkins.model.Jenkins;
-import org.jenkins.plugins.statistics.StatisticsConfiguration;
+import org.jenkins.plugins.statistics.gatherer.StatisticsConfiguration;
 
 import java.util.List;
 import java.util.ResourceBundle;

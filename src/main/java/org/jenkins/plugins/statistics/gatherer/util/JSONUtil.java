@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.util;
+package org.jenkins.plugins.statistics.gatherer.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
