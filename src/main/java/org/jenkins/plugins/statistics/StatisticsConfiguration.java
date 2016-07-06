@@ -14,6 +14,7 @@ import org.kohsuke.stapler.StaplerRequest;
 public class StatisticsConfiguration extends GlobalConfiguration {
 
     private static final String SLASH = "/";
+    public static final String PROTOCOL_ERROR_MESSAGE = "Only http and https protocols are supported";
 
     private String queueUrl;
     private String buildUrl;
@@ -119,7 +120,7 @@ public class StatisticsConfiguration extends GlobalConfiguration {
                     "For ex: \"http://ci.mycompany.com/api/builds\"");
         }
         if (validateProtocolUsed(buildUrl))
-            return FormValidation.error("Only http and https protocols are supported");
+            return FormValidation.error(PROTOCOL_ERROR_MESSAGE);
         return FormValidation.ok();
     }
 
@@ -130,7 +131,7 @@ public class StatisticsConfiguration extends GlobalConfiguration {
                     "For ex: \"http://ci.mycompany.com/api/queues\"");
         }
         if (validateProtocolUsed(queueUrl))
-            return FormValidation.error("Only http and https protocols are supported");
+            return FormValidation.error(PROTOCOL_ERROR_MESSAGE);
         return FormValidation.ok();
     }
 
@@ -141,7 +142,7 @@ public class StatisticsConfiguration extends GlobalConfiguration {
                     "For ex: \"http://ci.mycompany.com/api/\"");
         }
         if (validateProtocolUsed(projectUrl))
-            return FormValidation.error("Only http and https protocols are supported");
+            return FormValidation.error(PROTOCOL_ERROR_MESSAGE);
         return FormValidation.ok();
     }
 

@@ -8,8 +8,8 @@ import com.google.gson.GsonBuilder;
  */
 public class JSONUtil {
 
-    public JSONUtil() {
-        //Must
+    private JSONUtil() {
+        throw new IllegalAccessError("Utility class");
     }
 
     public static String convertToJsonStr(Object obj) {

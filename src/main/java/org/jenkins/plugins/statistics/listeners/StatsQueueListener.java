@@ -13,9 +13,7 @@ import hudson.triggers.TimerTrigger;
 import jenkins.model.Jenkins;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,210 +22,215 @@ import java.util.logging.Logger;
  */
 @Extension
 public class StatsQueueListener extends QueueListener {
-  private static final Logger LOGGER = Logger.getLogger(
-      StatsQueueListener.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(
+            StatsQueueListener.class.getName());
 
-  public StatsQueueListener() {
-
-  }
-
-  @Override
-  public void onEnterWaiting(Queue.WaitingItem waitingItemi) {
-    try {
-      waitingItemi.getInQueueSince();
-      StatsQueue queue = getCiQueue(waitingItemi);
-      addStartedBy(waitingItemi, queue);
-      queue.setEntryTime(new Date());
-      queue.setExitTime(null);
-      queue.setStatus(Constants.ENTERED);
-      if (waitingItemi.getCauseOfBlockage() != null) {
-        addEntryQueueCause("waiting", waitingItemi, queue);
-      }
-      RestClientUtil.postToService(getRestUrl(), queue);
-    } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
-          "job "+waitingItemi.task.getFullDisplayName()+
-          " with queue id "+waitingItemi.getId() + " using "+ getRestUrl(), e);
+    public StatsQueueListener() {
+        //Necessary for jenkins
     }
-  }
 
-  private void addEntryQueueCause(String type, Item item,
-                                  StatsQueue queue) {
-    QueueCause cause = new QueueCause();
-    cause.setType(type);
-    cause.setEntryTime(new Date());
-    cause.setExitTime(null);
-    cause.setReasonForWaiting(item.getCauseOfBlockage().getShortDescription());
-    queue.addQueueCause(cause);
-  }
-
-  @Override
-  public void onLeaveWaiting(Queue.WaitingItem waitingItem) {
-    try {
-      waitingItem.getInQueueSince();
-      StatsQueue queue = getCiQueue(waitingItem);
-      if (waitingItem.getCauseOfBlockage() != null) {
-        addExitQueueCause("waiting", waitingItem, queue);
-      }
-      RestClientUtil.postToService(getRestUrl(), queue);
-    } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
-          "job "+waitingItem.task.getFullDisplayName()+
-          " with queue id "+waitingItem.getId() + " using "+ getRestUrl(), e);
+    @Override
+    public void onEnterWaiting(Queue.WaitingItem waitingItemi) {
+        try {
+            waitingItemi.getInQueueSince();
+            StatsQueue queue = getCiQueue(waitingItemi);
+            addStartedBy(waitingItemi, queue);
+            queue.setEntryTime(new Date());
+            queue.setExitTime(null);
+            queue.setStatus(Constants.ENTERED);
+            if (waitingItemi.getCauseOfBlockage() != null) {
+                addEntryQueueCause("waiting", waitingItemi, queue);
+            }
+            RestClientUtil.postToService(getRestUrl(), queue);
+        } catch (Exception e) {
+            logExceptionWaiting(waitingItemi, e);
+        }
     }
-  }
 
-  private void addExitQueueCause(String type, Item item, StatsQueue queue) {
-    QueueCause cause = new QueueCause();
-    cause.setType(type);
-    cause.setEntryTime(null);
-    cause.setExitTime(new Date());
-    cause.setReasonForWaiting(item.getCauseOfBlockage().getShortDescription());
-    queue.addQueueCause(cause);
-  }
-
-  /**
-   * onEnterBlocked is used to update Reason for waiting in Queue.
-   * for ex. "Build #35 is already in progress (ETA:9 min 3 sec)"
-   *
-   * @param blockedItem
-   */
-  @Override
-  public void onEnterBlocked(Queue.BlockedItem blockedItem) {
-    try {
-      StatsQueue queue = getCiQueue(blockedItem);
-      if (blockedItem.getCauseOfBlockage() != null) {
-        addEntryQueueCause("blocked", blockedItem, queue);
-      }
-      RestClientUtil.postToService(getRestUrl(), queue);
-    } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "JOb "+blockedItem.task.getFullDisplayName()+
-          " with queue id "+blockedItem.getId()+
-          "failed with exception : " + e);
+    private void logExceptionWaiting(Queue.WaitingItem waitingItemi, Exception e) {
+        LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
+                "job " + waitingItemi.task.getFullDisplayName() +
+                " with queue id " + waitingItemi.getId() + " using " + getRestUrl(), e);
     }
-  }
 
-  @Override
-  public void onLeaveBlocked(Queue.BlockedItem blockedItem) {
-    try {
-      StatsQueue queue = getCiQueue(blockedItem);
-      if (blockedItem.getCauseOfBlockage() != null) {
-        addExitQueueCause("blocked", blockedItem, queue);
-      }
-
-      RestClientUtil.postToService(getRestUrl(), queue);
-    } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "JOb "+blockedItem.task.getFullDisplayName()+
-          " with queue id "+blockedItem.getId()+
-          "failed with exception : " + e);
+    private void addEntryQueueCause(String type, Item item,
+                                    StatsQueue queue) {
+        QueueCause cause = new QueueCause();
+        cause.setType(type);
+        cause.setEntryTime(new Date());
+        cause.setExitTime(null);
+        cause.setReasonForWaiting(item.getCauseOfBlockage().getShortDescription());
+        queue.addQueueCause(cause);
     }
-  }
 
-  /**
-   * onEnterBlocked is used to update Reason for waiting in Queue.
-   * for ex. "Waiting for next available executor"
-   *
-   * @param buildableItem
-   */
-  @Override
-  public void onEnterBuildable(Queue.BuildableItem buildableItem) {
-    try {
-      StatsQueue queue = getCiQueue(buildableItem);
-      if (buildableItem.getCauseOfBlockage() != null) {
-        addEntryQueueCause("buildable", buildableItem, queue);
-      }
-      RestClientUtil.postToService(getRestUrl(), queue);
-    } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "JOb "+buildableItem.task.getFullDisplayName()+
-          " with queue id "+buildableItem.getId()+
-          "failed with exception : " + e);
+    @Override
+    public void onLeaveWaiting(Queue.WaitingItem waitingItem) {
+        try {
+            waitingItem.getInQueueSince();
+            StatsQueue queue = getCiQueue(waitingItem);
+            if (waitingItem.getCauseOfBlockage() != null) {
+                addExitQueueCause("waiting", waitingItem, queue);
+            }
+            RestClientUtil.postToService(getRestUrl(), queue);
+        } catch (Exception e) {
+            logExceptionWaiting(waitingItem, e);
+        }
     }
-  }
 
-  @Override
-  public void onLeaveBuildable(Queue.BuildableItem buildableItem) {
-    try {
-      StatsQueue queue = getCiQueue(buildableItem);
-      if (buildableItem.getCauseOfBlockage() != null) {
-        addExitQueueCause("buildable", buildableItem, queue);
-      }
-      RestClientUtil.postToService(getRestUrl(), queue);
-    } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "JOb "+buildableItem.task.getFullDisplayName()+
-          " with queue id "+buildableItem.getId()+
-          "failed with exception : " + e);
+    private void addExitQueueCause(String type, Item item, StatsQueue queue) {
+        QueueCause cause = new QueueCause();
+        cause.setType(type);
+        cause.setEntryTime(null);
+        cause.setExitTime(new Date());
+        cause.setReasonForWaiting(item.getCauseOfBlockage().getShortDescription());
+        queue.addQueueCause(cause);
     }
-  }
 
-  /**
-   * Construct REST API url for queue resource.
-   *
-   * @return
-   */
-  private String getRestUrl() {
-   return PropertyLoader.getQueueEndPoint();
-  }
-
-  /**
-   * Returns a queue model object from Jenkins queue.
-   *
-   * @param item
-   * @return
-   */
-  private StatsQueue getCiQueue(Item item) {
-    StatsQueue queue = new StatsQueue();
-    String ciUrl = Jenkins.getInstance() != null
-        ? Jenkins.getInstance().getRootUrl()
-        : "";
-    queue.setCiUrl(ciUrl);
-    queue.setJobName(item.task.getFullDisplayName());
-    queue.setJenkinsQueueId((int)item.getId());
-    return queue;
-  }
-
-  /**
-   * Adds the Started By information to the Queue.
-   *
-   * @param item
-   * @param queue
-   */
-  private void addStartedBy(Item item, StatsQueue queue) {
-    List<Cause> causes = item.getCauses();
-    for (Cause cause : causes) {
-     if (cause instanceof Cause.UserIdCause
-         || cause instanceof Cause.UserCause) {
-       queue.setStartedBy(((Cause.UserIdCause) cause).getUserName());
-       break;
-     } else if (cause instanceof Cause.UpstreamCause) {
-       queue.setStartedBy(JenkinsCauses.UPSTREAM);
-       break;
-     } else if (cause instanceof SCMTrigger.SCMTriggerCause) {
-       queue.setStartedBy(JenkinsCauses.SCM);
-       break;
-     } else if (cause instanceof TimerTrigger.TimerTriggerCause) {
-       queue.setStartedBy(JenkinsCauses.TIMER);
-       break;
-     }
+    /**
+     * onEnterBlocked is used to update Reason for waiting in Queue.
+     * for ex. "Build #35 is already in progress (ETA:9 min 3 sec)"
+     *
+     * @param blockedItem
+     */
+    @Override
+    public void onEnterBlocked(Queue.BlockedItem blockedItem) {
+        try {
+            StatsQueue queue = getCiQueue(blockedItem);
+            if (blockedItem.getCauseOfBlockage() != null) {
+                addEntryQueueCause("blocked", blockedItem, queue);
+            }
+            RestClientUtil.postToService(getRestUrl(), queue);
+        } catch (Exception e) {
+            logExceptionBlocked(blockedItem, e);
+        }
     }
-  }
 
-
-  @Override
-  public void onLeft(Queue.LeftItem leftItem) {
-    try {
-      StatsQueue queue = getCiQueue(leftItem);
-      // We have already set entry time in onEnterWaiting(). No need
-      // to set it again.
-      queue.setEntryTime(null);
-      queue.setExitTime(new Date());
-      queue.setStatus(Constants.LEFT);
-      queue.setDurationStr(leftItem.getInQueueForString());
-      queue.setDuration(System.currentTimeMillis() - leftItem.getInQueueSince());
-      RestClientUtil.postToService(getRestUrl(), queue);
-    } catch (Exception e) {
-      LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
-          "job "+leftItem.task.getFullDisplayName()+
-          " with queue id "+leftItem.getId() + " using "+ getRestUrl(), e);
+    private void logExceptionBlocked(Queue.BlockedItem blockedItem, Exception e) {
+        LOGGER.log(Level.WARNING, "Job " + blockedItem.task.getFullDisplayName() +
+                " with queue id " + blockedItem.getId() +
+                "failed with exception : " + e);
     }
-  }
+
+    @Override
+    public void onLeaveBlocked(Queue.BlockedItem blockedItem) {
+        try {
+            StatsQueue queue = getCiQueue(blockedItem);
+            if (blockedItem.getCauseOfBlockage() != null) {
+                addExitQueueCause("blocked", blockedItem, queue);
+            }
+
+            RestClientUtil.postToService(getRestUrl(), queue);
+        } catch (Exception e) {
+            logExceptionBlocked(blockedItem, e);
+        }
+    }
+
+    /**
+     * onEnterBlocked is used to update Reason for waiting in Queue.
+     * for ex. "Waiting for next available executor"
+     *
+     * @param buildableItem
+     */
+    @Override
+    public void onEnterBuildable(Queue.BuildableItem buildableItem) {
+        try {
+            StatsQueue queue = getCiQueue(buildableItem);
+            if (buildableItem.getCauseOfBlockage() != null) {
+                addEntryQueueCause("buildable", buildableItem, queue);
+            }
+            RestClientUtil.postToService(getRestUrl(), queue);
+        } catch (Exception e) {
+            logExceptionLeave(buildableItem, e);
+        }
+    }
+
+    @Override
+    public void onLeaveBuildable(Queue.BuildableItem buildableItem) {
+        try {
+            StatsQueue queue = getCiQueue(buildableItem);
+            if (buildableItem.getCauseOfBlockage() != null) {
+                addExitQueueCause("buildable", buildableItem, queue);
+            }
+            RestClientUtil.postToService(getRestUrl(), queue);
+        } catch (Exception e) {
+            logExceptionLeave(buildableItem, e);
+        }
+    }
+
+    private void logExceptionLeave(Queue.BuildableItem buildableItem, Exception e) {
+        LOGGER.log(Level.WARNING, "JOb " + buildableItem.task.getFullDisplayName() +
+                " with queue id " + buildableItem.getId() +
+                "failed with exception : " + e);
+    }
+
+    /**
+     * Construct REST API url for queue resource.
+     *
+     * @return
+     */
+    private String getRestUrl() {
+        return PropertyLoader.getQueueEndPoint();
+    }
+
+    /**
+     * Returns a queue model object from Jenkins queue.
+     *
+     * @param item
+     * @return
+     */
+    private StatsQueue getCiQueue(Item item) {
+        StatsQueue queue = new StatsQueue();
+        String ciUrl = Jenkins.getInstance() != null
+                ? Jenkins.getInstance().getRootUrl()
+                : "";
+        queue.setCiUrl(ciUrl);
+        queue.setJobName(item.task.getFullDisplayName());
+        queue.setJenkinsQueueId((int) item.getId());
+        return queue;
+    }
+
+    /**
+     * Adds the Started By information to the Queue.
+     *
+     * @param item
+     * @param queue
+     */
+    private void addStartedBy(Item item, StatsQueue queue) {
+        List<Cause> causes = item.getCauses();
+        for (Cause cause : causes) {
+            if (cause instanceof Cause.UserIdCause) {
+                queue.setStartedBy(((Cause.UserIdCause) cause).getUserName());
+            } else if (cause instanceof Cause.UpstreamCause) {
+                queue.setStartedBy(JenkinsCauses.UPSTREAM);
+            } else if (cause instanceof SCMTrigger.SCMTriggerCause) {
+                queue.setStartedBy(JenkinsCauses.SCM);
+            } else if (cause instanceof TimerTrigger.TimerTriggerCause) {
+                queue.setStartedBy(JenkinsCauses.TIMER);
+            }
+        }
+    }
+
+
+    @Override
+    public void onLeft(Queue.LeftItem leftItem) {
+        try {
+            StatsQueue queue = getCiQueue(leftItem);
+            // We have already set entry time in onEnterWaiting(). No need
+            // to set it again.
+            queue.setEntryTime(null);
+            queue.setExitTime(new Date());
+            queue.setStatus(Constants.LEFT);
+            queue.setDurationStr(leftItem.getInQueueForString());
+            queue.setDuration(System.currentTimeMillis() - leftItem.getInQueueSince());
+            RestClientUtil.postToService(getRestUrl(), queue);
+        } catch (Exception e) {
+            logExceptionLeft(leftItem, e);
+        }
+    }
+
+    private void logExceptionLeft(Queue.LeftItem leftItem, Exception e) {
+        LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
+                "job " + leftItem.task.getFullDisplayName() +
+                " with queue id " + leftItem.getId() + " using " + getRestUrl(), e);
+    }
 }

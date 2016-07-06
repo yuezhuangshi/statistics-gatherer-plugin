@@ -10,7 +10,6 @@ import static org.junit.Assert.assertEquals;
 public class JSONUtilTest {
 
     private SCMInfo testObject = new SCMInfo();
-    private JSONUtil util = new JSONUtil();
 
     @Test
     public void givenObject_whenToJson_thenReturnJson(){
