@@ -1,6 +1,8 @@
 package org.jenkins.plugins.statistics.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by hthakkallapally on 3/16/2015.

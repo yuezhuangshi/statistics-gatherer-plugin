@@ -21,7 +21,7 @@ public class SCMInfo {
 
     public SCMInfo() {
         this.url = "";
-        this.branch ="";
+        this.branch = "";
         this.commit = "";
     }
 
