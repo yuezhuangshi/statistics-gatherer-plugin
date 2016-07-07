@@ -4,7 +4,9 @@
 Jenkins Statistics notification Plugin
 ======================================
 
-Read more: https://wiki.jenkins-ci.org/display/JENKINS/Statistics+Notification+Plugin
+This plugin gather information on specific events on jenkins and sends them to an external API. That way, you can get the statistics that matters for your needs.
+
+Read more: https://wiki.jenkins-ci.org/display/JENKINS/Statistics+Gatherer+Plugin
 
 Development
 ===========
@@ -55,8 +57,6 @@ License
 -------
 
 	(The MIT License)
-
-	Copyright 2015 PayPal
 
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
