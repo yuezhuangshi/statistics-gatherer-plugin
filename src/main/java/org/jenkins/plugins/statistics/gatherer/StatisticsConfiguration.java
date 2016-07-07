@@ -19,8 +19,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     private String queueUrl;
     private String buildUrl;
     private String projectUrl;
-    private int connectionTimeout;
-    private int socketTimeout;
 
     public StatisticsConfiguration() {
         load();
@@ -125,13 +123,5 @@ public class StatisticsConfiguration extends GlobalConfiguration {
             return true;
         }
         return false;
-    }
-
-    public FormValidation doCheckSocketTimeout(
-            @QueryParameter("socketTimeout") final int socketTimeout) {
-        if (socketTimeout < 0) {
-            return FormValidation.error("Provide timeout in milli seconds. For ex. 2000");
-        }
-        return FormValidation.ok();
     }
 }
