@@ -2,7 +2,7 @@ package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import hudson.Extension;
 import hudson.model.Cause;
-import hudson.model.Queue;
+import hudson.model.Queue.*;
 import hudson.model.Queue.Item;
 import hudson.model.queue.QueueListener;
 import hudson.triggers.SCMTrigger;
@@ -33,24 +33,23 @@ public class QueueStatsListener extends QueueListener {
     }
 
     @Override
-    public void onEnterWaiting(Queue.WaitingItem waitingItemi) {
+    public void onEnterWaiting(WaitingItem waitingItem) {
         try {
-            waitingItemi.getInQueueSince();
-            QueueStats queue = getCiQueue(waitingItemi);
-            addStartedBy(waitingItemi, queue);
+            QueueStats queue = getCiQueue(waitingItem);
+            addStartedBy(waitingItem, queue);
             queue.setEntryTime(new Date());
             queue.setExitTime(null);
             queue.setStatus(Constants.ENTERED);
-            if (waitingItemi.getCauseOfBlockage() != null) {
-                addEntryQueueCause("waiting", waitingItemi, queue);
+            if (waitingItem.getCauseOfBlockage() != null) {
+                addEntryQueueCause("waiting", waitingItem, queue);
             }
             RestClientUtil.postToService(getRestUrl(), queue);
         } catch (Exception e) {
-            logExceptionWaiting(waitingItemi, e);
+            logExceptionWaiting(waitingItem, e);
         }
     }
 
-    private void logExceptionWaiting(Queue.WaitingItem waitingItemi, Exception e) {
+    private void logExceptionWaiting(WaitingItem waitingItemi, Exception e) {
         LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
                 "job " + waitingItemi.task.getFullDisplayName() +
                 " with queue id " + waitingItemi.getId() + " using " + getRestUrl(), e);
@@ -67,9 +66,8 @@ public class QueueStatsListener extends QueueListener {
     }
 
     @Override
-    public void onLeaveWaiting(Queue.WaitingItem waitingItem) {
+    public void onLeaveWaiting(WaitingItem waitingItem) {
         try {
-            waitingItem.getInQueueSince();
             QueueStats queue = getCiQueue(waitingItem);
             if (waitingItem.getCauseOfBlockage() != null) {
                 addExitQueueCause("waiting", waitingItem, queue);
@@ -96,7 +94,7 @@ public class QueueStatsListener extends QueueListener {
      * @param blockedItem
      */
     @Override
-    public void onEnterBlocked(Queue.BlockedItem blockedItem) {
+    public void onEnterBlocked(BlockedItem blockedItem) {
         try {
             QueueStats queue = getCiQueue(blockedItem);
             if (blockedItem.getCauseOfBlockage() != null) {
@@ -108,14 +106,14 @@ public class QueueStatsListener extends QueueListener {
         }
     }
 
-    private void logExceptionBlocked(Queue.BlockedItem blockedItem, Exception e) {
+    private void logExceptionBlocked(BlockedItem blockedItem, Exception e) {
         LOGGER.log(Level.WARNING, "Job " + blockedItem.task.getFullDisplayName() +
                 " with queue id " + blockedItem.getId() +
                 "failed with exception : " + e);
     }
 
     @Override
-    public void onLeaveBlocked(Queue.BlockedItem blockedItem) {
+    public void onLeaveBlocked(BlockedItem blockedItem) {
         try {
             QueueStats queue = getCiQueue(blockedItem);
             if (blockedItem.getCauseOfBlockage() != null) {
@@ -135,7 +133,7 @@ public class QueueStatsListener extends QueueListener {
      * @param buildableItem
      */
     @Override
-    public void onEnterBuildable(Queue.BuildableItem buildableItem) {
+    public void onEnterBuildable(BuildableItem buildableItem) {
         try {
             QueueStats queue = getCiQueue(buildableItem);
             if (buildableItem.getCauseOfBlockage() != null) {
@@ -148,7 +146,7 @@ public class QueueStatsListener extends QueueListener {
     }
 
     @Override
-    public void onLeaveBuildable(Queue.BuildableItem buildableItem) {
+    public void onLeaveBuildable(BuildableItem buildableItem) {
         try {
             QueueStats queue = getCiQueue(buildableItem);
             if (buildableItem.getCauseOfBlockage() != null) {
@@ -160,7 +158,7 @@ public class QueueStatsListener extends QueueListener {
         }
     }
 
-    private void logExceptionLeave(Queue.BuildableItem buildableItem, Exception e) {
+    private void logExceptionLeave(BuildableItem buildableItem, Exception e) {
         LOGGER.log(Level.WARNING, "JOb " + buildableItem.task.getFullDisplayName() +
                 " with queue id " + buildableItem.getId() +
                 "failed with exception : " + e);
@@ -189,6 +187,7 @@ public class QueueStatsListener extends QueueListener {
         queue.setCiUrl(ciUrl);
         queue.setJobName(item.task.getFullDisplayName());
         queue.setJenkinsQueueId((int) item.getId());
+        queue.setEntryTime(new Date(item.getInQueueSince()));
         return queue;
     }
 
@@ -215,12 +214,10 @@ public class QueueStatsListener extends QueueListener {
 
 
     @Override
-    public void onLeft(Queue.LeftItem leftItem) {
+    public void onLeft(LeftItem leftItem) {
         try {
             QueueStats queue = getCiQueue(leftItem);
-            // We have already set entry time in onEnterWaiting(). No need
-            // to set it again.
-            queue.setEntryTime(null);
+            queue.setEntryTime(new Date(leftItem.getInQueueSince()));
             queue.setExitTime(new Date());
             queue.setStatus(Constants.LEFT);
             queue.setDuration(System.currentTimeMillis() - leftItem.getInQueueSince());
@@ -230,7 +227,7 @@ public class QueueStatsListener extends QueueListener {
         }
     }
 
-    private void logExceptionLeft(Queue.LeftItem leftItem, Exception e) {
+    private void logExceptionLeft(LeftItem leftItem, Exception e) {
         LOGGER.log(Level.WARNING, "Failed to add Queue info for " +
                 "job " + leftItem.task.getFullDisplayName() +
                 " with queue id " + leftItem.getId() + " using " + getRestUrl(), e);

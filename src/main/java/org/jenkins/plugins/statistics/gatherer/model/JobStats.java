@@ -23,6 +23,8 @@ public class JobStats {
 
     private String configFile;
 
+    private String jobUrl;
+
     public JobStats(String name,
                     Date createdDate,
                     String userId,
@@ -30,7 +32,8 @@ public class JobStats {
                     String ciUrl,
                     Date updatedDate,
                     String status,
-                    String configFile) {
+                    String configFile,
+                    String jobUrl) {
         this.name = name;
         this.createdDate = createdDate;
         this.userId = userId;
@@ -39,6 +42,7 @@ public class JobStats {
         this.updatedDate = updatedDate;
         this.status = status;
         this.configFile = configFile;
+        this.jobUrl = jobUrl;
     }
 
     public JobStats() {
@@ -50,8 +54,8 @@ public class JobStats {
         this.updatedDate = new Date();
         this.status = "";
         this.configFile = "";
+        this.jobUrl = "";
     }
-
 
     public String getName() {
         return name;
@@ -115,5 +119,13 @@ public class JobStats {
 
     public void setConfigFile(String configFile) {
         this.configFile = configFile;
+    }
+
+    public String getJobUrl() {
+        return jobUrl;
+    }
+
+    public void setJobUrl(String jobUrl) {
+        this.jobUrl = jobUrl;
     }
 }

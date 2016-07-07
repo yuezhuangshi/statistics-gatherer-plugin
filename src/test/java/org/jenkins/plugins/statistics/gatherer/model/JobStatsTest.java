@@ -23,6 +23,7 @@ public class JobStatsTest {
     private static final String CONFIG_FILE = "aConfigFile";
     private static final Date CREATED_DATE = new Date(0);
     private static final Date UPDATED_DATE = new Date(1000000);
+    private static final String JOB_URL = "http://url.com/job";
     private JobStats jobStats;
 
     @Before
@@ -34,7 +35,8 @@ public class JobStatsTest {
                 CI_URL,
                 UPDATED_DATE,
                 STATUS,
-                CONFIG_FILE);
+                CONFIG_FILE,
+                JOB_URL);
     }
 
     @Test
@@ -51,6 +53,7 @@ public class JobStatsTest {
         assertTrue(jobStats.getUpdatedDate().before(compareDate)|| jobStats.getUpdatedDate().equals(compareDate));
         assertEquals("", jobStats.getStatus());
         assertEquals("", jobStats.getConfigFile());
+        assertEquals("", jobStats.getJobUrl());
     }
 
     @Test
@@ -259,5 +262,28 @@ public class JobStatsTest {
         //then
         Date updatedDate = jobStats.getUpdatedDate();
         assertNull(updatedDate);
+    }
+
+    @Test
+    public void givenStatsJob_whenGetJobUrl_thenReturnJobUrl() {
+        //given
+
+        //when
+        String jobUrl = jobStats.getJobUrl();
+
+        //then
+        assertEquals(JOB_URL, jobUrl);
+    }
+
+    @Test
+    public void givenStatsJob_whenSetJobUrl_thenJobUrlIsSet() {
+        //given
+        String expectedJobUrl = "IHazJobUrl!";
+        //when
+        jobStats.setJobUrl(expectedJobUrl);
+
+        //then
+        String actualJobUrl = jobStats.getJobUrl();
+        assertEquals(expectedJobUrl, actualJobUrl);
     }
 }

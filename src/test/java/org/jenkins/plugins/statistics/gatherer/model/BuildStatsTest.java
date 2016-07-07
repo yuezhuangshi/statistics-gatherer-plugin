@@ -29,6 +29,7 @@ public class BuildStatsTest {
     private static final SlaveInfo SLAVE_INFO = new SlaveInfo();
     private static final SCMInfo SCM_INFO = new SCMInfo();
     private static final Map<String, String> PARAMETERS = new HashMap<String, String>();
+    private static final String BUILD_URL = "http://url.com/build";
     private BuildStats buildStats;
 
     @Before
@@ -46,7 +47,8 @@ public class BuildStatsTest {
                 DURATION,
                 PARAMETERS,
                 SCM_INFO,
-                QUEUE_TIME);
+                QUEUE_TIME,
+                BUILD_URL);
     }
 
     @Test
@@ -69,6 +71,7 @@ public class BuildStatsTest {
         assertEquals(new HashMap<String,String>(), buildStats.getParameters());
         assertEquals("", buildStats.getScmInfo().getUrl());
         assertEquals(0, buildStats.getQueueTime());
+        assertEquals("", buildStats.getBuildUrl());
     }
 
     @Test
@@ -392,5 +395,28 @@ public class BuildStatsTest {
         //then
         Map<String, String> actualParameters = buildStats.getParameters();
         assertEquals(expectedParameters, actualParameters);
+    }
+
+    @Test
+    public void givenStatsBuild_whenGetBuildUrl_thenReturnBuildUrl() {
+        //given
+
+        //when
+        String buildUrl = buildStats.getBuildUrl();
+
+        //then
+        assertEquals(BUILD_URL, buildUrl);
+    }
+
+    @Test
+    public void givenStatsBuild_whenSetBuildUrl_thenBuildUrlIsSet() {
+        //given
+        String expectedBuildUrl = "IHazBuildUrl!";
+        //when
+        buildStats.setBuildUrl(expectedBuildUrl);
+
+        //then
+        String actualBuildUrl = buildStats.getBuildUrl();
+        assertEquals(expectedBuildUrl, actualBuildUrl);
     }
 }

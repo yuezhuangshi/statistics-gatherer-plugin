@@ -37,6 +37,8 @@ public class BuildStats {
 
     private long queueTime;
 
+    private String buildUrl;
+
     public BuildStats(String ciUrl,
                       String jobName,
                       String fullJobName,
@@ -50,7 +52,8 @@ public class BuildStats {
                       long duration,
                       Map<String, String> parameters,
                       SCMInfo scmInfo,
-                      long queueTime) {
+                      long queueTime,
+                      String buildUrl) {
         this.ciUrl = ciUrl;
         this.jobName = jobName;
         this.fullJobName = fullJobName;
@@ -65,6 +68,7 @@ public class BuildStats {
         this.parameters = parameters;
         this.scmInfo = scmInfo;
         this.queueTime = queueTime;
+        this.buildUrl = buildUrl;
     }
 
     public BuildStats() {
@@ -82,6 +86,7 @@ public class BuildStats {
         this.parameters = new HashMap<>();
         this.scmInfo = new SCMInfo();
         this.queueTime = 0;
+        this.buildUrl = "";
     }
 
     public String getCiUrl() {
@@ -194,5 +199,13 @@ public class BuildStats {
 
     public void setQueueTime(long queueTime) {
         this.queueTime = queueTime;
+    }
+
+    public String getBuildUrl() {
+        return buildUrl;
+    }
+
+    public void setBuildUrl(String buildUrl) {
+        this.buildUrl = buildUrl;
     }
 }

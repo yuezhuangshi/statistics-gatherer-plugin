@@ -68,6 +68,7 @@ public class ItemStatsListener extends ItemListener {
         JobStats ciJob = new JobStats();
         ciJob.setCiUrl(Jenkins.getInstance().getRootUrl());
         ciJob.setName(project.getName());
+        ciJob.setJobUrl(project.getUrl());
         String userName = Jenkins.getAuthentication().getName();
         User user = Jenkins.getInstance().getUser(userName);
         ciJob.setUserId(user.getId());

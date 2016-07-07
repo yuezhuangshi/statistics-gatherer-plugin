@@ -55,6 +55,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
             build.setFullJobName(run.getParent().getFullName());
             build.setNumber(run.getNumber());
             build.setResult(buildResult);
+            build.setBuildUrl(run.getUrl());
             build.setQueueTime(run.getExecutor() != null ?
                     run.getExecutor().getTimeSpentInQueue() : 0);
             addUserDetails(run, build);
@@ -215,6 +216,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
             build.setFullJobName(run.getParent().getFullName());
             build.setNumber(run.getNumber());
             build.setResult(buildResult);
+            build.setBuildUrl(run.getUrl());
             // Capture duration in milliseconds.
             build.setDuration(run.getDuration());
             build.setEndTime(Calendar.getInstance().getTime());
