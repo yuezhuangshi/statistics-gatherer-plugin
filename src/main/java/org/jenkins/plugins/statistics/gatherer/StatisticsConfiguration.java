@@ -75,32 +75,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         save();
     }
 
-    public int getConnectionTimeout() {
-        return connectionTimeout;
-    }
-
-    public void setConnectionTimeout(int connectionTimeout) {
-        if (this.connectionTimeout <= 0) {
-            this.connectionTimeout = 1000;
-        } else {
-            this.connectionTimeout = connectionTimeout;
-        }
-        save();
-    }
-
-    public int getSocketTimeout() {
-        return socketTimeout;
-    }
-
-    public void setSocketTimeout(int socketTimeout) {
-        if (socketTimeout <= 0) {
-            this.socketTimeout = 1000;
-        } else {
-            this.socketTimeout = socketTimeout;
-        }
-        save();
-    }
-
     @Override
     public boolean configure(StaplerRequest request, JSONObject json) throws FormException {
         request.bindJSON(this, json);

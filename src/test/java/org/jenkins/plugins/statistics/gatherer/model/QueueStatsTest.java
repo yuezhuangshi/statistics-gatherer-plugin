@@ -24,7 +24,6 @@ public class QueueStatsTest {
     private static final int JENKINS_QUEUE_ID = 1;
     private static final String STATUS = "COMPLETED";
     private static final int DURATION = 2000;
-    private static final String DURATION_STR = "2000";
     private static final ArrayList<QueueCause> QUEUE_CAUSES = new ArrayList<QueueCause>();
     private QueueStats queueStats;
 
@@ -38,7 +37,6 @@ public class QueueStatsTest {
                 JENKINS_QUEUE_ID,
                 STATUS,
                 DURATION,
-                DURATION_STR,
                 QUEUE_CAUSES);
     }
 
@@ -68,7 +66,6 @@ public class QueueStatsTest {
         assertEquals(0, queueStats.getJenkinsQueueId());
         assertEquals("", queueStats.getStatus());
         assertEquals(0, queueStats.getDuration());
-        assertEquals("", queueStats.getDurationStr());
         assertEquals(new ArrayList<QueueCause>(), queueStats.getQueueCauses());
     }
 
@@ -147,17 +144,6 @@ public class QueueStatsTest {
 
         //then
         assertEquals(DURATION, duration);
-    }
-
-    @Test
-    public void givenStatsQueue_whenGetDurationString_thenReturnDurationString() {
-        //given
-
-        //when
-        String durationStr = queueStats.getDurationStr();
-
-        //then
-        assertEquals(DURATION_STR, durationStr);
     }
 
     @Test
@@ -262,17 +248,6 @@ public class QueueStatsTest {
         //then
         long actualDuration = queueStats.getDuration();
         assertEquals(expectedDuration, actualDuration);
-    }
-    @Test
-    public void givenStatsQueue_whenSetDurationString_thenDurationStringIsSet() {
-        //given
-        String expectedDurationString = "ThisIsAString";
-        //when
-        queueStats.setDurationStr(expectedDurationString);
-
-        //then
-        String actualUrl = queueStats.getDurationStr();
-        assertEquals(expectedDurationString, actualUrl);
     }
     @Test
     public void givenStatsQueue_whenSetJobName_thenJobNameIsSet() {

@@ -18,7 +18,7 @@ public class JSONUtilTest {
         testObject.setCommit("blopie");
         String expectedJson = "{\"url\":\"http://test.com\",\"branch\":\"blop\",\"commit\":\"blopie\"}";
 
-        String jsonString = JSONUtil.convertToJsonStr(testObject);
+        String jsonString = JSONUtil.convertToJson(testObject);
 
         assertEquals(expectedJson, jsonString);
     }

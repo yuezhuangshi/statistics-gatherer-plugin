@@ -223,7 +223,6 @@ public class QueueStatsListener extends QueueListener {
             queue.setEntryTime(null);
             queue.setExitTime(new Date());
             queue.setStatus(Constants.LEFT);
-            queue.setDurationStr(leftItem.getInQueueForString());
             queue.setDuration(System.currentTimeMillis() - leftItem.getInQueueSince());
             RestClientUtil.postToService(getRestUrl(), queue);
         } catch (Exception e) {

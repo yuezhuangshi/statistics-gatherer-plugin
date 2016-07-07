@@ -25,8 +25,6 @@ public class QueueStats {
 
     private long duration;
 
-    private String durationStr;
-
     private List<QueueCause> queueCauses = new ArrayList<>();
 
     public QueueStats(String ciUrl,
@@ -37,7 +35,6 @@ public class QueueStats {
                       int jenkinsQueueId,
                       String status,
                       long duration,
-                      String durationStr,
                       List<QueueCause> queueCauses) {
         this.ciUrl = ciUrl;
         this.jobName = jobName;
@@ -47,7 +44,6 @@ public class QueueStats {
         this.jenkinsQueueId = jenkinsQueueId;
         this.status = status;
         this.duration = duration;
-        this.durationStr = durationStr;
         this.queueCauses = queueCauses;
     }
 
@@ -60,7 +56,6 @@ public class QueueStats {
         this.jenkinsQueueId = 0;
         this.status = "";
         this.duration = 0;
-        this.durationStr = "";
         this.queueCauses = new ArrayList<>();
     }
 
@@ -127,14 +122,6 @@ public class QueueStats {
 
     public void setDuration(long duration) {
         this.duration = duration;
-    }
-
-    public String getDurationStr() {
-        return durationStr;
-    }
-
-    public void setDurationStr(String durationStr) {
-        this.durationStr = durationStr;
     }
 
     public List<QueueCause> getQueueCauses() {
