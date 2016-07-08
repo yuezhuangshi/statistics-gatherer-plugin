@@ -2,7 +2,7 @@ package org.jenkins.plugins.statistics.gatherer.StatisticsConfiguration
 
 def f=namespace(lib.FormTagLib)
 
-f.section(title:_("Statistics Notification")) {
+f.section(title:_("Statistics Gatherer")) {
     f.entry(title:_("Queue URL"), field:"queueUrl") {
         f.textbox(default: "http://ci.mycompany.com/api/queues")
     }
