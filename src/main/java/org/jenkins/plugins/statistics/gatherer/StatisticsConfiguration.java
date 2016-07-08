@@ -20,6 +20,10 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     private String buildUrl;
     private String projectUrl;
 
+    private Boolean queueInfo;
+    private Boolean buildInfo;
+    private Boolean projectInfo;
+
     public StatisticsConfiguration() {
         load();
     }
@@ -37,6 +41,34 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         }
         return queueUrl;
     }
+
+    public Boolean getProjectInfo() {
+        return projectInfo;
+    }
+
+    public void setProjectInfo(Boolean projectInfo) {
+        this.projectInfo = projectInfo;
+        save();
+    }
+
+    public Boolean getBuildInfo() {
+        return buildInfo;
+    }
+
+    public void setBuildInfo(Boolean buildInfo) {
+        this.buildInfo = buildInfo;
+        save();
+    }
+
+    public Boolean getQueueInfo() {
+        return queueInfo;
+    }
+
+    public void setQueueInfo(Boolean queueInfo) {
+        this.queueInfo = queueInfo;
+        save();
+    }
+
 
     public void setQueueUrl(String queueUrl) {
         this.queueUrl = queueUrl;
@@ -115,6 +147,33 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         }
         if (validateProtocolUsed(projectUrl))
             return FormValidation.error(PROTOCOL_ERROR_MESSAGE);
+        return FormValidation.ok();
+    }
+
+    public FormValidation doCheckBuildInfo(
+            @QueryParameter("buildInfo") final Boolean buildInfo) {
+        if (buildInfo == null) {
+            return FormValidation.error("Provide valid Build Info. " +
+                    "For ex: \"http://ci.mycompany.com/api/builds\"");
+        }
+        return FormValidation.ok();
+    }
+
+    public FormValidation doCheckQueueInfo(
+            @QueryParameter("queueInfo") final Boolean queueInfo) {
+        if (queueInfo == null) {
+            return FormValidation.error("Provide valid Queue Info. " +
+                    "For ex: \"http://ci.mycompany.com/api/queues\"");
+        }
+        return FormValidation.ok();
+    }
+
+    public FormValidation doCheckProjectInfo(
+            @QueryParameter("projectInfo") final Boolean projectInfo) {
+        if (projectInfo == null) {
+            return FormValidation.error("Provide valid Project Info. " +
+                    "For ex: \"http://ci.mycompany.com/api/\"");
+        }
         return FormValidation.ok();
     }
 

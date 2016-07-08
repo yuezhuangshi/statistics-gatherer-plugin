@@ -7,11 +7,11 @@ import hudson.model.listeners.RunListener;
 import hudson.triggers.SCMTrigger;
 import hudson.triggers.TimerTrigger;
 import jenkins.model.Jenkins;
-import org.jenkins.plugins.statistics.gatherer.util.JenkinsCauses;
 import org.jenkins.plugins.statistics.gatherer.model.BuildStats;
 import org.jenkins.plugins.statistics.gatherer.model.SCMInfo;
 import org.jenkins.plugins.statistics.gatherer.model.SlaveInfo;
 import org.jenkins.plugins.statistics.gatherer.util.Constants;
+import org.jenkins.plugins.statistics.gatherer.util.JenkinsCauses;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
@@ -42,32 +42,34 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
 
     @Override
     public void onStarted(Run<?, ?> run, TaskListener listener) {
-        try {
-            if (!(run instanceof AbstractBuild)) {
-                return;
+        if (PropertyLoader.getBuildInfo()) {
+            try {
+                if (!(run instanceof AbstractBuild)) {
+                    return;
+                }
+                final String buildResult = run.getResult() == null ?
+                        "INPROGRESS" : run.getResult().toString();
+                BuildStats build = new BuildStats();
+                build.setStartTime(run.getTimestamp().getTime());
+                build.setCiUrl(Jenkins.getInstance().getRootUrl());
+                build.setJobName(run.getParent().getName());
+                build.setFullJobName(run.getParent().getFullName());
+                build.setNumber(run.getNumber());
+                build.setResult(buildResult);
+                build.setBuildUrl(run.getUrl());
+                build.setQueueTime(run.getExecutor() != null ?
+                        run.getExecutor().getTimeSpentInQueue() : 0);
+                addUserDetails(run, build);
+                addSCMInfo(run, listener, build);
+                addParameters(run, build);
+                addSlaveInfo(run, build);
+                RestClientUtil.postToService(getRestUrl(), build);
+                LOGGER.log(Level.INFO, "Started build and its status is : " + buildResult +
+                        " and start time is : " + run.getTimestamp().getTime());
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Failed to call API " + getRestUrl() +
+                        " for build " + run.getDisplayName(), e);
             }
-            final String buildResult = run.getResult() == null ?
-                    "INPROGRESS" : run.getResult().toString();
-            BuildStats build = new BuildStats();
-            build.setStartTime(run.getTimestamp().getTime());
-            build.setCiUrl(Jenkins.getInstance().getRootUrl());
-            build.setJobName(run.getParent().getName());
-            build.setFullJobName(run.getParent().getFullName());
-            build.setNumber(run.getNumber());
-            build.setResult(buildResult);
-            build.setBuildUrl(run.getUrl());
-            build.setQueueTime(run.getExecutor() != null ?
-                    run.getExecutor().getTimeSpentInQueue() : 0);
-            addUserDetails(run, build);
-            addSCMInfo(run, listener, build);
-            addParameters(run, build);
-            addSlaveInfo(run, build);
-            RestClientUtil.postToService(getRestUrl(), build);
-            LOGGER.log(Level.INFO, "Started build and its status is : " + buildResult +
-                    " and start time is : " + run.getTimestamp().getTime());
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Failed to call API " + getRestUrl() +
-                    " for build " + run.getDisplayName(), e);
         }
     }
 
@@ -203,31 +205,33 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
      * Update the build status and duration.
      */
     public void onFinalized(final Run<?, ?> run) {
-        try {
-            if (!(run instanceof AbstractBuild)) {
-                return;
+        if (PropertyLoader.getBuildInfo()) {
+            try {
+                if (!(run instanceof AbstractBuild)) {
+                    return;
+                }
+
+                final String buildResult = run.getResult() == null ?
+                        Constants.UNKNOWN : run.getResult().toString();
+                BuildStats build = new BuildStats();
+                build.setCiUrl(Jenkins.getInstance().getRootUrl());
+                build.setJobName(run.getParent().getName());
+                build.setFullJobName(run.getParent().getFullName());
+                build.setNumber(run.getNumber());
+                build.setResult(buildResult);
+                build.setBuildUrl(run.getUrl());
+                // Capture duration in milliseconds.
+                build.setDuration(run.getDuration());
+                build.setEndTime(Calendar.getInstance().getTime());
+
+                RestClientUtil.postToService(getRestUrl(), build);
+                LOGGER.log(Level.INFO, run.getParent().getName() + " build is completed " +
+                        "its status is : " + buildResult +
+                        " at time : " + new Date());
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Failed to call API " + getRestUrl() +
+                        " for build " + run.getDisplayName(), e);
             }
-
-            final String buildResult = run.getResult() == null ?
-                    Constants.UNKNOWN : run.getResult().toString();
-            BuildStats build = new BuildStats();
-            build.setCiUrl(Jenkins.getInstance().getRootUrl());
-            build.setJobName(run.getParent().getName());
-            build.setFullJobName(run.getParent().getFullName());
-            build.setNumber(run.getNumber());
-            build.setResult(buildResult);
-            build.setBuildUrl(run.getUrl());
-            // Capture duration in milliseconds.
-            build.setDuration(run.getDuration());
-            build.setEndTime(Calendar.getInstance().getTime());
-
-            RestClientUtil.postToService(getRestUrl(), build);
-            LOGGER.log(Level.INFO, run.getParent().getName() + " build is completed " +
-                    "its status is : " + buildResult +
-                    " at time : " + new Date());
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Failed to call API " + getRestUrl() +
-                    " for build " + run.getDisplayName(), e);
         }
     }
 }

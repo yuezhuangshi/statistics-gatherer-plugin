@@ -12,4 +12,14 @@ f.section(title:_("Statistics Notification")) {
     f.entry(title:_("Project URL"), field:"projectUrl") {
         f.textbox(default: "http://ci.mycompany.com/api/projects")
     }
+
+    f.entry(title:_("Send Queue Info"), field:"queueInfo") {
+        f.checkbox(default: true)
+    }
+    f.entry(title:_("Send Build Info"), field:"buildInfo") {
+        f.checkbox(default: true)
+    }
+    f.entry(title:_("Send Job Info"), field:"projectInfo") {
+        f.checkbox(default: true)
+    }
 }

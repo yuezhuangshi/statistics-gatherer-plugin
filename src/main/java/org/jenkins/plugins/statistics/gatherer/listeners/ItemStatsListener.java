@@ -29,18 +29,20 @@ public class ItemStatsListener extends ItemListener {
 
     @Override
     public void onCreated(Item item) {
-        try {
-            if (item == null) {
-                return;
+        if (PropertyLoader.getProjectInfo()) {
+            try {
+                if (item == null) {
+                    return;
+                }
+                AbstractProject<?, ?> project = (AbstractProject<?, ?>) item;
+                JobStats ciJob = addCIJobData(project);
+                ciJob.setCreatedDate(new Date());
+                ciJob.setStatus(Constants.ACTIVE);
+                setConfig(project, ciJob);
+                RestClientUtil.postToService(getRestUrl(), ciJob);
+            } catch (Exception e) {
+                logException(item, e);
             }
-            AbstractProject<?, ?> project = (AbstractProject<?, ?>) item;
-            JobStats ciJob = addCIJobData(project);
-            ciJob.setCreatedDate(new Date());
-            ciJob.setStatus(Constants.ACTIVE);
-            setConfig(project, ciJob);
-            RestClientUtil.postToService(getRestUrl(), ciJob);
-        } catch (Exception e) {
-            logException(item, e);
         }
     }
 
@@ -94,34 +96,38 @@ public class ItemStatsListener extends ItemListener {
 
     @Override
     public void onUpdated(Item item) {
-        AbstractProject<?, ?> project = (AbstractProject<?, ?>) item;
-        try {
-            if (item == null) {
-                return;
+        if (PropertyLoader.getProjectInfo()) {
+            AbstractProject<?, ?> project = (AbstractProject<?, ?>) item;
+            try {
+                if (item == null) {
+                    return;
+                }
+                JobStats ciJob = addCIJobData(project);
+                ciJob.setUpdatedDate(new Date());
+                ciJob.setStatus(project.isDisabled() ? Constants.DISABLED : Constants.ACTIVE);
+                setConfig(project, ciJob);
+                RestClientUtil.postToService(getRestUrl(), ciJob);
+            } catch (Exception e) {
+                logException(item, e);
             }
-            JobStats ciJob = addCIJobData(project);
-            ciJob.setUpdatedDate(new Date());
-            ciJob.setStatus(project.isDisabled() ? Constants.DISABLED : Constants.ACTIVE);
-            setConfig(project, ciJob);
-            RestClientUtil.postToService(getRestUrl(), ciJob);
-        } catch (Exception e) {
-            logException(item, e);
         }
     }
 
     @Override
     public void onDeleted(Item item) {
-        AbstractProject<?, ?> project = (AbstractProject<?, ?>) item;
-        try {
-            if (item == null) {
-                return;
+        if (PropertyLoader.getProjectInfo()) {
+            AbstractProject<?, ?> project = (AbstractProject<?, ?>) item;
+            try {
+                if (item == null) {
+                    return;
+                }
+                JobStats ciJob = addCIJobData(project);
+                ciJob.setUpdatedDate(new Date());
+                ciJob.setStatus(Constants.DELETED);
+                RestClientUtil.postToService(getRestUrl(), ciJob);
+            } catch (Exception e) {
+                logException(item, e);
             }
-            JobStats ciJob = addCIJobData(project);
-            ciJob.setUpdatedDate(new Date());
-            ciJob.setStatus(Constants.DELETED);
-            RestClientUtil.postToService(getRestUrl(), ciJob);
-        } catch (Exception e) {
-            logException(item, e);
         }
     }
 }

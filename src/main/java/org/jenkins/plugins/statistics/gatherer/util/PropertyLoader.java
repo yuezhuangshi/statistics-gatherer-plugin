@@ -115,4 +115,31 @@ public class PropertyLoader {
         endPoint = getEnvironmentProperty("statistics.endpoint.projectUrl");
         return endPoint == null ? "" : endPoint;
     }
+
+    public static Boolean getQueueInfo() {
+        Boolean queueInfo = StatisticsConfiguration.get().getQueueInfo();
+        if (queueInfo != null) {
+            return queueInfo;
+        }
+        String queueInfoEnv = getEnvironmentProperty("statistics.endpoint.queueInfo");
+        return queueInfoEnv.equals("true");
+    }
+
+    public static Boolean getBuildInfo() {
+        Boolean buildInfo = StatisticsConfiguration.get().getBuildInfo();
+        if (buildInfo != null) {
+            return buildInfo;
+        }
+        String buildInfoEnv = getEnvironmentProperty("statistics.endpoint.buildInfo");
+        return buildInfoEnv.equals("true");
+    }
+
+    public static Boolean getProjectInfo() {
+        Boolean projectInfo = StatisticsConfiguration.get().getProjectInfo();
+        if (projectInfo != null) {
+            return projectInfo;
+        }
+        String projectInfoEnv = getEnvironmentProperty("statistics.endpoint.projectInfo");
+        return projectInfoEnv.equals("true");
+    }
 }

@@ -3,15 +3,14 @@ package org.jenkins.plugins.statistics.gatherer.listeners;
 import hudson.Extension;
 import hudson.model.Cause;
 import hudson.model.Queue.*;
-import hudson.model.Queue.Item;
 import hudson.model.queue.QueueListener;
 import hudson.triggers.SCMTrigger;
 import hudson.triggers.TimerTrigger;
 import jenkins.model.Jenkins;
 import org.jenkins.plugins.statistics.gatherer.model.QueueCause;
-import org.jenkins.plugins.statistics.gatherer.util.JenkinsCauses;
 import org.jenkins.plugins.statistics.gatherer.model.QueueStats;
 import org.jenkins.plugins.statistics.gatherer.util.Constants;
+import org.jenkins.plugins.statistics.gatherer.util.JenkinsCauses;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
@@ -34,18 +33,20 @@ public class QueueStatsListener extends QueueListener {
 
     @Override
     public void onEnterWaiting(WaitingItem waitingItem) {
-        try {
-            QueueStats queue = getCiQueue(waitingItem);
-            addStartedBy(waitingItem, queue);
-            queue.setEntryTime(new Date());
-            queue.setExitTime(null);
-            queue.setStatus(Constants.ENTERED);
-            if (waitingItem.getCauseOfBlockage() != null) {
-                addEntryQueueCause("waiting", waitingItem, queue);
+        if (PropertyLoader.getQueueInfo()) {
+            try {
+                QueueStats queue = getCiQueue(waitingItem);
+                addStartedBy(waitingItem, queue);
+                queue.setEntryTime(new Date());
+                queue.setExitTime(null);
+                queue.setStatus(Constants.ENTERED);
+                if (waitingItem.getCauseOfBlockage() != null) {
+                    addEntryQueueCause("waiting", waitingItem, queue);
+                }
+                RestClientUtil.postToService(getRestUrl(), queue);
+            } catch (Exception e) {
+                logExceptionWaiting(waitingItem, e);
             }
-            RestClientUtil.postToService(getRestUrl(), queue);
-        } catch (Exception e) {
-            logExceptionWaiting(waitingItem, e);
         }
     }
 
@@ -67,14 +68,16 @@ public class QueueStatsListener extends QueueListener {
 
     @Override
     public void onLeaveWaiting(WaitingItem waitingItem) {
-        try {
-            QueueStats queue = getCiQueue(waitingItem);
-            if (waitingItem.getCauseOfBlockage() != null) {
-                addExitQueueCause("waiting", waitingItem, queue);
+        if (PropertyLoader.getQueueInfo()) {
+            try {
+                QueueStats queue = getCiQueue(waitingItem);
+                if (waitingItem.getCauseOfBlockage() != null) {
+                    addExitQueueCause("waiting", waitingItem, queue);
+                }
+                RestClientUtil.postToService(getRestUrl(), queue);
+            } catch (Exception e) {
+                logExceptionWaiting(waitingItem, e);
             }
-            RestClientUtil.postToService(getRestUrl(), queue);
-        } catch (Exception e) {
-            logExceptionWaiting(waitingItem, e);
         }
     }
 
@@ -95,14 +98,16 @@ public class QueueStatsListener extends QueueListener {
      */
     @Override
     public void onEnterBlocked(BlockedItem blockedItem) {
-        try {
-            QueueStats queue = getCiQueue(blockedItem);
-            if (blockedItem.getCauseOfBlockage() != null) {
-                addEntryQueueCause("blocked", blockedItem, queue);
+        if (PropertyLoader.getQueueInfo()) {
+            try {
+                QueueStats queue = getCiQueue(blockedItem);
+                if (blockedItem.getCauseOfBlockage() != null) {
+                    addEntryQueueCause("blocked", blockedItem, queue);
+                }
+                RestClientUtil.postToService(getRestUrl(), queue);
+            } catch (Exception e) {
+                logExceptionBlocked(blockedItem, e);
             }
-            RestClientUtil.postToService(getRestUrl(), queue);
-        } catch (Exception e) {
-            logExceptionBlocked(blockedItem, e);
         }
     }
 
@@ -114,15 +119,17 @@ public class QueueStatsListener extends QueueListener {
 
     @Override
     public void onLeaveBlocked(BlockedItem blockedItem) {
-        try {
-            QueueStats queue = getCiQueue(blockedItem);
-            if (blockedItem.getCauseOfBlockage() != null) {
-                addExitQueueCause("blocked", blockedItem, queue);
-            }
+        if (PropertyLoader.getQueueInfo()) {
+            try {
+                QueueStats queue = getCiQueue(blockedItem);
+                if (blockedItem.getCauseOfBlockage() != null) {
+                    addExitQueueCause("blocked", blockedItem, queue);
+                }
 
-            RestClientUtil.postToService(getRestUrl(), queue);
-        } catch (Exception e) {
-            logExceptionBlocked(blockedItem, e);
+                RestClientUtil.postToService(getRestUrl(), queue);
+            } catch (Exception e) {
+                logExceptionBlocked(blockedItem, e);
+            }
         }
     }
 
@@ -134,27 +141,31 @@ public class QueueStatsListener extends QueueListener {
      */
     @Override
     public void onEnterBuildable(BuildableItem buildableItem) {
-        try {
-            QueueStats queue = getCiQueue(buildableItem);
-            if (buildableItem.getCauseOfBlockage() != null) {
-                addEntryQueueCause("buildable", buildableItem, queue);
+        if (PropertyLoader.getQueueInfo()) {
+            try {
+                QueueStats queue = getCiQueue(buildableItem);
+                if (buildableItem.getCauseOfBlockage() != null) {
+                    addEntryQueueCause("buildable", buildableItem, queue);
+                }
+                RestClientUtil.postToService(getRestUrl(), queue);
+            } catch (Exception e) {
+                logExceptionLeave(buildableItem, e);
             }
-            RestClientUtil.postToService(getRestUrl(), queue);
-        } catch (Exception e) {
-            logExceptionLeave(buildableItem, e);
         }
     }
 
     @Override
     public void onLeaveBuildable(BuildableItem buildableItem) {
-        try {
-            QueueStats queue = getCiQueue(buildableItem);
-            if (buildableItem.getCauseOfBlockage() != null) {
-                addExitQueueCause("buildable", buildableItem, queue);
+        if (PropertyLoader.getQueueInfo()) {
+            try {
+                QueueStats queue = getCiQueue(buildableItem);
+                if (buildableItem.getCauseOfBlockage() != null) {
+                    addExitQueueCause("buildable", buildableItem, queue);
+                }
+                RestClientUtil.postToService(getRestUrl(), queue);
+            } catch (Exception e) {
+                logExceptionLeave(buildableItem, e);
             }
-            RestClientUtil.postToService(getRestUrl(), queue);
-        } catch (Exception e) {
-            logExceptionLeave(buildableItem, e);
         }
     }
 
@@ -215,15 +226,17 @@ public class QueueStatsListener extends QueueListener {
 
     @Override
     public void onLeft(LeftItem leftItem) {
-        try {
-            QueueStats queue = getCiQueue(leftItem);
-            queue.setEntryTime(new Date(leftItem.getInQueueSince()));
-            queue.setExitTime(new Date());
-            queue.setStatus(Constants.LEFT);
-            queue.setDuration(System.currentTimeMillis() - leftItem.getInQueueSince());
-            RestClientUtil.postToService(getRestUrl(), queue);
-        } catch (Exception e) {
-            logExceptionLeft(leftItem, e);
+        if (PropertyLoader.getQueueInfo()) {
+            try {
+                QueueStats queue = getCiQueue(leftItem);
+                queue.setEntryTime(new Date(leftItem.getInQueueSince()));
+                queue.setExitTime(new Date());
+                queue.setStatus(Constants.LEFT);
+                queue.setDuration(System.currentTimeMillis() - leftItem.getInQueueSince());
+                RestClientUtil.postToService(getRestUrl(), queue);
+            } catch (Exception e) {
+                logExceptionLeft(leftItem, e);
+            }
         }
     }
 
