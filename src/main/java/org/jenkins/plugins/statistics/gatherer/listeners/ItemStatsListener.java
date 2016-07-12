@@ -6,7 +6,7 @@ import hudson.model.Item;
 import hudson.model.User;
 import hudson.model.listeners.ItemListener;
 import jenkins.model.Jenkins;
-import org.jenkins.plugins.statistics.gatherer.model.JobStats;
+import org.jenkins.plugins.statistics.gatherer.model.job.JobStats;
 import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;

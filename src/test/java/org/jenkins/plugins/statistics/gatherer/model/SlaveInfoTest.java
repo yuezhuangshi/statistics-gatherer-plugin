@@ -1,5 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.model;
 
+import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
 import org.junit.Before;
 import org.junit.Test;
 

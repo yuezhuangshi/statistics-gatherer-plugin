@@ -116,6 +116,15 @@ public class PropertyLoader {
         return endPoint == null ? "" : endPoint;
     }
 
+    public static String getScmCheckoutEndPoint() {
+        String endPoint = StatisticsConfiguration.get().getScmCheckoutUrl();
+        if (endPoint != null && !endPoint.isEmpty()) {
+            return endPoint;
+        }
+        endPoint = getEnvironmentProperty("statistics.endpoint.scmCheckoutUrl");
+        return endPoint == null ? "" : endPoint;
+    }
+
     public static Boolean getQueueInfo() {
         Boolean queueInfo = StatisticsConfiguration.get().getQueueInfo();
         if (queueInfo != null) {

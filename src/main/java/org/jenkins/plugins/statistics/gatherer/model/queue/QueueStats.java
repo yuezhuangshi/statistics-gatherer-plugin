@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.gatherer.model;
+package org.jenkins.plugins.statistics.gatherer.model.queue;
 
 import java.util.ArrayList;
 import java.util.Date;

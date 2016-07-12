@@ -1,5 +1,8 @@
 package org.jenkins.plugins.statistics.gatherer.model;
 
+import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
+import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
+import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
 import org.junit.Before;
 import org.junit.Test;
 
