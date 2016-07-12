@@ -5,6 +5,9 @@ import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.BuildStepListener;
 import hudson.tasks.BuildStep;
+import org.jenkins.plugins.statistics.gatherer.model.step.BuildStepStats;
+import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
+import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
 import java.util.Date;
 
@@ -16,20 +19,25 @@ public class BuildStepStatsListener extends BuildStepListener{
 
     @Override
     public void finished(AbstractBuild build, BuildStep bs, BuildListener listener, boolean canContinue){
-        System.out.println(new Date());
-        System.out.println(build.getProject().getUrl());
-        System.out.println(build.getProject().getFullName());
-        System.out.println(bs.getProjectActions(build.getProject()));
-        System.out.println(bs.toString());
+        BuildStepStats buildStepStats = new BuildStepStats();
+        buildStepStats.setBuildUrl(build.getProject().getUrl());
+        buildStepStats.setBuildFullName(build.getProject().getFullName());
+        buildStepStats.setBuildStepType(bs.getClass().toString().replace("class ", ""));
+        buildStepStats.setEndTime(new Date());
+        RestClientUtil.postToService(getRestUrl(), build);
     }
 
     @Override
     public void started(AbstractBuild build, BuildStep bs, BuildListener listener){
-        System.out.println(build.getProject().getUrl());
-        System.out.println(build.getProject().getFullName());
-        System.out.println(bs.getProjectActions(build.getProject()));
-        System.out.println(bs.getRequiredMonitorService());
-        System.out.println( bs.getClass().toString());
-        System.out.println(new Date());
+        BuildStepStats buildStepStats = new BuildStepStats();
+        buildStepStats.setBuildUrl(build.getProject().getUrl());
+        buildStepStats.setBuildFullName(build.getProject().getFullName());
+        buildStepStats.setBuildStepType(bs.getClass().toString().replace("class ", ""));
+        buildStepStats.setStartTime(new Date());
+        RestClientUtil.postToService(getRestUrl(), build);
+    }
+
+    private String getRestUrl() {
+        return PropertyLoader.getB();
     }
 }

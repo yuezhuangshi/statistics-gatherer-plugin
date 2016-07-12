@@ -73,6 +73,24 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         save();
     }
 
+    public Boolean getBuildStepInfo() {
+        return buildStepInfo;
+    }
+
+    public void setBuildStepInfo(Boolean buildStepInfo) {
+        this.buildStepInfo = buildStepInfo;
+        save();
+    }
+
+    public Boolean getScmCheckoutInfo() {
+        return scmCheckoutInfo;
+    }
+
+    public void setScmCheckoutInfo(Boolean scmCheckoutInfo) {
+        this.scmCheckoutInfo = scmCheckoutInfo;
+        save();
+    }
+
 
     public void setQueueUrl(String queueUrl) {
         this.queueUrl = queueUrl;

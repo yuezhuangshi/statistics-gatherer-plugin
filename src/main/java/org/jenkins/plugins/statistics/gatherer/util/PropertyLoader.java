@@ -125,6 +125,15 @@ public class PropertyLoader {
         return endPoint == null ? "" : endPoint;
     }
 
+    public static String getBuildStepEndPoint() {
+        String endPoint = StatisticsConfiguration.get().getBuildStepUrl();
+        if (endPoint != null && !endPoint.isEmpty()) {
+            return endPoint;
+        }
+        endPoint = getEnvironmentProperty("statistics.endpoint.buildStepUrl");
+        return endPoint == null ? "" : endPoint;
+    }
+
     public static Boolean getQueueInfo() {
         Boolean queueInfo = StatisticsConfiguration.get().getQueueInfo();
         if (queueInfo != null) {
@@ -149,6 +158,23 @@ public class PropertyLoader {
             return projectInfo;
         }
         String projectInfoEnv = getEnvironmentProperty("statistics.endpoint.projectInfo");
+        return projectInfoEnv.equals("true");
+    }
+
+    public static Boolean getScmCheckoutInfo() {
+        Boolean projectInfo = StatisticsConfiguration.get().getScmCheckoutInfo();
+        if (projectInfo != null) {
+            return projectInfo;
+        }
+        String projectInfoEnv = getEnvironmentProperty("statistics.endpoint.scmCheckoutInfo");
+        return projectInfoEnv.equals("true");
+    }
+    public static Boolean getBuildStepInfo() {
+        Boolean projectInfo = StatisticsConfiguration.get().getBuildStepInfo();
+        if (projectInfo != null) {
+            return projectInfo;
+        }
+        String projectInfoEnv = getEnvironmentProperty("statistics.endpoint.buildStepInfo");
         return projectInfoEnv.equals("true");
     }
 }
