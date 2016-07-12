@@ -7,37 +7,22 @@ public class SlaveInfo {
 
     private String slaveName;
 
-    private String vmName;
-
     private String executor;
 
     private String label;
 
-    private String description;
-
-    private String remoteFs;
-
     public SlaveInfo(String slaveName,
-                     String vmName,
                      String executor,
-                     String label,
-                     String description,
-                     String remoteFs) {
+                     String label) {
         this.slaveName = slaveName;
-        this.vmName = vmName;
         this.executor = executor;
         this.label = label;
-        this.description = description;
-        this.remoteFs = remoteFs;
     }
 
     public SlaveInfo() {
         this.slaveName = "";
-        this.vmName = "";
         this.executor = "";
         this.label = "";
-        this.description = "";
-        this.remoteFs = "";
     }
 
     public String getSlaveName() {
@@ -46,14 +31,6 @@ public class SlaveInfo {
 
     public void setSlaveName(String slaveName) {
         this.slaveName = slaveName;
-    }
-
-    public String getVmName() {
-        return vmName;
-    }
-
-    public void setVmName(String vmName) {
-        this.vmName = vmName;
     }
 
     public String getExecutor() {
@@ -72,19 +49,4 @@ public class SlaveInfo {
         this.label = label;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getRemoteFs() {
-        return remoteFs;
-    }
-
-    public void setRemoteFs(String remoteFs) {
-        this.remoteFs = remoteFs;
-    }
 }

@@ -28,7 +28,7 @@ public class BuildStatsTest {
     private static final long QUEUE_TIME = 12345678;
     private static final SlaveInfo SLAVE_INFO = new SlaveInfo();
     private static final SCMInfo SCM_INFO = new SCMInfo();
-    private static final Map<String, String> PARAMETERS = new HashMap<String, String>();
+    private static final Map<String, String> PARAMETERS = new HashMap<>();
     private static final String BUILD_URL = "http://url.com/build";
     private BuildStats buildStats;
 

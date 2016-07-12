@@ -62,7 +62,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 addUserDetails(run, build);
                 addSCMInfo(run, listener, build);
                 addParameters(run, build);
-                addSlaveInfo(run, build);
+                addSlaveInfo(run, build, listener);
                 RestClientUtil.postToService(getRestUrl(), build);
                 LOGGER.log(Level.INFO, "Started build and its status is : " + buildResult +
                         " and start time is : " + run.getTimestamp().getTime());
@@ -88,25 +88,36 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
      * @param run
      * @param build
      */
-    private void addSlaveInfo(Run<?, ?> run, BuildStats build) throws InterruptedException {
+    private void addSlaveInfo(Run<?, ?> run, BuildStats build, TaskListener listener) throws InterruptedException {
         SlaveInfo slaveInfo = new SlaveInfo();
-        if (run.getExecutor() != null) {
-            try {
-                Node node = run.getExecutor().getOwner().getNode();
-                slaveInfo.setSlaveName(node.getNodeName());
-                slaveInfo.setVmName(node.toComputer().getHostName());
-                slaveInfo.setLabel(node.getLabelString());
-                slaveInfo.setRemoteFs(node.getRootPath().getName());
-            } catch (IOException e) {
-                LOGGER.log(Level.WARNING, "Failed to retrieve hostname of Slave " +
-                        " for " + run.getUrl(), e);
-            } catch (InterruptedException e) {
-                LOGGER.log(Level.WARNING, "Failed to retrieve hostname of Slave " +
-                        " for " + run.getUrl(), e);
-                throw e;
+        EnvVars environment = getEnvVars(run, listener);
+        if (environment != null) {
+            if (environment.get("NODE_NAME") != null) {
+                slaveInfo.setSlaveName(environment.get("NODE_NAME"));
             }
-            build.setSlaveInfo(slaveInfo);
+            if (environment.get("NODE_LABELS") != null) {
+                slaveInfo.setLabel(environment.get("NODE_LABELS"));
+            }
+            if (environment.get("EXECUTOR_NUMBER") != null) {
+                slaveInfo.setExecutor(environment.get("EXECUTOR_NUMBER"));
+            }
         }
+        build.setSlaveInfo(slaveInfo);
+    }
+
+    private EnvVars getEnvVars(Run<?, ?> run, TaskListener listener) throws InterruptedException {
+        EnvVars environment = null;
+        try {
+            environment = run.getEnvironment(listener);
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "Failed to retrieve environment" +
+                    " for " + run.getUrl(), e);
+        } catch (InterruptedException e) {
+            LOGGER.log(Level.WARNING, "Failed to retrieve environment" +
+                    " for " + run.getUrl(), e);
+            throw e;
+        }
+        return environment;
     }
 
     /**
@@ -137,18 +148,8 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
      */
     private void addSCMInfo(Run<?, ?> run, TaskListener listener,
                             BuildStats build) throws InterruptedException {
-        EnvVars environment = null;
+        EnvVars environment =getEnvVars(run, listener);
         SCMInfo scmInfo = new SCMInfo();
-        try {
-            environment = run.getEnvironment(listener);
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Failed to retrieve environment" +
-                    " for " + run.getUrl(), e);
-        } catch (InterruptedException e) {
-            LOGGER.log(Level.WARNING, "Failed to retrieve environment" +
-                    " for " + run.getUrl(), e);
-            throw e;
-        }
         if (environment != null) {
             if (environment.get("GIT_URL") != null) {
                 scmInfo.setUrl(environment.get("GIT_URL"));
@@ -157,6 +158,8 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
             }
             if (environment.get("GIT_BRANCH") != null) {
                 scmInfo.setBranch(environment.get("GIT_BRANCH"));
+            } else if (environment.get("Branch") != null) {
+                scmInfo.setBranch(environment.get("Branch"));
             }
             if (environment.get("GIT_COMMIT") != null) {
                 scmInfo.setCommit(environment.get("GIT_COMMIT"));
@@ -223,7 +226,6 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 // Capture duration in milliseconds.
                 build.setDuration(run.getDuration());
                 build.setEndTime(Calendar.getInstance().getTime());
-
                 RestClientUtil.postToService(getRestUrl(), build);
                 LOGGER.log(Level.INFO, run.getParent().getName() + " build is completed " +
                         "its status is : " + buildResult +
