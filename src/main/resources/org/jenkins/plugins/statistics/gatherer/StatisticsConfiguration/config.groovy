@@ -4,10 +4,10 @@ def f=namespace(lib.FormTagLib)
 
 f.section(title:_("Statistics Gatherer")) {
     f.entry(title:_("Queue URL"), field:"queueUrl") {
-        f.textbox(default: "http://ci.mycompany.com/api/queues")
+        f.textbox(default: "https://prodmetrics.frimastudio.com/queue")
     }
     f.entry(title:_("Build URL"), field:"buildUrl") {
-        f.textbox(default: "http://ci.mycompany.com/api/builds")
+        f.textbox(default: "https://prodmetrics.frimastudio.com/builds")
     }
     f.entry(title:_("Project URL"), field:"projectUrl") {
         f.textbox(default: "http://ci.mycompany.com/api/projects")
@@ -20,6 +20,6 @@ f.section(title:_("Statistics Gatherer")) {
         f.checkbox(default: true)
     }
     f.entry(title:_("Send Job Info"), field:"projectInfo") {
-        f.checkbox(default: true)
+        f.checkbox(default: false)
     }
 }
