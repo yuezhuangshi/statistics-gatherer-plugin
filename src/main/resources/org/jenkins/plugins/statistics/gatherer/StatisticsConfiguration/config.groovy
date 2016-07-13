@@ -12,9 +12,6 @@ f.section(title:_("Statistics Gatherer")) {
     f.entry(title:_("Project URL"), field:"projectUrl") {
         f.textbox(default: "http://ci.mycompany.com/api/projects")
     }
-    f.entry(title:_("ScmCheckout URL"), field:"scmCheckoutUrl") {
-        f.textbox(default: "http://ci.mycompany.com/api/checkout")
-    }
     f.entry(title:_("BuildSteps URL"), field:"buildStepUrl") {
         f.textbox(default: "http://ci.mycompany.com/api/step")
     }
@@ -29,9 +26,6 @@ f.section(title:_("Statistics Gatherer")) {
         f.checkbox(default: true)
     }
     f.entry(title:_("Send BuildSteps Info"), field:"buildStepInfo") {
-        f.checkbox(default: true)
-    }
-    f.entry(title:_("Send ScmCheckout Info"), field:"scmCheckoutInfo") {
         f.checkbox(default: true)
     }
 }

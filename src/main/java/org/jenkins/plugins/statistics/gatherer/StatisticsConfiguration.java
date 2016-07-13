@@ -142,21 +142,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         save();
     }
 
-    public String getScmCheckoutUrl() {
-        if (scmCheckoutUrl != null && !scmCheckoutUrl.isEmpty()) {
-            if (scmCheckoutUrl.endsWith(SLASH)) {
-                return scmCheckoutUrl;
-            }
-            return scmCheckoutUrl + SLASH;
-        }
-        return scmCheckoutUrl;
-    }
-
-    public void setScmCheckoutUrl(String scmCheckoutUrl) {
-        this.scmCheckoutUrl = scmCheckoutUrl;
-        save();
-    }
-
     @Override
     public boolean configure(StaplerRequest request, JSONObject json) throws FormException {
         request.bindJSON(this, json);
@@ -202,6 +187,17 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         return FormValidation.ok();
     }
 
+    public FormValidation doCheckBuildStepUrl(
+            @QueryParameter("buildStepUrl") final String buildStepUrl) {
+        if (buildStepUrl == null || buildStepUrl.isEmpty()) {
+            return FormValidation.error("Provide valid BuildStep URL. " +
+                    "For ex: \"http://ci.mycompany.com/api/steps\"");
+        }
+        if (validateProtocolUsed(buildStepUrl))
+            return FormValidation.error(PROTOCOL_ERROR_MESSAGE);
+        return FormValidation.ok();
+    }
+
     public FormValidation doCheckBuildInfo(
             @QueryParameter("buildInfo") final Boolean buildInfo) {
         if (buildInfo == null) {
@@ -226,13 +222,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         return FormValidation.ok();
     }
 
-    public FormValidation doCheckScmCheckoutInfo(
-            @QueryParameter("scmCheckoutInfo") final Boolean scmCheckoutInfo) {
-        if (scmCheckoutInfo == null) {
-            return FormValidation.error("Provide valid ScmCheckoutInfo. ");
-        }
-        return FormValidation.ok();
-    }
 
     public FormValidation doCheckBuildStepInfo(
             @QueryParameter("buildStepInfo") final Boolean buildStepInfo) {
