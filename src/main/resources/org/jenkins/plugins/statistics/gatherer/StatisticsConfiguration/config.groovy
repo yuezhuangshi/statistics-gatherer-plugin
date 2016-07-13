@@ -12,6 +12,9 @@ f.section(title:_("Statistics Gatherer")) {
     f.entry(title:_("Project URL"), field:"projectUrl") {
         f.textbox(default: "http://ci.mycompany.com/api/projects")
     }
+    f.entry(title:_("BuildSteps URL"), field:"buildStepUrl") {
+        f.textbox(default: "http://ci.mycompany.com/api/step")
+    }
 
     f.entry(title:_("Send Queue Info"), field:"queueInfo") {
         f.checkbox(default: true)
@@ -21,5 +24,8 @@ f.section(title:_("Statistics Gatherer")) {
     }
     f.entry(title:_("Send Job Info"), field:"projectInfo") {
         f.checkbox(default: false)
+    }
+    f.entry(title:_("Send BuildSteps Info"), field:"buildStepInfo") {
+        f.checkbox(default: true)
     }
 }

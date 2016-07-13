@@ -19,10 +19,14 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     private String queueUrl;
     private String buildUrl;
     private String projectUrl;
+    private String scmCheckoutUrl;
+    private String buildStepUrl;
 
     private Boolean queueInfo;
     private Boolean buildInfo;
     private Boolean projectInfo;
+    private Boolean scmCheckoutInfo;
+    private Boolean buildStepInfo;
 
     public StatisticsConfiguration() {
         load();
@@ -69,6 +73,24 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         save();
     }
 
+    public Boolean getBuildStepInfo() {
+        return buildStepInfo;
+    }
+
+    public void setBuildStepInfo(Boolean buildStepInfo) {
+        this.buildStepInfo = buildStepInfo;
+        save();
+    }
+
+    public Boolean getScmCheckoutInfo() {
+        return scmCheckoutInfo;
+    }
+
+    public void setScmCheckoutInfo(Boolean scmCheckoutInfo) {
+        this.scmCheckoutInfo = scmCheckoutInfo;
+        save();
+    }
+
 
     public void setQueueUrl(String queueUrl) {
         this.queueUrl = queueUrl;
@@ -102,6 +124,21 @@ public class StatisticsConfiguration extends GlobalConfiguration {
 
     public void setProjectUrl(String projectUrl) {
         this.projectUrl = projectUrl;
+        save();
+    }
+
+    public String getBuildStepUrl() {
+        if (buildStepUrl != null && !buildStepUrl.isEmpty()) {
+            if (buildStepUrl.endsWith(SLASH)) {
+                return buildStepUrl;
+            }
+            return buildStepUrl + SLASH;
+        }
+        return buildStepUrl;
+    }
+
+    public void setBuildStepUrl(String buildStepUrl) {
+        this.buildStepUrl = buildStepUrl;
         save();
     }
 
@@ -150,11 +187,21 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         return FormValidation.ok();
     }
 
+    public FormValidation doCheckBuildStepUrl(
+            @QueryParameter("buildStepUrl") final String buildStepUrl) {
+        if (buildStepUrl == null || buildStepUrl.isEmpty()) {
+            return FormValidation.error("Provide valid BuildStep URL. " +
+                    "For ex: \"http://ci.mycompany.com/api/steps\"");
+        }
+        if (validateProtocolUsed(buildStepUrl))
+            return FormValidation.error(PROTOCOL_ERROR_MESSAGE);
+        return FormValidation.ok();
+    }
+
     public FormValidation doCheckBuildInfo(
             @QueryParameter("buildInfo") final Boolean buildInfo) {
         if (buildInfo == null) {
-            return FormValidation.error("Provide valid Build Info. " +
-                    "For ex: \"http://ci.mycompany.com/api/builds\"");
+            return FormValidation.error("Provide valid Build Info. ");
         }
         return FormValidation.ok();
     }
@@ -162,8 +209,7 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     public FormValidation doCheckQueueInfo(
             @QueryParameter("queueInfo") final Boolean queueInfo) {
         if (queueInfo == null) {
-            return FormValidation.error("Provide valid Queue Info. " +
-                    "For ex: \"http://ci.mycompany.com/api/queues\"");
+            return FormValidation.error("Provide valid Queue Info. ");
         }
         return FormValidation.ok();
     }
@@ -171,14 +217,22 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     public FormValidation doCheckProjectInfo(
             @QueryParameter("projectInfo") final Boolean projectInfo) {
         if (projectInfo == null) {
-            return FormValidation.error("Provide valid Project Info. " +
-                    "For ex: \"http://ci.mycompany.com/api/\"");
+            return FormValidation.error("Provide valid Project Info. ");
         }
         return FormValidation.ok();
     }
 
-    private boolean validateProtocolUsed(@QueryParameter("projectUrl") String projectUrl) {
-        if (!(projectUrl.startsWith("http://") || projectUrl.startsWith("https://"))) {
+
+    public FormValidation doCheckBuildStepInfo(
+            @QueryParameter("buildStepInfo") final Boolean buildStepInfo) {
+        if (buildStepInfo == null) {
+            return FormValidation.error("Provide valid BuildStepInfo. ");
+        }
+        return FormValidation.ok();
+    }
+
+    private boolean validateProtocolUsed(String url) {
+        if (!(url.startsWith("http://") || url.startsWith("https://"))) {
             return true;
         }
         return false;

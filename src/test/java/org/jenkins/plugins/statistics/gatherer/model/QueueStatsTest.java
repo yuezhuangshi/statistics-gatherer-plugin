@@ -1,5 +1,7 @@
 package org.jenkins.plugins.statistics.gatherer.model;
 
+import org.jenkins.plugins.statistics.gatherer.model.queue.QueueCause;
+import org.jenkins.plugins.statistics.gatherer.model.queue.QueueStats;
 import org.junit.Test;
 import org.junit.Before;
 

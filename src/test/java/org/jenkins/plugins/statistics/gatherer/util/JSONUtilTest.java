@@ -1,6 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
-import org.jenkins.plugins.statistics.gatherer.model.SCMInfo;
+import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
