@@ -2,6 +2,7 @@ package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import hudson.EnvVars;
 import hudson.Extension;
+import hudson.Launcher;
 import hudson.model.*;
 import hudson.model.listeners.RunListener;
 import hudson.triggers.SCMTrigger;
@@ -10,6 +11,7 @@ import jenkins.model.Jenkins;
 import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
 import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
+import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckout;
 import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.jenkins.plugins.statistics.gatherer.util.JenkinsCauses;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
@@ -148,7 +150,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
      */
     private void addSCMInfo(Run<?, ?> run, TaskListener listener,
                             BuildStats build) throws InterruptedException {
-        EnvVars environment =getEnvVars(run, listener);
+        EnvVars environment = getEnvVars(run, listener);
         SCMInfo scmInfo = new SCMInfo();
         if (environment != null) {
             if (environment.get("GIT_URL") != null) {
@@ -164,7 +166,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
             if (environment.get("GIT_COMMIT") != null) {
                 scmInfo.setCommit(environment.get("GIT_COMMIT"));
             } else if (environment.get("SVN_REVISION") != null) {
-                scmInfo.setUrl(environment.get("SVN_REVISION"));
+                scmInfo.setCommit(environment.get("SVN_REVISION"));
             }
         }
         build.setScmInfo(scmInfo);
@@ -235,5 +237,25 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                         " for build " + run.getDisplayName(), e);
             }
         }
+    }
+
+    @Override
+    public Environment setUpEnvironment(AbstractBuild build,
+                                        Launcher launcher,
+                                        BuildListener listener)throws IOException, InterruptedException{
+        if (PropertyLoader.getBuildStepInfo()){
+            ScmCheckout scmCheckout = new ScmCheckout();
+            scmCheckout.setStartTime(Calendar.getInstance().getTime());
+            scmCheckout.setBuildUrl(build.getUrl());
+            scmCheckout.setEndTime(new Date(0));
+            System.out.println("Scm checkout start: " + scmCheckout.getStartTime());
+            RestClientUtil.postToService(getScmCheckoutUrl(), scmCheckout);
+        }
+        return super.setUpEnvironment(build, launcher,listener);
+
+    }
+
+    private String getScmCheckoutUrl(){
+        return PropertyLoader.getScmCheckoutEndPoint();
     }
 }

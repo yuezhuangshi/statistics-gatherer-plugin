@@ -5,6 +5,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.BuildStepListener;
 import hudson.tasks.BuildStep;
+import hudson.tasks.Shell;
 import org.jenkins.plugins.statistics.gatherer.model.step.BuildStepStats;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
@@ -24,6 +25,7 @@ public class BuildStepStatsListener extends BuildStepListener {
             buildStepStats.setBuildUrl(build.getProject().getUrl());
             buildStepStats.setBuildFullName(build.getProject().getFullName());
             buildStepStats.setBuildStepType(bs.getClass().toString().replace("class ", ""));
+            buildStepStats.setBuildStepId(bs.toString());
             buildStepStats.setEndTime(new Date());
             RestClientUtil.postToService(getRestUrl(), buildStepStats);
         }
@@ -36,6 +38,7 @@ public class BuildStepStatsListener extends BuildStepListener {
             buildStepStats.setBuildUrl(build.getProject().getUrl());
             buildStepStats.setBuildFullName(build.getProject().getFullName());
             buildStepStats.setBuildStepType(bs.getClass().toString().replace("class ", ""));
+            buildStepStats.setBuildStepId(bs.toString());
             buildStepStats.setStartTime(new Date());
             RestClientUtil.postToService(getRestUrl(), buildStepStats);
         }

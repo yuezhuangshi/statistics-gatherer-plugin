@@ -28,4 +28,7 @@ f.section(title:_("Statistics Gatherer")) {
     f.entry(title:_("Send BuildSteps Info"), field:"buildStepInfo") {
         f.checkbox(default: true)
     }
+    f.entry(title:_("Send Scm Checkout Info"), field:"scmCheckoutInfo") {
+        f.checkbox(default: true)
+    }
 }

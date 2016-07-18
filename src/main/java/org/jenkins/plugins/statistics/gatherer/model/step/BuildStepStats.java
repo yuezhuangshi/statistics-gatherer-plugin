@@ -11,6 +11,7 @@ public class BuildStepStats {
     private String buildUrl;
     private String buildFullName;
     private String buildStepType;
+    private String buildStepId;
 
     public Date getStartTime() {
         return startTime;
@@ -50,5 +51,13 @@ public class BuildStepStats {
 
     public void setBuildStepType(String buildStepType) {
         this.buildStepType = buildStepType;
+    }
+
+    public String getBuildStepId() {
+        return buildStepId;
+    }
+
+    public void setBuildStepId(String buildStepId) {
+        this.buildStepId = buildStepId;
     }
 }
