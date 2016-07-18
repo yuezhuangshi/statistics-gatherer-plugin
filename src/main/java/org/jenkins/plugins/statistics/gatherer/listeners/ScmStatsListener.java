@@ -32,7 +32,6 @@ public class ScmStatsListener extends SCMListener{
             scmCheckout.setBuildUrl(run.getUrl());
             scmCheckout.setStartTime(new Date(0));
             scmCheckout.setEndTime(Calendar.getInstance().getTime());
-            System.out.println("Scm checkout end: " + scmCheckout.getEndTime());
             RestClientUtil.postToService(getUrl(), scmCheckout);
         }
     }

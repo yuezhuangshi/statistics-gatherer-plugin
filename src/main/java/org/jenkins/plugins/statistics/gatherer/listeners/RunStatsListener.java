@@ -248,7 +248,6 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
             scmCheckout.setStartTime(Calendar.getInstance().getTime());
             scmCheckout.setBuildUrl(build.getUrl());
             scmCheckout.setEndTime(new Date(0));
-            System.out.println("Scm checkout start: " + scmCheckout.getStartTime());
             RestClientUtil.postToService(getScmCheckoutUrl(), scmCheckout);
         }
         return super.setUpEnvironment(build, launcher,listener);
