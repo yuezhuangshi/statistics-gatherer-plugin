@@ -5,6 +5,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONObject;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,5 +41,19 @@ public class RestClientUtil {
                     }
 
                 });
+    }
+
+    public static JSONObject getJson(final String url) {
+        try{
+            HttpResponse<JsonNode> response = Unirest.get(url)
+                .header("accept", "application/json")
+                .header("Content-Type", "application/json")
+                .asJson();
+            return response.getBody().getObject();
+        }
+        catch (UnirestException e){
+            LOGGER.log(Level.WARNING, "Json called have failed in unirest.", e);
+        }
+        return null;
     }
 }

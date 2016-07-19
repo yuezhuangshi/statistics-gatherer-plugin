@@ -3,6 +3,7 @@ package org.jenkins.plugins.statistics.gatherer.listeners;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Launcher;
+import hudson.PluginWrapper;
 import hudson.model.*;
 import hudson.model.listeners.RunListener;
 import hudson.triggers.SCMTrigger;
@@ -13,11 +14,11 @@ import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
 import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
 import org.jenkins.plugins.statistics.gatherer.util.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,7 @@ import java.util.logging.Logger;
 public class RunStatsListener extends RunListener<Run<?, ?>> {
 
     private static final Logger LOGGER = Logger.getLogger(RunStatsListener.class.getName());
+    private static final String buildFailureUrlToAppend = "/api/json?depth=2&tree=actions[foundFailureCauses[categories,description,id,name]]";
 
     public RunStatsListener() {
         //Necessary for jenkins
@@ -223,8 +225,32 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setNumber(run.getNumber());
                 build.setResult(buildResult);
                 build.setBuildUrl(run.getUrl());
-                build.setDuration(run.getDuration()/1000);
+                build.setDuration(run.getDuration());
+                System.out.println(run.getCauses().get(0).getShortDescription());
                 build.setEndTime(Calendar.getInstance().getTime());
+                List<PluginWrapper> plugins = Jenkins.getInstance().getPluginManager().getPlugins();
+                for (PluginWrapper plugin : plugins) {
+                    if (plugin.getDisplayName().contains("Build Failure Analyzer")) {
+                        JSONObject response = RestClientUtil.getJson(build.getCiUrl() + build.getBuildUrl() + buildFailureUrlToAppend);
+                        if (response != null && response.getJSONArray("actions") != null) {
+                            JSONArray actions = response.getJSONArray("actions");
+                            for (int i = 0; i < actions.length(); i++) {
+                                JSONObject failureResponse = actions.getJSONObject(i);
+                                if (!failureResponse.keySet().isEmpty()) {
+                                    List<Map> failureCauses = new ArrayList<>();
+                                    for (int j = 0; j < failureResponse.getJSONArray("foundFailureCauses").length(); j++) {
+                                        JSONArray foundFailureCauses = failureResponse.getJSONArray("foundFailureCauses");
+                                        Map jsonObject = JSONUtil.convertBuildFailureToMap(foundFailureCauses.getJSONObject(j));
+                                        failureCauses.add(jsonObject);
+                                    }
+                                    build.setBuildFailureCauses(failureCauses);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+                System.out.println("JSon is: "+ JSONUtil.convertToJson(build));
                 RestClientUtil.postToService(getRestUrl(), build);
                 LOGGER.log(Level.INFO, run.getParent().getName() + " build is completed " +
                         "its status is : " + buildResult +
@@ -239,19 +265,19 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
     @Override
     public Environment setUpEnvironment(AbstractBuild build,
                                         Launcher launcher,
-                                        BuildListener listener)throws IOException, InterruptedException{
-        if (PropertyLoader.getScmCheckoutInfo()){
+                                        BuildListener listener) throws IOException, InterruptedException {
+        if (PropertyLoader.getScmCheckoutInfo()) {
             ScmCheckoutInfo scmCheckoutInfo = new ScmCheckoutInfo();
             scmCheckoutInfo.setStartTime(Calendar.getInstance().getTime());
             scmCheckoutInfo.setBuildUrl(build.getUrl());
             scmCheckoutInfo.setEndTime(new Date(0));
             RestClientUtil.postToService(getScmCheckoutUrl(), scmCheckoutInfo);
         }
-        return super.setUpEnvironment(build, launcher,listener);
+        return super.setUpEnvironment(build, launcher, listener);
 
     }
 
-    private String getScmCheckoutUrl(){
+    private String getScmCheckoutUrl() {
         return PropertyLoader.getScmCheckoutEndPoint();
     }
 }

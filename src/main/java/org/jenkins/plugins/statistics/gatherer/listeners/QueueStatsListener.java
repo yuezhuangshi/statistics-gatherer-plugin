@@ -1,10 +1,7 @@
 package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import hudson.Extension;
-import hudson.model.AbstractBuild;
-import hudson.model.Build;
 import hudson.model.Cause;
-import hudson.model.FreeStyleBuild;
 import hudson.model.Queue.*;
 import hudson.model.queue.QueueListener;
 import hudson.triggers.SCMTrigger;

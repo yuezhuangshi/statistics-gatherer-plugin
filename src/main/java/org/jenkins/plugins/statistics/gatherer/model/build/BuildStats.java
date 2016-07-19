@@ -1,7 +1,10 @@
 package org.jenkins.plugins.statistics.gatherer.model.build;
 
+import org.json.JSONArray;
+
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +43,8 @@ public class BuildStats {
     private String buildUrl;
 
     private int contextId;
+
+    private List<Map> buildFailureCauses;
 
     public BuildStats(String ciUrl,
                       String jobName,
@@ -220,5 +225,13 @@ public class BuildStats {
 
     public void setContextId(int contextId) {
         this.contextId = contextId;
+    }
+
+    public List<Map> getBuildFailureCauses() {
+        return buildFailureCauses;
+    }
+
+    public void setBuildFailureCauses(List<Map> buildFailureCauses) {
+        this.buildFailureCauses = buildFailureCauses;
     }
 }
