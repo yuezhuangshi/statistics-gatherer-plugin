@@ -11,11 +11,8 @@ import jenkins.model.Jenkins;
 import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
 import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
-import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckout;
-import org.jenkins.plugins.statistics.gatherer.util.Constants;
-import org.jenkins.plugins.statistics.gatherer.util.JenkinsCauses;
-import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
-import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
+import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
+import org.jenkins.plugins.statistics.gatherer.util.*;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -225,8 +222,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setNumber(run.getNumber());
                 build.setResult(buildResult);
                 build.setBuildUrl(run.getUrl());
-                // Capture duration in milliseconds.
-                build.setDuration(run.getDuration());
+                build.setDuration(run.getDuration()/1000);
                 build.setEndTime(Calendar.getInstance().getTime());
                 RestClientUtil.postToService(getRestUrl(), build);
                 LOGGER.log(Level.INFO, run.getParent().getName() + " build is completed " +
@@ -243,12 +239,12 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
     public Environment setUpEnvironment(AbstractBuild build,
                                         Launcher launcher,
                                         BuildListener listener)throws IOException, InterruptedException{
-        if (PropertyLoader.getBuildStepInfo()){
-            ScmCheckout scmCheckout = new ScmCheckout();
-            scmCheckout.setStartTime(Calendar.getInstance().getTime());
-            scmCheckout.setBuildUrl(build.getUrl());
-            scmCheckout.setEndTime(new Date(0));
-            RestClientUtil.postToService(getScmCheckoutUrl(), scmCheckout);
+        if (PropertyLoader.getScmCheckoutInfo()){
+            ScmCheckoutInfo scmCheckoutInfo = new ScmCheckoutInfo();
+            scmCheckoutInfo.setStartTime(Calendar.getInstance().getTime());
+            scmCheckoutInfo.setBuildUrl(build.getUrl());
+            scmCheckoutInfo.setEndTime(new Date(0));
+            RestClientUtil.postToService(getScmCheckoutUrl(), scmCheckoutInfo);
         }
         return super.setUpEnvironment(build, launcher,listener);
 

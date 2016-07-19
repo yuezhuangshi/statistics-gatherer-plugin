@@ -9,9 +9,24 @@ public class BuildStepStats {
     private Date startTime;
     private Date endTime;
     private String buildUrl;
-    private String buildFullName;
     private String buildStepType;
     private String buildStepId;
+
+    public BuildStepStats(Date startTime, Date endTime, String buildUrl, String buildStepType, String buildStepId){
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.buildUrl = buildUrl;
+        this.buildStepType= buildStepType;
+        this.buildStepId = buildStepId;
+    }
+
+    public BuildStepStats(){
+        this.startTime = new Date(0);
+        this.endTime = new Date(0);
+        this.buildUrl = "";
+        this.buildStepType= "";
+        this.buildStepId = "";
+    }
 
     public Date getStartTime() {
         return startTime;
@@ -35,14 +50,6 @@ public class BuildStepStats {
 
     public void setBuildUrl(String buildUrl) {
         this.buildUrl = buildUrl;
-    }
-
-    public String getBuildFullName() {
-        return buildFullName;
-    }
-
-    public void setBuildFullName(String buildFullName) {
-        this.buildFullName = buildFullName;
     }
 
     public String getBuildStepType() {

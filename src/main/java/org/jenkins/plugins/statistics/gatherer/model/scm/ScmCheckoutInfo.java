@@ -5,11 +5,23 @@ import java.util.Date;
 /**
  * Created by mcharron on 2016-07-18.
  */
-public class ScmCheckout {
+public class ScmCheckoutInfo {
 
     private String buildUrl;
     private Date startTime;
     private Date endTime;
+
+    public ScmCheckoutInfo(Date startTime, Date endTime, String buildUrl){
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.buildUrl = buildUrl;
+    }
+
+    public ScmCheckoutInfo(){
+        this.startTime = new Date(0);
+        this.endTime = new Date(0);
+        this.buildUrl = "";
+    }
 
     public String getBuildUrl() {
         return buildUrl;

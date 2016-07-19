@@ -15,6 +15,9 @@ f.section(title:_("Statistics Gatherer")) {
     f.entry(title:_("BuildSteps URL"), field:"buildStepUrl") {
         f.textbox(default: "http://ci.mycompany.com/api/step")
     }
+    f.entry(title:_("ScmCheckoutInfo URL"), field:"scmCheckoutUrl") {
+        f.textbox(default: "http://ci.mycompany.com/api/step")
+    }
 
     f.entry(title:_("Send Queue Info"), field:"queueInfo") {
         f.checkbox(default: true)

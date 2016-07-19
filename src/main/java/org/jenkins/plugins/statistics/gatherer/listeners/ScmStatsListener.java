@@ -8,7 +8,7 @@ import hudson.model.TaskListener;
 import hudson.model.listeners.SCMListener;
 import hudson.scm.SCM;
 import hudson.scm.SCMRevisionState;
-import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckout;
+import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
@@ -28,11 +28,11 @@ public class ScmStatsListener extends SCMListener{
             if (!(run instanceof AbstractBuild)) {
                 return;
             }
-            ScmCheckout scmCheckout = new ScmCheckout();
-            scmCheckout.setBuildUrl(run.getUrl());
-            scmCheckout.setStartTime(new Date(0));
-            scmCheckout.setEndTime(Calendar.getInstance().getTime());
-            RestClientUtil.postToService(getUrl(), scmCheckout);
+            ScmCheckoutInfo scmCheckoutInfo = new ScmCheckoutInfo();
+            scmCheckoutInfo.setBuildUrl(run.getUrl());
+            scmCheckoutInfo.setStartTime(new Date(0));
+            scmCheckoutInfo.setEndTime(Calendar.getInstance().getTime());
+            RestClientUtil.postToService(getUrl(), scmCheckoutInfo);
         }
     }
 

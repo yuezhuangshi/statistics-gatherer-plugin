@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.gatherer.model;
+package org.jenkins.plugins.statistics.gatherer.model.job;
 
 import org.jenkins.plugins.statistics.gatherer.model.job.JobStats;
 import org.junit.Before;

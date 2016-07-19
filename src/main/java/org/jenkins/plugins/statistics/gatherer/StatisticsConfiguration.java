@@ -213,6 +213,17 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         return FormValidation.ok();
     }
 
+    public FormValidation doCheckScmCheckoutUrl(
+            @QueryParameter("scmCheckoutUrl") final String scmCheckoutUrl) {
+        if (scmCheckoutUrl == null || scmCheckoutUrl.isEmpty()) {
+            return FormValidation.error("Provide valid BuildStep URL. " +
+                    "For ex: \"http://ci.mycompany.com/api/checkout\"");
+        }
+        if (validateProtocolUsed(scmCheckoutUrl))
+            return FormValidation.error(PROTOCOL_ERROR_MESSAGE);
+        return FormValidation.ok();
+    }
+
     public FormValidation doCheckBuildInfo(
             @QueryParameter("buildInfo") final Boolean buildInfo) {
         if (buildInfo == null) {

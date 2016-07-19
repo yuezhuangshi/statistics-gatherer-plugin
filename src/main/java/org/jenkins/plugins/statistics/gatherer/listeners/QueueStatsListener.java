@@ -36,6 +36,7 @@ public class QueueStatsListener extends QueueListener {
         if (PropertyLoader.getQueueInfo()) {
             try {
                 QueueStats queue = getCiQueue(waitingItem);
+                System.out.println("Url is: " + waitingItem.getUrl());
                 addStartedBy(waitingItem, queue);
                 queue.setEntryTime(new Date());
                 queue.setExitTime(null);
