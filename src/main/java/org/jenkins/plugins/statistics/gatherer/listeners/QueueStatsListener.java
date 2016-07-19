@@ -1,7 +1,10 @@
 package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import hudson.Extension;
+import hudson.model.AbstractBuild;
+import hudson.model.Build;
 import hudson.model.Cause;
+import hudson.model.FreeStyleBuild;
 import hudson.model.Queue.*;
 import hudson.model.queue.QueueListener;
 import hudson.triggers.SCMTrigger;
@@ -36,7 +39,6 @@ public class QueueStatsListener extends QueueListener {
         if (PropertyLoader.getQueueInfo()) {
             try {
                 QueueStats queue = getCiQueue(waitingItem);
-                System.out.println("Url is: " + waitingItem.getUrl());
                 addStartedBy(waitingItem, queue);
                 queue.setEntryTime(new Date());
                 queue.setExitTime(null);
@@ -234,6 +236,7 @@ public class QueueStatsListener extends QueueListener {
                 queue.setExitTime(new Date());
                 queue.setStatus(Constants.LEFT);
                 queue.setDuration(System.currentTimeMillis() - leftItem.getInQueueSince());
+                queue.setContextId(leftItem.outcome.hashCode());
                 RestClientUtil.postToService(getRestUrl(), queue);
             } catch (Exception e) {
                 logExceptionLeft(leftItem, e);

@@ -27,6 +27,16 @@ public class BuildStepStatsTest {
     }
 
     @Test
+    public void givenNothing_whenCreateBuildStepStats_thenItIsInitialized(){
+        BuildStepStats buildStep = new BuildStepStats();
+        assertEquals("", buildStep.getBuildUrl());
+        assertEquals("", buildStep.getBuildStepType());
+        assertEquals("", buildStep.getBuildStepId());
+        assertEquals(new Date(0), buildStep.getStartTime());
+        assertEquals(new Date(0), buildStep.getEndTime());
+    }
+
+    @Test
     public void givenBuildStepStats_whenGetBuildUrl_thenReturnBuildUrl() {
         //given
 

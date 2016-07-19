@@ -23,6 +23,14 @@ public class ScmCheckoutInfoTest {
     }
 
     @Test
+    public void givenNothing_whenCreateScmCheckoutInfo_thenItIsInitialized(){
+        ScmCheckoutInfo scmCheckout = new ScmCheckoutInfo();
+        assertEquals("", scmCheckout.getBuildUrl());
+        assertEquals(new Date(0), scmCheckout.getStartTime());
+        assertEquals(new Date(0), scmCheckout.getEndTime());
+    }
+
+    @Test
     public void givenScmCheckoutInfo_whenGetBuildUrl_thenReturnBuildUrl() {
         //given
 

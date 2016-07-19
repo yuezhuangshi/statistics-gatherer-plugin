@@ -39,6 +39,8 @@ public class BuildStats {
 
     private String buildUrl;
 
+    private int contextId;
+
     public BuildStats(String ciUrl,
                       String jobName,
                       String fullJobName,
@@ -53,7 +55,8 @@ public class BuildStats {
                       Map<String, String> parameters,
                       SCMInfo scmInfo,
                       long queueTime,
-                      String buildUrl) {
+                      String buildUrl,
+                      int contextId) {
         this.ciUrl = ciUrl;
         this.jobName = jobName;
         this.fullJobName = fullJobName;
@@ -69,6 +72,7 @@ public class BuildStats {
         this.scmInfo = scmInfo;
         this.queueTime = queueTime;
         this.buildUrl = buildUrl;
+        this.contextId = contextId;
     }
 
     public BuildStats() {
@@ -87,6 +91,7 @@ public class BuildStats {
         this.scmInfo = new SCMInfo();
         this.queueTime = 0;
         this.buildUrl = "";
+        this.contextId = 0;
     }
 
     public String getCiUrl() {
@@ -207,5 +212,13 @@ public class BuildStats {
 
     public void setBuildUrl(String buildUrl) {
         this.buildUrl = buildUrl;
+    }
+
+    public int getContextId() {
+        return contextId;
+    }
+
+    public void setContextId(int contextId) {
+        this.contextId = contextId;
     }
 }

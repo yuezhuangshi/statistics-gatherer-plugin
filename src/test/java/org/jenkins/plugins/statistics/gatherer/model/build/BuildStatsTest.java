@@ -29,6 +29,7 @@ public class BuildStatsTest {
     private static final Date END_TIME = new Date(1000000);
     private static final long DURATION = 123456;
     private static final long QUEUE_TIME = 12345678;
+    private static final int CONTEXT_ID = 333333333;
     private static final SlaveInfo SLAVE_INFO = new SlaveInfo();
     private static final SCMInfo SCM_INFO = new SCMInfo();
     private static final Map<String, String> PARAMETERS = new HashMap<>();
@@ -51,7 +52,8 @@ public class BuildStatsTest {
                 PARAMETERS,
                 SCM_INFO,
                 QUEUE_TIME,
-                BUILD_URL);
+                BUILD_URL,
+                CONTEXT_ID);
     }
 
     @Test
@@ -75,6 +77,7 @@ public class BuildStatsTest {
         assertEquals("", buildStats.getScmInfo().getUrl());
         assertEquals(0, buildStats.getQueueTime());
         assertEquals("", buildStats.getBuildUrl());
+        assertEquals(0, buildStats.getContextId());
     }
 
     @Test
@@ -236,6 +239,29 @@ public class BuildStatsTest {
         //then
         int actualNumber = buildStats.getNumber();
         assertEquals(expectedNumber, actualNumber);
+    }
+
+    @Test
+    public void givenStatsBuild_whenGetContextId_thenReturnContextId() {
+        //given
+
+        //when
+        int contextId = buildStats.getContextId();
+
+        //then
+        assertEquals(CONTEXT_ID, contextId);
+    }
+
+    @Test
+    public void givenStatsBuild_whenSetContextId_thenContextIdIsSet() {
+        //given
+        int expectedContextId = 123456789;
+        //when
+        buildStats.setContextId(expectedContextId);
+
+        //then
+        int actualContextId = buildStats.getContextId();
+        assertEquals(expectedContextId, actualContextId);
     }
 
     @Test

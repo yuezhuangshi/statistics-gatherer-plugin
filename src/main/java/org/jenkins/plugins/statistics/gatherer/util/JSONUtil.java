@@ -1,5 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class JSONUtil {
         try {
             convertedJson = mapper.writeValueAsString(object);
             return convertedJson;
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             LOGGER.log(Level.WARNING, "Json conversion failed for object " + object, e);
         }
         return convertedJson;

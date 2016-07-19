@@ -26,6 +26,7 @@ public class QueueStatsTest {
     private static final int JENKINS_QUEUE_ID = 1;
     private static final String STATUS = "COMPLETED";
     private static final int DURATION = 2000;
+    private static final int CONTEXT_ID = 444444444;
     private static final ArrayList<QueueCause> QUEUE_CAUSES = new ArrayList<QueueCause>();
     private QueueStats queueStats;
 
@@ -39,7 +40,8 @@ public class QueueStatsTest {
                 JENKINS_QUEUE_ID,
                 STATUS,
                 DURATION,
-                QUEUE_CAUSES);
+                QUEUE_CAUSES,
+                CONTEXT_ID);
     }
 
     @Test
@@ -69,6 +71,7 @@ public class QueueStatsTest {
         assertEquals("", queueStats.getStatus());
         assertEquals(0, queueStats.getDuration());
         assertEquals(new ArrayList<QueueCause>(), queueStats.getQueueCauses());
+        assertEquals(0, queueStats.getContextId());
     }
 
     @Test
@@ -146,6 +149,17 @@ public class QueueStatsTest {
 
         //then
         assertEquals(DURATION, duration);
+    }
+
+    @Test
+    public void givenStatsQueue_whenGetContextId_thenReturnContextId() {
+        //given
+
+        //when
+        int contextId = queueStats.getContextId();
+
+        //then
+        assertEquals(CONTEXT_ID, contextId);
     }
 
     @Test
@@ -228,6 +242,18 @@ public class QueueStatsTest {
         //then
         int actualQueueId = queueStats.getJenkinsQueueId();
         assertEquals(expectedQueueId, actualQueueId);
+    }
+
+    @Test
+    public void givenStatsQueue_whenSetContextId_thenContextIdIsSet() {
+        //given
+        int expectedContextId = 123456;
+        //when
+        queueStats.setContextId(expectedContextId);
+
+        //then
+        int actualContextId = queueStats.getContextId();
+        assertEquals(expectedContextId, actualContextId);
     }
     @Test
     public void givenStatsQueue_whenSetStatus_thenStatusIsSet() {
