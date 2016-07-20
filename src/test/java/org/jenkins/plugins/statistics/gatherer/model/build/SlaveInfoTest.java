@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.gatherer.model;
+package org.jenkins.plugins.statistics.gatherer.model.build;
 
 import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
 import org.junit.Before;
@@ -77,7 +77,7 @@ public class SlaveInfoTest {
         String label = slaveInfo.getLabel();
 
         //then
-        assertEquals(label, label);
+        assertEquals(LABEL, label);
     }
 
     @Test

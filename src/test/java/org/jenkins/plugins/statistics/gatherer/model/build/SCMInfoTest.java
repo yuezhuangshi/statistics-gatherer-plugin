@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.gatherer.model;
+package org.jenkins.plugins.statistics.gatherer.model.build;
 
 import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.junit.Test;

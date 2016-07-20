@@ -142,6 +142,21 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         save();
     }
 
+    public String getScmCheckoutUrl() {
+        if (scmCheckoutUrl != null && !scmCheckoutUrl.isEmpty()) {
+            if (scmCheckoutUrl.endsWith(SLASH)) {
+                return scmCheckoutUrl;
+            }
+            return scmCheckoutUrl + SLASH;
+        }
+        return scmCheckoutUrl;
+    }
+
+    public void setScmCheckoutUrl(String scmCheckoutUrl) {
+        this.scmCheckoutUrl = scmCheckoutUrl;
+        save();
+    }
+
     @Override
     public boolean configure(StaplerRequest request, JSONObject json) throws FormException {
         request.bindJSON(this, json);
@@ -198,6 +213,17 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         return FormValidation.ok();
     }
 
+    public FormValidation doCheckScmCheckoutUrl(
+            @QueryParameter("scmCheckoutUrl") final String scmCheckoutUrl) {
+        if (scmCheckoutUrl == null || scmCheckoutUrl.isEmpty()) {
+            return FormValidation.error("Provide valid BuildStep URL. " +
+                    "For ex: \"http://ci.mycompany.com/api/checkout\"");
+        }
+        if (validateProtocolUsed(scmCheckoutUrl))
+            return FormValidation.error(PROTOCOL_ERROR_MESSAGE);
+        return FormValidation.ok();
+    }
+
     public FormValidation doCheckBuildInfo(
             @QueryParameter("buildInfo") final Boolean buildInfo) {
         if (buildInfo == null) {
@@ -227,6 +253,14 @@ public class StatisticsConfiguration extends GlobalConfiguration {
             @QueryParameter("buildStepInfo") final Boolean buildStepInfo) {
         if (buildStepInfo == null) {
             return FormValidation.error("Provide valid BuildStepInfo. ");
+        }
+        return FormValidation.ok();
+    }
+
+    public FormValidation doCheckScmCheckoutInfo(
+            @QueryParameter("scmCheckoutInfo") final Boolean scmCheckoutInfo) {
+        if (scmCheckoutInfo == null) {
+            return FormValidation.error("Provide valid CcmCheckoutInfo. ");
         }
         return FormValidation.ok();
     }

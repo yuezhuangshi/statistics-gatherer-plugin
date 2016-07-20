@@ -23,6 +23,8 @@ public class QueueStats {
 
     private String status;
 
+    private int contextId;
+
     private long duration;
 
     private List<QueueCause> queueCauses = new ArrayList<>();
@@ -35,7 +37,8 @@ public class QueueStats {
                       int jenkinsQueueId,
                       String status,
                       long duration,
-                      List<QueueCause> queueCauses) {
+                      List<QueueCause> queueCauses,
+                      int contextId) {
         this.ciUrl = ciUrl;
         this.jobName = jobName;
         this.entryTime = entryTime;
@@ -45,6 +48,7 @@ public class QueueStats {
         this.status = status;
         this.duration = duration;
         this.queueCauses = queueCauses;
+        this.contextId = contextId;
     }
 
     public QueueStats() {
@@ -57,6 +61,7 @@ public class QueueStats {
         this.status = "";
         this.duration = 0;
         this.queueCauses = new ArrayList<>();
+        this.contextId = 0;
     }
 
 
@@ -134,5 +139,13 @@ public class QueueStats {
 
     public void addQueueCause(QueueCause queueCause) {
         this.queueCauses.add(queueCause);
+    }
+
+    public int getContextId() {
+        return contextId;
+    }
+
+    public void setContextId(int contextId) {
+        this.contextId = contextId;
     }
 }

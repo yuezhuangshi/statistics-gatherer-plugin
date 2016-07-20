@@ -1,4 +1,4 @@
-package org.jenkins.plugins.statistics.gatherer.model;
+package org.jenkins.plugins.statistics.gatherer.model.queue;
 
 import org.jenkins.plugins.statistics.gatherer.model.queue.QueueCause;
 import org.junit.Test;

@@ -125,13 +125,22 @@ public class PropertyLoader {
         return endPoint == null ? "" : endPoint;
     }
 
+    public static String getScmCheckoutEndPoint() {
+        String endPoint = StatisticsConfiguration.get().getScmCheckoutUrl();
+        if (endPoint != null && !endPoint.isEmpty()) {
+            return endPoint;
+        }
+        endPoint = getEnvironmentProperty("statistics.endpoint.scmCheckoutUrl");
+        return endPoint == null ? "" : endPoint;
+    }
+
     public static Boolean getQueueInfo() {
         Boolean queueInfo = StatisticsConfiguration.get().getQueueInfo();
         if (queueInfo != null) {
             return queueInfo;
         }
         String queueInfoEnv = getEnvironmentProperty("statistics.endpoint.queueInfo");
-        return queueInfoEnv.equals("true");
+        return "true".equals(queueInfoEnv);
     }
 
     public static Boolean getBuildInfo() {
@@ -140,7 +149,7 @@ public class PropertyLoader {
             return buildInfo;
         }
         String buildInfoEnv = getEnvironmentProperty("statistics.endpoint.buildInfo");
-        return buildInfoEnv.equals("true");
+        return "true".equals(buildInfoEnv);
     }
 
     public static Boolean getProjectInfo() {
@@ -149,15 +158,24 @@ public class PropertyLoader {
             return projectInfo;
         }
         String projectInfoEnv = getEnvironmentProperty("statistics.endpoint.projectInfo");
-        return projectInfoEnv.equals("true");
+        return "true".equals(projectInfoEnv);
     }
 
     public static Boolean getBuildStepInfo() {
-        Boolean projectInfo = StatisticsConfiguration.get().getBuildStepInfo();
-        if (projectInfo != null) {
-            return projectInfo;
+        Boolean buildStepInfo = StatisticsConfiguration.get().getBuildStepInfo();
+        if (buildStepInfo != null) {
+            return buildStepInfo;
         }
-        String projectInfoEnv = getEnvironmentProperty("statistics.endpoint.buildStepInfo");
-        return projectInfoEnv.equals("true");
+        String buildStepInfoEnv = getEnvironmentProperty("statistics.endpoint.buildStepInfo");
+        return "true".equals(buildStepInfoEnv);
+    }
+
+    public static Boolean getScmCheckoutInfo() {
+        Boolean scmCheckoutInfo = StatisticsConfiguration.get().getScmCheckoutInfo();
+        if (scmCheckoutInfo != null) {
+            return scmCheckoutInfo;
+        }
+        String scmCheckoutInfoEnv = getEnvironmentProperty("statistics.endpoint.scmCheckoutInfo");
+        return "true".equals(scmCheckoutInfoEnv);
     }
 }

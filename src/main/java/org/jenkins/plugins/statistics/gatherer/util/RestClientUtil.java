@@ -5,6 +5,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONObject;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +14,9 @@ public class RestClientUtil {
 
     private static final Logger LOGGER = Logger.getLogger(
             RestClientUtil.class.getName());
+    public static final String APPLICATION_JSON = "application/json";
+    public static final String ACCEPT = "accept";
+    public static final String CONTENT_TYPE = "Content-Type";
 
     private RestClientUtil() {
         throw new IllegalAccessError("Utility class");
@@ -21,8 +25,8 @@ public class RestClientUtil {
     public static void postToService(final String url, Object object) {
         String jsonToPost = JSONUtil.convertToJson(object);
         Unirest.post(url)
-                .header("accept", "application/json")
-                .header("Content-Type", "application/json")
+                .header(ACCEPT, APPLICATION_JSON)
+                .header(CONTENT_TYPE, APPLICATION_JSON)
                 .body(jsonToPost)
                 .asJsonAsync(new Callback<JsonNode>() {
 
@@ -40,5 +44,19 @@ public class RestClientUtil {
                     }
 
                 });
+    }
+
+    public static JSONObject getJson(final String url) {
+        try{
+            HttpResponse<JsonNode> response = Unirest.get(url)
+                .header(ACCEPT, APPLICATION_JSON)
+                .header(CONTENT_TYPE, APPLICATION_JSON)
+                .asJson();
+            return response.getBody().getObject();
+        }
+        catch (UnirestException e){
+            LOGGER.log(Level.WARNING, "Json called have failed in unirest.", e);
+        }
+        return null;
     }
 }

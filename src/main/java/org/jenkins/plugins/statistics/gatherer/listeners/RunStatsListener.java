@@ -2,6 +2,8 @@ package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import hudson.EnvVars;
 import hudson.Extension;
+import hudson.Launcher;
+import hudson.PluginWrapper;
 import hudson.model.*;
 import hudson.model.listeners.RunListener;
 import hudson.triggers.SCMTrigger;
@@ -10,15 +12,13 @@ import jenkins.model.Jenkins;
 import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
 import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
-import org.jenkins.plugins.statistics.gatherer.util.Constants;
-import org.jenkins.plugins.statistics.gatherer.util.JenkinsCauses;
-import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
-import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
+import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
+import org.jenkins.plugins.statistics.gatherer.util.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 public class RunStatsListener extends RunListener<Run<?, ?>> {
 
     private static final Logger LOGGER = Logger.getLogger(RunStatsListener.class.getName());
+    private static final String BUILD_FAILURE_URL_TO_APPEND = "/api/json?depth=2&tree=actions[foundFailureCauses[categories,description,id,name]]";
 
     public RunStatsListener() {
         //Necessary for jenkins
@@ -50,6 +51,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 final String buildResult = run.getResult() == null ?
                         "INPROGRESS" : run.getResult().toString();
                 BuildStats build = new BuildStats();
+                build.setContextId(run.getExecutor().getCurrentWorkUnit().context.hashCode());
                 build.setStartTime(run.getTimestamp().getTime());
                 build.setCiUrl(Jenkins.getInstance().getRootUrl());
                 build.setJobName(run.getParent().getName());
@@ -59,6 +61,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setBuildUrl(run.getUrl());
                 build.setQueueTime(run.getExecutor() != null ?
                         run.getExecutor().getTimeSpentInQueue() : 0);
+                build.setBuildCause(run.getCauses().get(0).getShortDescription());
                 addUserDetails(run, build);
                 addSCMInfo(run, listener, build);
                 addParameters(run, build);
@@ -148,7 +151,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
      */
     private void addSCMInfo(Run<?, ?> run, TaskListener listener,
                             BuildStats build) throws InterruptedException {
-        EnvVars environment =getEnvVars(run, listener);
+        EnvVars environment = getEnvVars(run, listener);
         SCMInfo scmInfo = new SCMInfo();
         if (environment != null) {
             if (environment.get("GIT_URL") != null) {
@@ -164,7 +167,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
             if (environment.get("GIT_COMMIT") != null) {
                 scmInfo.setCommit(environment.get("GIT_COMMIT"));
             } else if (environment.get("SVN_REVISION") != null) {
-                scmInfo.setUrl(environment.get("SVN_REVISION"));
+                scmInfo.setCommit(environment.get("SVN_REVISION"));
             }
         }
         build.setScmInfo(scmInfo);
@@ -223,9 +226,9 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setNumber(run.getNumber());
                 build.setResult(buildResult);
                 build.setBuildUrl(run.getUrl());
-                // Capture duration in milliseconds.
                 build.setDuration(run.getDuration());
                 build.setEndTime(Calendar.getInstance().getTime());
+                addBuildFailureCauses(build);
                 RestClientUtil.postToService(getRestUrl(), build);
                 LOGGER.log(Level.INFO, run.getParent().getName() + " build is completed " +
                         "its status is : " + buildResult +
@@ -235,5 +238,49 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                         " for build " + run.getDisplayName(), e);
             }
         }
+    }
+
+    private void addBuildFailureCauses(BuildStats build) {
+        List<PluginWrapper> plugins = Jenkins.getInstance().getPluginManager().getPlugins();
+        for (PluginWrapper plugin : plugins) {
+            if (plugin.getDisplayName().contains("Build Failure Analyzer")) {
+                JSONObject response = RestClientUtil.getJson(build.getCiUrl() + build.getBuildUrl() + BUILD_FAILURE_URL_TO_APPEND);
+                if (response != null && response.getJSONArray("actions") != null) {
+                    JSONArray actions = response.getJSONArray("actions");
+                    for (int i = 0; i < actions.length(); i++) {
+                        JSONObject failureResponse = actions.getJSONObject(i);
+                        if (!failureResponse.keySet().isEmpty()) {
+                            List<Map> failureCauses = new ArrayList<>();
+                            for (int j = 0; j < failureResponse.getJSONArray("foundFailureCauses").length(); j++) {
+                                JSONArray foundFailureCauses = failureResponse.getJSONArray("foundFailureCauses");
+                                Map jsonObject = JSONUtil.convertBuildFailureToMap(foundFailureCauses.getJSONObject(j));
+                                failureCauses.add(jsonObject);
+                            }
+                            build.setBuildFailureCauses(failureCauses);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public Environment setUpEnvironment(AbstractBuild build,
+                                        Launcher launcher,
+                                        BuildListener listener) throws IOException, InterruptedException {
+        if (PropertyLoader.getScmCheckoutInfo()) {
+            ScmCheckoutInfo scmCheckoutInfo = new ScmCheckoutInfo();
+            scmCheckoutInfo.setStartTime(Calendar.getInstance().getTime());
+            scmCheckoutInfo.setBuildUrl(build.getUrl());
+            scmCheckoutInfo.setEndTime(new Date(0));
+            RestClientUtil.postToService(getScmCheckoutUrl(), scmCheckoutInfo);
+        }
+        return super.setUpEnvironment(build, launcher, listener);
+
+    }
+
+    private String getScmCheckoutUrl() {
+        return PropertyLoader.getScmCheckoutEndPoint();
     }
 }
