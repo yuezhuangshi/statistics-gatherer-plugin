@@ -1,11 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.model.build;
 
-import org.json.JSONArray;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hthakkallapally on 3/16/2015.
@@ -44,6 +39,8 @@ public class BuildStats {
 
     private int contextId;
 
+    private String buildCause;
+
     private List<Map> buildFailureCauses;
 
     public BuildStats(String ciUrl,
@@ -61,7 +58,9 @@ public class BuildStats {
                       SCMInfo scmInfo,
                       long queueTime,
                       String buildUrl,
-                      int contextId) {
+                      int contextId,
+                      String buildCause,
+                      List<Map> buildFailureCauses) {
         this.ciUrl = ciUrl;
         this.jobName = jobName;
         this.fullJobName = fullJobName;
@@ -78,6 +77,8 @@ public class BuildStats {
         this.queueTime = queueTime;
         this.buildUrl = buildUrl;
         this.contextId = contextId;
+        this.buildCause = buildCause;
+        this.buildFailureCauses = buildFailureCauses;
     }
 
     public BuildStats() {
@@ -97,6 +98,8 @@ public class BuildStats {
         this.queueTime = 0;
         this.buildUrl = "";
         this.contextId = 0;
+        this.buildCause = "";
+        this.buildFailureCauses = new ArrayList<>();
     }
 
     public String getCiUrl() {
@@ -225,6 +228,14 @@ public class BuildStats {
 
     public void setContextId(int contextId) {
         this.contextId = contextId;
+    }
+
+    public String getBuildCause() {
+        return buildCause;
+    }
+
+    public void setBuildCause(String buildCause) {
+        this.buildCause = buildCause;
     }
 
     public List<Map> getBuildFailureCauses() {

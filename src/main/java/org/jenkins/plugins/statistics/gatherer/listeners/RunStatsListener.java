@@ -226,31 +226,9 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setResult(buildResult);
                 build.setBuildUrl(run.getUrl());
                 build.setDuration(run.getDuration());
-                System.out.println(run.getCauses().get(0).getShortDescription());
+                build.setBuildCause(run.getCauses().get(0).getShortDescription());
                 build.setEndTime(Calendar.getInstance().getTime());
-                List<PluginWrapper> plugins = Jenkins.getInstance().getPluginManager().getPlugins();
-                for (PluginWrapper plugin : plugins) {
-                    if (plugin.getDisplayName().contains("Build Failure Analyzer")) {
-                        JSONObject response = RestClientUtil.getJson(build.getCiUrl() + build.getBuildUrl() + buildFailureUrlToAppend);
-                        if (response != null && response.getJSONArray("actions") != null) {
-                            JSONArray actions = response.getJSONArray("actions");
-                            for (int i = 0; i < actions.length(); i++) {
-                                JSONObject failureResponse = actions.getJSONObject(i);
-                                if (!failureResponse.keySet().isEmpty()) {
-                                    List<Map> failureCauses = new ArrayList<>();
-                                    for (int j = 0; j < failureResponse.getJSONArray("foundFailureCauses").length(); j++) {
-                                        JSONArray foundFailureCauses = failureResponse.getJSONArray("foundFailureCauses");
-                                        Map jsonObject = JSONUtil.convertBuildFailureToMap(foundFailureCauses.getJSONObject(j));
-                                        failureCauses.add(jsonObject);
-                                    }
-                                    build.setBuildFailureCauses(failureCauses);
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-                System.out.println("JSon is: "+ JSONUtil.convertToJson(build));
+                addBuildFailureCauses(build);
                 RestClientUtil.postToService(getRestUrl(), build);
                 LOGGER.log(Level.INFO, run.getParent().getName() + " build is completed " +
                         "its status is : " + buildResult +
@@ -258,6 +236,31 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Failed to call API " + getRestUrl() +
                         " for build " + run.getDisplayName(), e);
+            }
+        }
+    }
+
+    private void addBuildFailureCauses(BuildStats build) {
+        List<PluginWrapper> plugins = Jenkins.getInstance().getPluginManager().getPlugins();
+        for (PluginWrapper plugin : plugins) {
+            if (plugin.getDisplayName().contains("Build Failure Analyzer")) {
+                JSONObject response = RestClientUtil.getJson(build.getCiUrl() + build.getBuildUrl() + buildFailureUrlToAppend);
+                if (response != null && response.getJSONArray("actions") != null) {
+                    JSONArray actions = response.getJSONArray("actions");
+                    for (int i = 0; i < actions.length(); i++) {
+                        JSONObject failureResponse = actions.getJSONObject(i);
+                        if (!failureResponse.keySet().isEmpty()) {
+                            List<Map> failureCauses = new ArrayList<>();
+                            for (int j = 0; j < failureResponse.getJSONArray("foundFailureCauses").length(); j++) {
+                                JSONArray foundFailureCauses = failureResponse.getJSONArray("foundFailureCauses");
+                                Map jsonObject = JSONUtil.convertBuildFailureToMap(foundFailureCauses.getJSONObject(j));
+                                failureCauses.add(jsonObject);
+                            }
+                            build.setBuildFailureCauses(failureCauses);
+                        }
+                    }
+                    break;
+                }
             }
         }
     }

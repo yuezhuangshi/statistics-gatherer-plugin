@@ -6,9 +6,7 @@ import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -34,6 +32,8 @@ public class BuildStatsTest {
     private static final SCMInfo SCM_INFO = new SCMInfo();
     private static final Map<String, String> PARAMETERS = new HashMap<>();
     private static final String BUILD_URL = "http://url.com/build";
+    private static final String BUILD_CAUSE = "This is a cause";
+    private static final List<Map> BUILD_FAILURE_CAUSES = new ArrayList<>();
     private BuildStats buildStats;
 
     @Before
@@ -53,7 +53,9 @@ public class BuildStatsTest {
                 SCM_INFO,
                 QUEUE_TIME,
                 BUILD_URL,
-                CONTEXT_ID);
+                CONTEXT_ID,
+                BUILD_CAUSE,
+                BUILD_FAILURE_CAUSES);
     }
 
     @Test
@@ -78,6 +80,8 @@ public class BuildStatsTest {
         assertEquals(0, buildStats.getQueueTime());
         assertEquals("", buildStats.getBuildUrl());
         assertEquals(0, buildStats.getContextId());
+        assertEquals("", buildStats.getBuildCause());
+        assertEquals(new ArrayList<>(), buildStats.getBuildFailureCauses());
     }
 
     @Test
@@ -447,5 +451,52 @@ public class BuildStatsTest {
         //then
         String actualBuildUrl = buildStats.getBuildUrl();
         assertEquals(expectedBuildUrl, actualBuildUrl);
+    }
+
+    @Test
+    public void givenStatsBuild_whenGetBuildCause_thenReturnBuildCause() {
+        //given
+
+        //when
+        String buildCause = buildStats.getBuildCause();
+
+        //then
+        assertEquals(BUILD_CAUSE, buildCause);
+    }
+
+    @Test
+    public void givenStatsBuild_whenSetBuildCause_thenBuildCauseIsSet() {
+        //given
+        String expectedBuildCause = "IHazBuildCause!";
+        //when
+        buildStats.setBuildCause(expectedBuildCause);
+
+        //then
+        String actualBuildCause = buildStats.getBuildCause();
+        assertEquals(expectedBuildCause, actualBuildCause);
+    }
+
+    @Test
+    public void givenStatsBuild_whenGetBuildFailureCauses_thenReturnBuildFailureCauses() {
+        //given
+
+        //when
+        List<Map> buildFailureCauses = buildStats.getBuildFailureCauses();
+
+        //then
+        assertEquals(BUILD_FAILURE_CAUSES, buildFailureCauses);
+    }
+
+    @Test
+    public void givenStatsBuild_whenSetBuildFailureCauses_thenBuildFailureCausesIsSet() {
+        //given
+        List<Map> expectedBuildFailureCauses = new ArrayList<>();
+        expectedBuildFailureCauses.add(new HashMap());
+        //when
+        buildStats.setBuildFailureCauses(expectedBuildFailureCauses);
+
+        //then
+        List<Map> actualBuildFailureCauses = buildStats.getBuildFailureCauses();
+        assertEquals(expectedBuildFailureCauses, actualBuildFailureCauses);
     }
 }
