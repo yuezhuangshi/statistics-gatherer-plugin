@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 public class RunStatsListener extends RunListener<Run<?, ?>> {
 
     private static final Logger LOGGER = Logger.getLogger(RunStatsListener.class.getName());
-    private static final String buildFailureUrlToAppend = "/api/json?depth=2&tree=actions[foundFailureCauses[categories,description,id,name]]";
+    private static final String BUILD_FAILURE_URL_TO_APPEND = "/api/json?depth=2&tree=actions[foundFailureCauses[categories,description,id,name]]";
 
     public RunStatsListener() {
         //Necessary for jenkins
@@ -61,6 +61,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setBuildUrl(run.getUrl());
                 build.setQueueTime(run.getExecutor() != null ?
                         run.getExecutor().getTimeSpentInQueue() : 0);
+                build.setBuildCause(run.getCauses().get(0).getShortDescription());
                 addUserDetails(run, build);
                 addSCMInfo(run, listener, build);
                 addParameters(run, build);
@@ -226,7 +227,6 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setResult(buildResult);
                 build.setBuildUrl(run.getUrl());
                 build.setDuration(run.getDuration());
-                build.setBuildCause(run.getCauses().get(0).getShortDescription());
                 build.setEndTime(Calendar.getInstance().getTime());
                 addBuildFailureCauses(build);
                 RestClientUtil.postToService(getRestUrl(), build);
@@ -244,7 +244,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
         List<PluginWrapper> plugins = Jenkins.getInstance().getPluginManager().getPlugins();
         for (PluginWrapper plugin : plugins) {
             if (plugin.getDisplayName().contains("Build Failure Analyzer")) {
-                JSONObject response = RestClientUtil.getJson(build.getCiUrl() + build.getBuildUrl() + buildFailureUrlToAppend);
+                JSONObject response = RestClientUtil.getJson(build.getCiUrl() + build.getBuildUrl() + BUILD_FAILURE_URL_TO_APPEND);
                 if (response != null && response.getJSONArray("actions") != null) {
                     JSONArray actions = response.getJSONArray("actions");
                     for (int i = 0; i < actions.length(); i++) {

@@ -38,7 +38,7 @@ public class JSONUtil {
 
         while( keys.hasNext() ){
             String key = (String)keys.next();
-            if (key.equals("categories")){
+            if ("categories".equals(key)){
                 List<String> value = convertJsonArrayToList(jObject.getJSONArray(key));
                 map.put(key, value);
             } else {
