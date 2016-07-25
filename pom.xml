@@ -16,7 +16,7 @@
     <packaging>hpi</packaging>
 
     <name>Statistics Gatherer Plugin</name>
-    <description>Captures Statistics related to Jenkins Builds, Jobs and Queue and sends them where you want.
+    <description>Captures Statistics related to Jenkins Builds, Build Step, SCM checkouts, Jobs and Queue and sends them where you want.
     </description>
     <url>https://wiki.jenkins-ci.org/display/JENKINS/Statistics+Gatherer+Plugin</url>
     <licenses>

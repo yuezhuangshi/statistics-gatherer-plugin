@@ -266,9 +266,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     }
 
     private boolean validateProtocolUsed(String url) {
-        if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-            return true;
-        }
-        return false;
+        return !(url.startsWith("http://") || url.startsWith("https://"));
     }
 }
