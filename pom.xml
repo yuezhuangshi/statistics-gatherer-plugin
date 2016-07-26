@@ -19,6 +19,20 @@
         where you want.
     </description>
     <url>https://wiki.jenkins-ci.org/display/JENKINS/Statistics+Gatherer+Plugin</url>
+    <scm>
+        <connection>scm:git:ssh://github.com/jenkinsci/statistics-gatherer-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/statistics-gatherer-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/statistics-gatherer-plugin</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>maximecharron</id>
+            <name>Maxime Charron</name>
+            <email>charron.maxime97@gmail.com</email>
+        </developer>
+    </developers>
+
     <licenses>
         <license>
             <name>MIT License</name>
