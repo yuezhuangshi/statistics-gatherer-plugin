@@ -163,12 +163,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         return true;
     }
 
-    /**
-     * Validate notificationUrl is filled correctly.
-     *
-     * @param buildUrl
-     * @return
-     */
     public FormValidation doCheckBuildUrl(
             @QueryParameter("buildUrl") final String buildUrl) {
         if (buildUrl == null || buildUrl.isEmpty()) {

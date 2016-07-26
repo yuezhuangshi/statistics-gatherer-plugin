@@ -28,10 +28,6 @@ public class PropertyLoader {
         return instance;
     }
 
-    /**
-     * This should only be called when the process is being setup.  It
-     * is not intended for general use.
-     */
     public static final synchronized void setInstance(
             final PropertyLoader propertyLoader) {
         instance = propertyLoader;
@@ -41,16 +37,6 @@ public class PropertyLoader {
         return resourceBundle.getString(keyProperty);
     }
 
-    /**
-     * Utility method to get the properties value
-     * First it will try to get the property value from the vars supplied
-     * then from the property file
-     *
-     * @param inKey for which value will be returned
-     *              the properties are looked thru the property file
-     * @return the value of the key
-     * @throws Exception
-     */
     public String getProperty(
             final String inKey) {
         if (inKey == null) {
@@ -75,15 +61,6 @@ public class PropertyLoader {
         return value;
     }
 
-    /**
-     * Utility method to get the properties value
-     * First it will try to get the property value from the vars supplied
-     * then from the property file
-     *
-     * @param key for which value will be returned
-     * @return the value of the key
-     * @throws Exception
-     */
     public static String getEnvironmentProperty(
             final String key) {
         return getInstance().getProperty(key);

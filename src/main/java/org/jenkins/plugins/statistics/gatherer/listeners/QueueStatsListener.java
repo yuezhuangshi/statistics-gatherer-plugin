@@ -133,12 +133,6 @@ public class QueueStatsListener extends QueueListener {
         }
     }
 
-    /**
-     * onEnterBlocked is used to update Reason for waiting in Queue.
-     * for ex. "Waiting for next available executor"
-     *
-     * @param buildableItem
-     */
     @Override
     public void onEnterBuildable(BuildableItem buildableItem) {
         if (PropertyLoader.getQueueInfo()) {
@@ -175,21 +169,10 @@ public class QueueStatsListener extends QueueListener {
                 "failed with exception : " + e);
     }
 
-    /**
-     * Construct REST API url for queue resource.
-     *
-     * @return
-     */
     private String getRestUrl() {
         return PropertyLoader.getQueueEndPoint();
     }
 
-    /**
-     * Returns a queue model object from Jenkins queue.
-     *
-     * @param item
-     * @return
-     */
     private QueueStats getCiQueue(Item item) {
         QueueStats queue = new QueueStats();
         String ciUrl = Jenkins.getInstance() != null
@@ -202,12 +185,6 @@ public class QueueStatsListener extends QueueListener {
         return queue;
     }
 
-    /**
-     * Adds the Started By information to the Queue.
-     *
-     * @param item
-     * @param queue
-     */
     private void addStartedBy(Item item, QueueStats queue) {
         List<Cause> causes = item.getCauses();
         for (Cause cause : causes) {
