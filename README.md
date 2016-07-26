@@ -151,7 +151,7 @@ When a job leaves the queue, the following JSON will be sent:
     "entryTime": 1469455391674,
     "jobName": "Projects » AProject » Blop » Foo » OnCommit",
     "jenkinsQueueId": 191283,
-    "contextId": 12343
+    "contextId": 12343,
     "ciUrl": "http://jenkins.localhost/",
     "exitTime": 1469455391674
 }
