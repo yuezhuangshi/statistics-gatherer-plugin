@@ -23,7 +23,7 @@ public class PropertyLoader {
 
     public static final synchronized PropertyLoader getInstance() {
         if (instance == null) {
-            instance = new PropertyLoader();
+            setInstance(new PropertyLoader());
         }
         return instance;
     }

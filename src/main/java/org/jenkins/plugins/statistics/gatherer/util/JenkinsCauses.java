@@ -8,8 +8,7 @@ public final class JenkinsCauses {
     public static final String UPSTREAM = "UPSTREAM";
     public static final String SCM = "SCM";
     public static final String TIMER = "TIMER";
-
-    private JenkinsCauses() {
+    protected JenkinsCauses() {
         throw new IllegalAccessError("Utility class");
     }
 }

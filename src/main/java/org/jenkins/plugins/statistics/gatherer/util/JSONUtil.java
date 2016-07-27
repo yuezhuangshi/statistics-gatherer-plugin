@@ -16,7 +16,7 @@ public class JSONUtil {
 
     private static final Logger LOGGER = Logger.getLogger(
             RestClientUtil.class.getName());
-    private JSONUtil() {
+    protected JSONUtil() {
         throw new IllegalAccessError("Utility class");
     }
 

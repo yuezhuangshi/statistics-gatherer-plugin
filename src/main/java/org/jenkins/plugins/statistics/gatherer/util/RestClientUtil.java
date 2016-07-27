@@ -18,7 +18,7 @@ public class RestClientUtil {
     public static final String ACCEPT = "accept";
     public static final String CONTENT_TYPE = "Content-Type";
 
-    private RestClientUtil() {
+    protected RestClientUtil() {
         throw new IllegalAccessError("Utility class");
     }
 
@@ -55,7 +55,7 @@ public class RestClientUtil {
             return response.getBody().getObject();
         }
         catch (UnirestException e){
-            LOGGER.log(Level.WARNING, "Json called have failed in unirest.", e);
+            LOGGER.log(Level.WARNING, "Json call have failed in unirest.", e);
         }
         return null;
     }

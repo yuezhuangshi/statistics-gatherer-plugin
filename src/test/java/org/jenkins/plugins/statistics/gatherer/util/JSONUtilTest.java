@@ -84,4 +84,8 @@ public class JSONUtilTest {
         assertEquals(1, result.size());
         assertEquals("testString", result.get("stuff"));
     }
+    @Test(expected=IllegalAccessError.class)
+    public void givenProtectedConstructor_whenNew_throwIllegalAccess(){
+        new JSONUtil();
+    }
 }
