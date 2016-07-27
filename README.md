@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/maximecharron/statistics-gatherer-plugin.svg?branch=master)](https://travis-ci.org/maximecharron/statistics-gatherer-plugin)   [![Coverage Status](https://coveralls.io/repos/github/maximecharron/statistics-gatherer-plugin/badge.svg?branch=master)](https://coveralls.io/github/maximecharron/statistics-gatherer-plugin?branch=master)
+[![Build Status](https://travis-ci.org/jenkinsci/statistics-gatherer-plugin.svg?branch=master)](https://travis-ci.org/jenkinsci/statistics-gatherer-plugin)   [![Coverage Status](https://coveralls.io/repos/github/jenkinsci/statistics-gatherer-plugin/badge.svg?branch=master)](https://coveralls.io/github/jenkinsci/statistics-gatherer-plugin?branch=master)
 
 
 Jenkins Statistics gatherer Plugin
@@ -299,6 +299,10 @@ Plugin releases
 ---------------
 
 	mvn release:prepare release:perform -Dusername=user -Dpassword=******
+
+Changelog
+--------------
+Please refer to the CHANGELOG.md file. 
 
 
 License
