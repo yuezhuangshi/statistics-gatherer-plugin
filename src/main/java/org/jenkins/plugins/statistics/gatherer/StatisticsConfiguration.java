@@ -5,7 +5,6 @@ import hudson.Extension;
 import hudson.util.FormValidation;
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
-import org.apache.commons.logging.Log;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import com.amazonaws.regions.RegionUtils;
@@ -27,7 +26,7 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     private String awsRegion;
     private String awsAccessKey;
     private String awsSecretKey;
-    private String snsArn;
+    private String snsTopicArn;
 
     private Boolean queueInfo;
     private Boolean buildInfo;
@@ -186,10 +185,10 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         save();
     }
 
-    public String getSnsArn() { return snsArn; }
+    public String getSnsTopicArn() { return snsTopicArn; }
 
-    public void setSnsArn(String snsArn) {
-        this.snsArn = snsArn;
+    public void setSnsTopicArn(String snsTopicArn) {
+        this.snsTopicArn = snsTopicArn;
         save();
     }
 
@@ -324,10 +323,10 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         return FormValidation.ok();
     }
 
-    public FormValidation doCheckSnsArn(
-            @QueryParameter("snsArn") final String snsArn) {
+    public FormValidation doCheckSnsTopicArn(
+            @QueryParameter("snsTopicArn") final String snsTopicArn) {
         if (shouldPublishToAwsSnsQueue) {
-            if (snsArn == null || snsArn.isEmpty()) {
+            if (snsTopicArn == null || snsTopicArn.isEmpty()) {
                 return FormValidation.error("SNS ARN required. ");
             }
         }

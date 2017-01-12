@@ -49,11 +49,11 @@ f.section(title:_("Statistics Gatherer")) {
             f.textbox()
         }
 
-        f.entry(title:_("AWS Region"), field:"awsRegion") {
+        f.entry(title:_("SNS Topic ARN"), field:"snsTopicArn") {
             f.textbox()
         }
 
-        f.entry(title:_("SNS ARN"), field:"snsArn") {
+        f.entry(title:_("AWS Region"), field:"awsRegion") {
             f.textbox()
         }
 

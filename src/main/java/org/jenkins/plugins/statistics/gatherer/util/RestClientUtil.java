@@ -12,8 +12,7 @@ import java.util.logging.Logger;
 
 public class RestClientUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(
-            RestClientUtil.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RestClientUtil.class.getName());
     public static final String APPLICATION_JSON = "application/json";
     public static final String ACCEPT = "accept";
     public static final String CONTENT_TYPE = "Content-Type";
@@ -23,27 +22,29 @@ public class RestClientUtil {
     }
 
     public static void postToService(final String url, Object object) {
-        String jsonToPost = JSONUtil.convertToJson(object);
-        Unirest.post(url)
-                .header(ACCEPT, APPLICATION_JSON)
-                .header(CONTENT_TYPE, APPLICATION_JSON)
-                .body(jsonToPost)
-                .asJsonAsync(new Callback<JsonNode>() {
+        if (PropertyLoader.getShouldSendApiHttpRequests()) {
+            String jsonToPost = JSONUtil.convertToJson(object);
+            Unirest.post(url)
+                    .header(ACCEPT, APPLICATION_JSON)
+                    .header(CONTENT_TYPE, APPLICATION_JSON)
+                    .body(jsonToPost)
+                    .asJsonAsync(new Callback<JsonNode>() {
 
-                    public void failed(UnirestException e) {
-                        LOGGER.log(Level.WARNING, "The request for url " + url + " has failed.", e);
-                    }
+                        public void failed(UnirestException e) {
+                            LOGGER.log(Level.WARNING, "The request for url " + url + " has failed.", e);
+                        }
 
-                    public void completed(HttpResponse<JsonNode> response) {
-                        int responseCode = response.getStatus();
-                        LOGGER.log(Level.INFO, "The request for url " + url + " completed with status " + responseCode);
-                    }
+                        public void completed(HttpResponse<JsonNode> response) {
+                            int responseCode = response.getStatus();
+                            LOGGER.log(Level.INFO, "The request for url " + url + " completed with status " + responseCode);
+                        }
 
-                    public void cancelled() {
-                        LOGGER.log(Level.INFO, "The request for url " + url + " has been cancelled");
-                    }
+                        public void cancelled() {
+                            LOGGER.log(Level.INFO, "The request for url " + url + " has been cancelled");
+                        }
 
-                });
+                    });
+        }
     }
 
     public static JSONObject getJson(final String url) {

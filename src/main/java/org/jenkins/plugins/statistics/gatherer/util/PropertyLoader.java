@@ -138,13 +138,13 @@ public class PropertyLoader {
         return awsSecretKey == null ? "" : awsSecretKey;
     }
 
-    public static String getSnsArn() {
-        String snsArn = StatisticsConfiguration.get().getSnsArn();
-        if (snsArn != null && !snsArn.isEmpty()) {
-            return snsArn;
+    public static String getSnsTopicArn() {
+        String snsTopicArn = StatisticsConfiguration.get().getSnsTopicArn();
+        if (snsTopicArn != null && !snsTopicArn.isEmpty()) {
+            return snsTopicArn;
         }
-        snsArn = getEnvironmentProperty("statistics.endpoint.snsArn");
-        return snsArn == null ? "" : snsArn;
+        snsTopicArn = getEnvironmentProperty("statistics.endpoint.snsTopicArn");
+        return snsTopicArn == null ? "" : snsTopicArn;
     }
 
     public static Boolean getQueueInfo() {
