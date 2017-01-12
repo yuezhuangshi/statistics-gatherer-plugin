@@ -34,4 +34,31 @@ f.section(title:_("Statistics Gatherer")) {
     f.entry(title:_("Send Scm Checkout Info"), field:"scmCheckoutInfo") {
         f.checkbox(default: true)
     }
+
+    f.advanced(title: _("Advanced Settings")) {
+
+        f.entry(title:_("Publish to Amazon SNS Queue"), field:"shouldPublishToAwsSnsQueue") {
+            f.checkbox(default: instance.shouldPublishToAwsSnsQueue == null ? false : instance.shouldPublishToAwsSnsQueue.equals(true));
+        }
+
+        f.entry(title:_("AWS Access Key"), field:"awsAccessKey") {
+            f.textbox()
+        }
+
+        f.entry(title:_("AWS Secret Key"), field:"awsSecretKey") {
+            f.textbox()
+        }
+
+        f.entry(title:_("AWS Region"), field:"awsRegion") {
+            f.textbox()
+        }
+
+        f.entry(title:_("SNS ARN"), field:"snsArn") {
+            f.textbox()
+        }
+
+        f.entry(title:_("Disable API HTTP requests? (Only use SNS?)"), field:"shouldSendApiHttpRequests") {
+            f.checkbox(default: instance.shouldSendApiHttpRequests == null ? false : instance.shouldSendApiHttpRequests.equals(true));
+        }
+    }
 }

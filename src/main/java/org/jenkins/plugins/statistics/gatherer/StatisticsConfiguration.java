@@ -1,11 +1,14 @@
 package org.jenkins.plugins.statistics.gatherer;
 
+import com.amazonaws.regions.Region;
 import hudson.Extension;
 import hudson.util.FormValidation;
 import jenkins.model.GlobalConfiguration;
 import net.sf.json.JSONObject;
+import org.apache.commons.logging.Log;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
+import com.amazonaws.regions.RegionUtils;
 
 /**
  * Created by hthakkallapally on 6/25/2015.
@@ -21,12 +24,18 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     private String projectUrl;
     private String scmCheckoutUrl;
     private String buildStepUrl;
+    private String awsRegion;
+    private String awsAccessKey;
+    private String awsSecretKey;
+    private String snsArn;
 
     private Boolean queueInfo;
     private Boolean buildInfo;
     private Boolean projectInfo;
     private Boolean scmCheckoutInfo;
     private Boolean buildStepInfo;
+    private Boolean shouldSendApiHttpRequests;
+    private Boolean shouldPublishToAwsSnsQueue;
 
     public StatisticsConfiguration() {
         load();
@@ -91,7 +100,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         save();
     }
 
-
     public void setQueueUrl(String queueUrl) {
         this.queueUrl = queueUrl;
         save();
@@ -154,6 +162,48 @@ public class StatisticsConfiguration extends GlobalConfiguration {
 
     public void setScmCheckoutUrl(String scmCheckoutUrl) {
         this.scmCheckoutUrl = scmCheckoutUrl;
+        save();
+    }
+
+    public String getAwsRegion() { return awsRegion; }
+
+    public void setAwsRegion(String awsRegion) {
+        this.awsRegion = awsRegion;
+        save();
+    }
+
+    public String getAwsAccessKey() { return awsAccessKey; }
+
+    public void setAwsAccessKey(String awsAccessKey) {
+        this.awsAccessKey = awsAccessKey;
+        save();
+    }
+
+    public String getAwsSecretKey() { return awsSecretKey; }
+
+    public void setAwsSecretKey(String awsSecretKey) {
+        this.awsSecretKey = awsSecretKey;
+        save();
+    }
+
+    public String getSnsArn() { return snsArn; }
+
+    public void setSnsArn(String snsArn) {
+        this.snsArn = snsArn;
+        save();
+    }
+
+    public Boolean getShouldSendApiHttpRequests() { return shouldSendApiHttpRequests; }
+
+    public void setShouldSendApiHttpRequests(Boolean shouldSendApiHttpRequests) {
+        this.shouldSendApiHttpRequests = shouldSendApiHttpRequests;
+        save();
+    }
+
+    public Boolean getShouldPublishToAwsSnsQueue() { return shouldPublishToAwsSnsQueue; }
+
+    public void setShouldPublishToAwsSnsQueue(Boolean shouldPublishToAwsSnsQueue) {
+        this.shouldPublishToAwsSnsQueue = shouldPublishToAwsSnsQueue;
         save();
     }
 
@@ -242,7 +292,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         return FormValidation.ok();
     }
 
-
     public FormValidation doCheckBuildStepInfo(
             @QueryParameter("buildStepInfo") final Boolean buildStepInfo) {
         if (buildStepInfo == null) {
@@ -256,6 +305,55 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         if (scmCheckoutInfo == null) {
             return FormValidation.error("Provide valid CcmCheckoutInfo. ");
         }
+        return FormValidation.ok();
+    }
+
+    public FormValidation doCheckAwsRegion(
+        @QueryParameter("awsRegion") final String awsRegion) {
+        if (shouldPublishToAwsSnsQueue) {
+            if (awsRegion == null) {
+                return FormValidation.error("AWS Region required. ");
+            }
+
+            Region r = RegionUtils.getRegion(awsRegion);
+            if (r == null || !r.isServiceSupported("sns")) {
+                return FormValidation.error("Please enter a valid SNS AWS region. ");
+            }
+        }
+
+        return FormValidation.ok();
+    }
+
+    public FormValidation doCheckSnsArn(
+            @QueryParameter("snsArn") final String snsArn) {
+        if (shouldPublishToAwsSnsQueue) {
+            if (snsArn == null || snsArn.isEmpty()) {
+                return FormValidation.error("SNS ARN required. ");
+            }
+        }
+
+        return FormValidation.ok();
+    }
+
+    public FormValidation doCheckAwsAccessKey(
+            @QueryParameter("awsAccessKey") final String awsAccessKey) {
+        if (shouldPublishToAwsSnsQueue) {
+            if (awsAccessKey == null || awsAccessKey.isEmpty()) {
+                return FormValidation.error("AWS Access Key required. ");
+            }
+        }
+
+        return FormValidation.ok();
+    }
+
+    public FormValidation doCheckAwsSecretKey(
+            @QueryParameter("awsSecretKey") final String awsSecretKey) {
+        if (shouldPublishToAwsSnsQueue) {
+            if (awsSecretKey == null || awsSecretKey.isEmpty()) {
+                return FormValidation.error("AWS Secret Key required. ");
+            }
+        }
+
         return FormValidation.ok();
     }
 
