@@ -111,6 +111,42 @@ public class PropertyLoader {
         return endPoint == null ? "" : endPoint;
     }
 
+    public static String getAwsRegion() {
+        String awsRegion = StatisticsConfiguration.get().getAwsRegion();
+        if (awsRegion != null && !awsRegion.isEmpty()) {
+            return awsRegion;
+        }
+        awsRegion = getEnvironmentProperty("statistics.endpoint.awsRegion");
+        return awsRegion == null ? "" : awsRegion;
+    }
+
+    public static String getAwsAccessKey() {
+        String awsAccessKey = StatisticsConfiguration.get().getAwsAccessKey();
+        if (awsAccessKey != null && !awsAccessKey.isEmpty()) {
+            return awsAccessKey;
+        }
+        awsAccessKey = getEnvironmentProperty("statistics.endpoint.awsAccessKey");
+        return awsAccessKey == null ? "" : awsAccessKey;
+    }
+
+    public static String getAwsSecretKey() {
+        String awsSecretKey = StatisticsConfiguration.get().getAwsSecretKey();
+        if (awsSecretKey != null && !awsSecretKey.isEmpty()) {
+            return awsSecretKey;
+        }
+        awsSecretKey = getEnvironmentProperty("statistics.endpoint.awsSecretKey");
+        return awsSecretKey == null ? "" : awsSecretKey;
+    }
+
+    public static String getSnsTopicArn() {
+        String snsTopicArn = StatisticsConfiguration.get().getSnsTopicArn();
+        if (snsTopicArn != null && !snsTopicArn.isEmpty()) {
+            return snsTopicArn;
+        }
+        snsTopicArn = getEnvironmentProperty("statistics.endpoint.snsTopicArn");
+        return snsTopicArn == null ? "" : snsTopicArn;
+    }
+
     public static Boolean getQueueInfo() {
         Boolean queueInfo = StatisticsConfiguration.get().getQueueInfo();
         if (queueInfo != null) {
@@ -154,5 +190,23 @@ public class PropertyLoader {
         }
         String scmCheckoutInfoEnv = getEnvironmentProperty("statistics.endpoint.scmCheckoutInfo");
         return "true".equals(scmCheckoutInfoEnv);
+    }
+
+    public static Boolean getShouldSendApiHttpRequests() {
+        Boolean shouldSendApiHttpRequests = StatisticsConfiguration.get().getShouldSendApiHttpRequests();
+        if (shouldSendApiHttpRequests != null) {
+            return shouldSendApiHttpRequests;
+        }
+        String shouldSendApiHttpRequestsInfoEnv = getEnvironmentProperty("statistics.endpoint.shouldSendApiHttpRequests");
+        return "true".equals(shouldSendApiHttpRequestsInfoEnv);
+    }
+
+    public static Boolean getShouldPublishToAwsSnsQueue() {
+        Boolean shouldPublishToAwsSnsQueue = StatisticsConfiguration.get().getShouldPublishToAwsSnsQueue();
+        if (shouldPublishToAwsSnsQueue != null) {
+            return shouldPublishToAwsSnsQueue;
+        }
+        String shouldPublishToAwsSnsQueueEnv = getEnvironmentProperty("statistics.endpoint.shouldPublishToAwsSnsQueue");
+        return "true".equals(shouldPublishToAwsSnsQueueEnv);
     }
 }

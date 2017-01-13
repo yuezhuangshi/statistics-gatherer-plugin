@@ -31,6 +31,11 @@
             <name>Maxime Charron</name>
             <email>charron.maxime97@gmail.com</email>
         </developer>
+        <developer>
+            <id>alexgandy</id>
+            <name>Alex Gandy</name>
+            <email>alexgandy@gmail.com</email>
+        </developer>
     </developers>
 
     <licenses>
@@ -55,7 +60,22 @@
         <powermock.version>1.6.5</powermock.version>
         <jenkins.version>1.645</jenkins.version>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-bom</artifactId>
+                <version>1.11.22</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-sns</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.mashape.unirest</groupId>
             <artifactId>unirest-java</artifactId>
@@ -64,7 +84,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.3.6</version>
+            <version>4.5.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
