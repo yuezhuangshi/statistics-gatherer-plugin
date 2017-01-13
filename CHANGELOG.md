@@ -1,7 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 1.0.2 [Unreleased yet]
+## 1.1.0 - 2017-01-12
+- Add functionnality to publish on AWS SNS. 
 - Update readme to expose Changelog.
 - Better unit test coverage
 
