@@ -45,9 +45,6 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
     public void onStarted(Run<?, ?> run, TaskListener listener) {
         if (PropertyLoader.getBuildInfo()) {
             try {
-                if (!(run instanceof AbstractBuild)) {
-                    return;
-                }
                 final String buildResult = run.getResult() == null ?
                         "INPROGRESS" : run.getResult().toString();
                 BuildStats build = new BuildStats();
@@ -214,10 +211,6 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
     public void onFinalized(final Run<?, ?> run) {
         if (PropertyLoader.getBuildInfo()) {
             try {
-                if (!(run instanceof AbstractBuild)) {
-                    return;
-                }
-
                 final String buildResult = run.getResult() == null ?
                         Constants.UNKNOWN : run.getResult().toString();
                 BuildStats build = new BuildStats();
