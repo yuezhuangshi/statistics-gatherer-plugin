@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 1.1.1 - 2017-02-15
+- Fix a bug that was preventing an event being send for a build in a pipeline
+
 ## 1.1.0 - 2017-01-12
 - Add functionnality to publish on AWS SNS. 
 - Update readme to expose Changelog.
