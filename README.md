@@ -6,6 +6,11 @@ Jenkins Statistics gatherer Plugin
 
 This plugin gather information on specific events on jenkins and sends them to an external API. That way, you can get the statistics that matters for your needs.
 
+Issues
+==========
+
+If you have an issue with this plugin, please open a ticket here: https://issues.jenkins-ci.org under the component `statistics-gatherer-plugin`
+
 Documentation
 ==============
 In this section, you'll see which data is sent when. Please note that we do not consider adding a field to a JSON as a breaking change. However, removing one is considered as a breaking change.
