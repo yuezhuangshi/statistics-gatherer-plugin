@@ -222,6 +222,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setBuildUrl(run.getUrl());
                 build.setDuration(run.getDuration());
                 build.setEndTime(Calendar.getInstance().getTime());
+                addSCMInfo(run, SoutTaskListener.INSTANCE, build);
                 addBuildFailureCauses(build);
                 RestClientUtil.postToService(getRestUrl(), build);
                 SnsClientUtil.publishToSns(build);
