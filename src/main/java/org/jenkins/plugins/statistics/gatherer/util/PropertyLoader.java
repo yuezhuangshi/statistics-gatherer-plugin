@@ -1,5 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
+import com.google.common.base.Strings;
 import hudson.EnvVars;
 import hudson.slaves.EnvironmentVariablesNodeProperty;
 import hudson.slaves.NodeProperty;
@@ -54,16 +55,29 @@ public class PropertyLoader {
         for (EnvironmentVariablesNodeProperty environmentVariablesNodeProperty : properties) {
             environmentVariables.putAll(environmentVariablesNodeProperty.getEnvVars());
         }
-        final String value = environmentVariables.get(key);
-        if (value == null || value.isEmpty()) {
-            return getResourceBundleProperty(key);
+        String value = environmentVariables.get(key);
+        if (!Strings.isNullOrEmpty(value)) {
+            return value;
         }
-        return value;
+        value = environmentVariables.get(key.toLowerCase());
+        if (!Strings.isNullOrEmpty(value)) {
+            return value;
+        }
+
+        value = getResourceBundleProperty(key);
+        if (!Strings.isNullOrEmpty(value)) {
+            return value;
+        }
+        return getResourceBundleProperty(key.toLowerCase());
     }
 
     public static String getEnvironmentProperty(
             final String key) {
         return getInstance().getProperty(key);
+    }
+
+    public static boolean isTrue(String value) {
+        return value != null ? value.toLowerCase().equals("true") : false;
     }
 
     public static String getQueueEndPoint() {
@@ -153,7 +167,7 @@ public class PropertyLoader {
             return queueInfo;
         }
         String queueInfoEnv = getEnvironmentProperty("statistics.endpoint.queueInfo");
-        return "true".equals(queueInfoEnv);
+        return isTrue(queueInfoEnv);
     }
 
     public static Boolean getBuildInfo() {
@@ -161,8 +175,7 @@ public class PropertyLoader {
         if (buildInfo != null) {
             return buildInfo;
         }
-        String buildInfoEnv = getEnvironmentProperty("statistics.endpoint.buildInfo");
-        return "true".equals(buildInfoEnv);
+        return isTrue(getEnvironmentProperty("statistics.endpoint.buildInfo"));
     }
 
     public static Boolean getProjectInfo() {
@@ -170,8 +183,7 @@ public class PropertyLoader {
         if (projectInfo != null) {
             return projectInfo;
         }
-        String projectInfoEnv = getEnvironmentProperty("statistics.endpoint.projectInfo");
-        return "true".equals(projectInfoEnv);
+        return isTrue(getEnvironmentProperty("statistics.endpoint.projectInfo"));
     }
 
     public static Boolean getBuildStepInfo() {
@@ -179,8 +191,7 @@ public class PropertyLoader {
         if (buildStepInfo != null) {
             return buildStepInfo;
         }
-        String buildStepInfoEnv = getEnvironmentProperty("statistics.endpoint.buildStepInfo");
-        return "true".equals(buildStepInfoEnv);
+        return isTrue(getEnvironmentProperty("statistics.endpoint.buildStepInfo"));
     }
 
     public static Boolean getScmCheckoutInfo() {
@@ -188,8 +199,7 @@ public class PropertyLoader {
         if (scmCheckoutInfo != null) {
             return scmCheckoutInfo;
         }
-        String scmCheckoutInfoEnv = getEnvironmentProperty("statistics.endpoint.scmCheckoutInfo");
-        return "true".equals(scmCheckoutInfoEnv);
+        return isTrue(getEnvironmentProperty("statistics.endpoint.scmCheckoutInfo"));
     }
 
     public static Boolean getShouldSendApiHttpRequests() {
@@ -197,8 +207,7 @@ public class PropertyLoader {
         if (shouldSendApiHttpRequests != null) {
             return shouldSendApiHttpRequests;
         }
-        String shouldSendApiHttpRequestsInfoEnv = getEnvironmentProperty("statistics.endpoint.shouldSendApiHttpRequests");
-        return "true".equals(shouldSendApiHttpRequestsInfoEnv);
+        return isTrue(getEnvironmentProperty("statistics.endpoint.shouldSendApiHttpRequests"));
     }
 
     public static Boolean getShouldPublishToAwsSnsQueue() {
@@ -206,7 +215,22 @@ public class PropertyLoader {
         if (shouldPublishToAwsSnsQueue != null) {
             return shouldPublishToAwsSnsQueue;
         }
-        String shouldPublishToAwsSnsQueueEnv = getEnvironmentProperty("statistics.endpoint.shouldPublishToAwsSnsQueue");
-        return "true".equals(shouldPublishToAwsSnsQueueEnv);
+        return isTrue(getEnvironmentProperty("statistics.endpoint.shouldPublishToAwsSnsQueue"));
+    }
+
+    public static boolean getShouldSendToLogback() {
+        Boolean shouldSendToLogback = StatisticsConfiguration.get().getShouldSendToLogback();
+        if (shouldSendToLogback != null) {
+            return shouldSendToLogback;
+        }
+        return isTrue(getEnvironmentProperty("statistics.endpoint.shouldSendToLogback"));
+    }
+
+    public static String getLogbackConfigXmlUrl() {
+        String logbackConfigXmlUrlString = StatisticsConfiguration.get().getLogbackConfigXmlUrl();
+        if (logbackConfigXmlUrlString == null) {
+            logbackConfigXmlUrlString = getEnvironmentProperty("statistics.endpoint.logbackConfigXmlUrl");
+        }
+        return logbackConfigXmlUrlString;
     }
 }
