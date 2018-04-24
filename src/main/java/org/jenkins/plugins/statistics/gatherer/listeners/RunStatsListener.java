@@ -1,5 +1,7 @@
 package org.jenkins.plugins.statistics.gatherer.listeners;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Launcher;
@@ -32,6 +34,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
 
     private static final Logger LOGGER = Logger.getLogger(RunStatsListener.class.getName());
     private static final String BUILD_FAILURE_URL_TO_APPEND = "/api/json?depth=2&tree=actions[foundFailureCauses[categories,description,id,name]]";
+    private static final ObjectMapper jsonMapper = new ObjectMapper();
 
     public RunStatsListener() {
         //Necessary for jenkins
@@ -63,6 +66,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 addSCMInfo(run, listener, build);
                 addParameters(run, build);
                 addSlaveInfo(run, build, listener);
+                addSourceObject(run, build);
                 RestClientUtil.postToService(getRestUrl(), build);
                 SnsClientUtil.publishToSns(build);
                 LOGGER.log(Level.INFO, "Started build and its status is : " + buildResult +
@@ -224,6 +228,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setEndTime(Calendar.getInstance().getTime());
                 addSCMInfo(run, SoutTaskListener.INSTANCE, build);
                 addBuildFailureCauses(build);
+                addSourceObject(run, build);
                 RestClientUtil.postToService(getRestUrl(), build);
                 SnsClientUtil.publishToSns(build);
                 LOGGER.log(Level.INFO, run.getParent().getName() + " build is completed " +
@@ -258,6 +263,15 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                     break;
                 }
             }
+        }
+    }
+
+    private void addSourceObject(final Run<?, ?> run, BuildStats build) {
+        try {
+            String runJson = jsonMapper.writeValueAsString(build);
+            build.setSourceObject(runJson);
+        } catch (JsonProcessingException e) {
+            LOGGER.log(Level.WARNING, "Unable to add source object JSON to build info", e);
         }
     }
 
