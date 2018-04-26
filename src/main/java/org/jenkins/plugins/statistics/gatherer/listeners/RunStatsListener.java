@@ -2,6 +2,7 @@ package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Launcher;
@@ -14,6 +15,7 @@ import jenkins.model.Jenkins;
 import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
 import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
+import org.jenkins.plugins.statistics.gatherer.model.build.SourceObjectMap;
 import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
 import org.jenkins.plugins.statistics.gatherer.util.*;
 import org.json.JSONArray;
@@ -34,7 +36,14 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
 
     private static final Logger LOGGER = Logger.getLogger(RunStatsListener.class.getName());
     private static final String BUILD_FAILURE_URL_TO_APPEND = "/api/json?depth=2&tree=actions[foundFailureCauses[categories,description,id,name]]";
-    private static final ObjectMapper jsonMapper = new ObjectMapper();
+    private static final ObjectMapper jsonMapper = newObjectMapper();
+
+    private static ObjectMapper newObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        mapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);
+        return mapper;
+    }
 
     public RunStatsListener() {
         //Necessary for jenkins
@@ -268,7 +277,8 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
 
     private void addSourceObject(final Run<?, ?> run, BuildStats build) {
         try {
-            String runJson = jsonMapper.writeValueAsString(build);
+            SourceObjectMap runObjectMap = new SourceObjectMap(run);
+            String runJson = jsonMapper.writeValueAsString(runObjectMap);
             build.setSourceObject(runJson);
         } catch (JsonProcessingException e) {
             LOGGER.log(Level.WARNING, "Unable to add source object JSON to build info", e);
