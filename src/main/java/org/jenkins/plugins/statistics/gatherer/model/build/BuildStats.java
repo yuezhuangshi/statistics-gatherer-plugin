@@ -43,6 +43,8 @@ public class BuildStats {
 
     private List<Map> buildFailureCauses;
 
+    private String sourceObject;
+
     public BuildStats(String ciUrl,
                       String jobName,
                       String fullJobName,
@@ -60,7 +62,8 @@ public class BuildStats {
                       String buildUrl,
                       int contextId,
                       String buildCause,
-                      List<Map> buildFailureCauses) {
+                      List<Map> buildFailureCauses,
+                      String sourceObject) {
         this.ciUrl = ciUrl;
         this.jobName = jobName;
         this.fullJobName = fullJobName;
@@ -79,6 +82,7 @@ public class BuildStats {
         this.contextId = contextId;
         this.buildCause = buildCause;
         this.buildFailureCauses = buildFailureCauses;
+        this.sourceObject = sourceObject;
     }
 
     public BuildStats() {
@@ -100,6 +104,7 @@ public class BuildStats {
         this.contextId = 0;
         this.buildCause = "";
         this.buildFailureCauses = new ArrayList<>();
+        this.sourceObject = "";
     }
 
     public String getCiUrl() {
@@ -244,5 +249,13 @@ public class BuildStats {
 
     public void setBuildFailureCauses(List<Map> buildFailureCauses) {
         this.buildFailureCauses = buildFailureCauses;
+    }
+
+    public String getSourceObject() {
+        return sourceObject;
+    }
+
+    public void setSourceObject(String sourceObject) {
+        this.sourceObject = sourceObject;
     }
 }

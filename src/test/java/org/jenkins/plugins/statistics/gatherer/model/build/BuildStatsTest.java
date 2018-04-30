@@ -34,6 +34,7 @@ public class BuildStatsTest {
     private static final String BUILD_URL = "http://url.com/build";
     private static final String BUILD_CAUSE = "This is a cause";
     private static final List<Map> BUILD_FAILURE_CAUSES = new ArrayList<>();
+    private static final String SOURCE_OBJECT = "{}";
     private BuildStats buildStats;
 
     @Before
@@ -55,7 +56,8 @@ public class BuildStatsTest {
                 BUILD_URL,
                 CONTEXT_ID,
                 BUILD_CAUSE,
-                BUILD_FAILURE_CAUSES);
+                BUILD_FAILURE_CAUSES,
+                SOURCE_OBJECT);
     }
 
     @Test
