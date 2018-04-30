@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0 - 2018-04-30
+
+- Allow the send events to LOGBack appenders
+- Upgrade plugin version and target to Jenkins 2.x
+
 ## 1.1.3 - 2018-04-26
 
 - Luca Milanesio started as additional maintainer
@@ -12,18 +17,21 @@ All notable changes to this project will be documented in this file.
 - add ScmInfo on build completion
 
 ## 1.1.2 - 2017-04-11
+
 - Fix NullPointerException for not configured Booleans
 - Fix bad configuration meaning and default values
 
 ## 1.1.1 - 2017-02-15
+
 - Fix a bug that was preventing an event being send for a build in a pipeline
 
 ## 1.1.0 - 2017-01-12
+
 - Add functionnality to publish on AWS SNS. 
 - Update readme to expose Changelog.
 - Better unit test coverage
 
 
 ## 1.0.1 - 2016-07-26
-###
+
 - First official release on Jenkins
