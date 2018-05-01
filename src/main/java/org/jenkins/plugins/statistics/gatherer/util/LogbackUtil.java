@@ -1,44 +1,42 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.util.ContextInitializer;
-import ch.qos.logback.core.joran.spi.JoranException;
+import jenkins.model.Jenkins;
+import jline.internal.Log;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LogbackUtil {
-    private static final String STATISTICS_GATHERER_LOGGER = "statistics-gatherer";
-    private static Logger logger;
+    public static final String STATISTICS_GATHERER_LOGGER = "statistics-gatherer";
+    public static final String LOGBACK_PLUGIN_NAME = "logback-nats-appender";
+    public static final LogbackUtil INSTANCE = new LogbackUtil();
 
-    private static Logger getLogger(String loggerName) {
-        LoggerContext loggerContext = new LoggerContext();
-        ContextInitializer contextInitializer = new ContextInitializer(loggerContext);
-        try {
-            String configurationUrlString = PropertyLoader.getLogbackConfigXmlUrl();
-            if (configurationUrlString == null) {
-                throw new IllegalStateException("LOGBack XML configuration file not specified");
+    private static Logger logger = Logger.getLogger(LogbackUtil.class.getName());
+
+    private Logback logback;
+
+    public static void info(Object object) {
+        INSTANCE.logInfo(object);
+    }
+
+    public void logInfo(Object object) {
+        if (PropertyLoader.getShouldSendToLogback() && isLogbackAvailable()) {
+            try {
+                if (logback == null) {
+                    logback = LogbackFactory.create(STATISTICS_GATHERER_LOGGER);
+                }
+                logback.log(JSONUtil.convertToJson(object));
+            } catch (Exception e) {
+                logger.log(Level.WARNING, "Unable to find a valid implementation of Logback", e);
             }
-
-            URL configurationUrl = new URL(configurationUrlString);
-            contextInitializer.configureByResource(configurationUrl);
-            return loggerContext.getLogger(loggerName);
-        } catch (JoranException e) {
-            throw new RuntimeException("Unable to configure logger", e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Unable to find LOGBack XML configuration", e);
         }
     }
 
-    public static void info(Object object) {
-        if (PropertyLoader.getShouldSendToLogback()) {
-            if(logger == null) {
-                synchronized (LogbackUtil.class) {
-                    logger = getLogger(STATISTICS_GATHERER_LOGGER);
-                }
-            }
-            logger.info(JSONUtil.convertToJson(object));
-        }
+    public static boolean isLogbackAvailable() {
+        return Jenkins.getInstance().getPlugin(LOGBACK_PLUGIN_NAME) != null;
+    }
+
+    public Logback getLogback() {
+        return logback;
     }
 }
