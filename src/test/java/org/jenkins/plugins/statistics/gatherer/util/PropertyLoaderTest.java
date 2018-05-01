@@ -61,6 +61,15 @@ public class PropertyLoaderTest {
     }
 
     @Test
+    public void givenResourceBundleWithoutProperty_whenGetKey_thenReturnNull(){
+        //given
+        //when
+        String property = PropertyLoader.getInstance().getResourceBundleProperty("non.existent.property");
+        //then
+        assertNull("Non existent properties should return null values", property);
+    }
+
+    @Test
     public void givenQueueUrl_whenGetQueueUrlEndpoint_thenReturnQueueUrl(){
         //given
         PowerMockito.mockStatic(StatisticsConfiguration.class);

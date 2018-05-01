@@ -10,6 +10,7 @@ import jenkins.model.Jenkins;
 import org.jenkins.plugins.statistics.gatherer.StatisticsConfiguration;
 
 import java.util.List;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 
@@ -35,7 +36,11 @@ public class PropertyLoader {
     }
 
     protected String getResourceBundleProperty(String keyProperty) {
-        return resourceBundle.getString(keyProperty);
+        try {
+            return resourceBundle.getString(keyProperty);
+        } catch (MissingResourceException e) {
+            return null;
+        }
     }
 
     public String getProperty(
