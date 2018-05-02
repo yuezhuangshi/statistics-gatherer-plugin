@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0.1 - 2018-05-02
+
+- Disable LOGBack when [LOGBack NATS Appender](https://plugins.jenkins.io/logback-nats-appender) is not installed
+- Disable HTTP log notification by default, unless explicitly configured
+
 ## 2.0 - 2018-04-30
 
 - Allow the send events to LOGBack appenders
