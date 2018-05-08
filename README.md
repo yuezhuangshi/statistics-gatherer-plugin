@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jenkinsci/statistics-gatherer-plugin.svg?branch=master)](https://travis-ci.org/jenkinsci/statistics-gatherer-plugin)   [![Coverage Status](https://coveralls.io/repos/github/jenkinsci/statistics-gatherer-plugin/badge.svg?branch=master)](https://coveralls.io/github/jenkinsci/statistics-gatherer-plugin?branch=master)
+[![Build Status](https://travis-ci.org/jenkinsci/statistics-gatherer-plugin.svg?branch=statistics-gatherer-2.0.2)](https://travis-ci.org/jenkinsci/statistics-gatherer-plugin)   [![Coverage Status](https://coveralls.io/repos/github/jenkinsci/statistics-gatherer-plugin/badge.svg?branch=statistics-gatherer-2.0.2)](https://coveralls.io/github/jenkinsci/statistics-gatherer-plugin?branch=statistics-gatherer-2.0.2)
 
 
 Jenkins Statistics gatherer Plugin
