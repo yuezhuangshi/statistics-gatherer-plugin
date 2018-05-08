@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.0.2 - 2018-05-08
+
+- [JENKINS-51085](https://issues.jenkins-ci.org/browse/JENKINS-51085) Auto-reload LOGBack config XML
+
 ## 2.0.1 - 2018-05-02
 
 - Disable LOGBack when [LOGBack NATS Appender](https://plugins.jenkins.io/logback-nats-appender) is not installed
