@@ -22,6 +22,11 @@ public class URLSha {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
     public String toString() {
         return "{sha1}" + value;
     }
