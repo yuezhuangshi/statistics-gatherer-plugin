@@ -19,7 +19,7 @@ public class URLSha {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof URLSha) ? Objects.equals(this.value, ((URLSha) obj).value) : false;
+        return (obj instanceof URLSha) && Objects.equals(this.value, ((URLSha) obj).value);
     }
 
     @Override

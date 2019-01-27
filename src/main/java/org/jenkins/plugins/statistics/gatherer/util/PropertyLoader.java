@@ -82,7 +82,7 @@ public class PropertyLoader {
     }
 
     public static boolean isTrue(String value) {
-        return value != null ? value.toLowerCase().equals("true") : false;
+        return value != null && value.toLowerCase().equals("true");
     }
 
     public static String getQueueEndPoint() {
