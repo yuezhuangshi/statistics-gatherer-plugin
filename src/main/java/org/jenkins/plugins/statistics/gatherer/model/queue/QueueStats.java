@@ -27,7 +27,7 @@ public class QueueStats {
 
     private long duration;
 
-    private List<QueueCause> queueCauses = new ArrayList<>();
+    private List<QueueCause> queueCauses;
 
     public QueueStats(String ciUrl,
                       String jobName,
