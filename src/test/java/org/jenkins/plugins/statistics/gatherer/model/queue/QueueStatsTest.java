@@ -27,7 +27,7 @@ public class QueueStatsTest {
     private static final String STATUS = "COMPLETED";
     private static final int DURATION = 2000;
     private static final int CONTEXT_ID = 444444444;
-    private static final ArrayList<QueueCause> QUEUE_CAUSES = new ArrayList<QueueCause>();
+    private static final ArrayList<QueueCause> QUEUE_CAUSES = new ArrayList<>();
     private QueueStats queueStats;
 
     @Before
@@ -177,7 +177,7 @@ public class QueueStatsTest {
     public void givenStatsQueue_whenSetQueueCauses_thenQueueCausesIsSet() {
         //given
         QueueCause queueCause = new QueueCause(ENTRY_TIME, EXIT_TIME, "aReason", "type");
-        List<QueueCause> queueCausesToBeSet = new ArrayList<QueueCause>();
+        List<QueueCause> queueCausesToBeSet = new ArrayList<>();
         queueCausesToBeSet.add(queueCause);
         //when
         queueStats.setQueueCauses(queueCausesToBeSet);
@@ -317,7 +317,7 @@ public class QueueStatsTest {
     public void givenStatsQueue_whenAddQueueCause_thenQueueCauseIsAdded() {
         //given
         QueueCause queueCause = new QueueCause(ENTRY_TIME, EXIT_TIME, "aReason", "type");
-        List<QueueCause> expectedQueueCauses = new ArrayList<QueueCause>();
+        List<QueueCause> expectedQueueCauses = new ArrayList<>();
         expectedQueueCauses.add(queueCause);
         //when
         queueStats.addQueueCause(queueCause);

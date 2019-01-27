@@ -92,7 +92,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getQueueUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -111,9 +111,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getQueueUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.queueUrl", "http://cistats.mycompany.com/api/");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -136,9 +136,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getQueueUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.queueUrl", "");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -161,7 +161,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getQueueUrl()).thenReturn("");
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -194,7 +194,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -213,9 +213,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.buildUrl", "http://cistats.mycompany.com/api/");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -238,9 +238,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.buildUrl", "");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -263,7 +263,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildUrl()).thenReturn("");
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -296,7 +296,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getProjectUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -315,9 +315,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getProjectUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.projectUrl", "http://cistats.mycompany.com/api/");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -340,9 +340,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getProjectUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.projectUrl", "");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -365,7 +365,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getProjectUrl()).thenReturn("");
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -434,9 +434,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildStepUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.buildStepUrl", "http://cistats.mycompany.com/api/");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -484,7 +484,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildStepUrl()).thenReturn("");
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -535,9 +535,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getScmCheckoutUrl()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.scmCheckoutUrl", "http://cistats.mycompany.com/api/");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -585,7 +585,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getScmCheckoutUrl()).thenReturn("");
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -636,9 +636,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getScmCheckoutInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.scmCheckoutInfo", "true");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -686,7 +686,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getScmCheckoutInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -737,9 +737,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildStepInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.buildStepInfo", "true");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -787,7 +787,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildStepInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -838,9 +838,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.buildInfo", "true");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -888,7 +888,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getBuildInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -939,9 +939,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getQueueInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.queueInfo", "true");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -989,7 +989,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getQueueInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when
@@ -1040,9 +1040,9 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getProjectInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<EnvironmentVariablesNodeProperty>();
+        List<EnvironmentVariablesNodeProperty> environmentVariablesNodePropertyList = new ArrayList<>();
         EnvironmentVariablesNodeProperty envVar = mock(EnvironmentVariablesNodeProperty.class);
-        Map<String, String> envVarMap = new HashMap<String, String>();
+        Map<String, String> envVarMap = new HashMap<>();
         envVarMap.put("statistics.endpoint.projectInfo", "true");
         Mockito.when(envVar.getEnvVars()).thenReturn(new EnvVars(envVarMap));
         environmentVariablesNodePropertyList.add(envVar);
@@ -1090,7 +1090,7 @@ public class PropertyLoaderTest {
         Mockito.when(StatisticsConfiguration.get().getProjectInfo()).thenReturn(null);
         Jenkins jenkinsMock = mock(Jenkins.class);
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
-        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
+        Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
         Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         //when

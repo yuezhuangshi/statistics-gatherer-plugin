@@ -420,7 +420,7 @@ public class BuildStatsTest {
     @Test
     public void givenStatsBuild_whenSetParameters_thenParametersIsSet() {
         //given
-        Map<String, String>  expectedParameters = new HashMap<String, String>();
+        Map<String, String>  expectedParameters = new HashMap<>();
         expectedParameters.put("aKey", "something");
         //when
         buildStats.setParameters(expectedParameters);
