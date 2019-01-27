@@ -1,20 +1,12 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 

@@ -1,6 +1,5 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
-import jenkins.model.Jenkins;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

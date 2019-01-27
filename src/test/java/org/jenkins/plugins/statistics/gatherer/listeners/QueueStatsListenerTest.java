@@ -2,7 +2,6 @@ package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import hudson.model.Action;
 import hudson.model.Queue;
-import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
 import org.jenkins.plugins.statistics.gatherer.model.queue.QueueStats;
 import org.jenkins.plugins.statistics.gatherer.util.LogbackUtil;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;

@@ -1,7 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
 import jenkins.model.Jenkins;
-import jline.internal.Log;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

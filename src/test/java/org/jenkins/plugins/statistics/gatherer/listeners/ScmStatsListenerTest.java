@@ -2,17 +2,13 @@ package org.jenkins.plugins.statistics.gatherer.listeners;
 
 import hudson.FilePath;
 import hudson.model.AbstractBuild;
-import hudson.model.BuildListener;
 import hudson.model.TaskListener;
 import hudson.remoting.VirtualChannel;
 import hudson.scm.SCM;
 import hudson.scm.SCMRevisionState;
-import hudson.tasks.BuildStep;
 import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
-import org.jenkins.plugins.statistics.gatherer.model.step.BuildStepStats;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
-import org.jenkins.plugins.statistics.gatherer.util.SnsClientUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

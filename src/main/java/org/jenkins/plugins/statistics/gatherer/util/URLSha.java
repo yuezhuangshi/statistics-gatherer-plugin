@@ -1,7 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
