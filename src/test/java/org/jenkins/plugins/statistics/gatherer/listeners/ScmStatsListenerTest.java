@@ -55,7 +55,7 @@ public class ScmStatsListenerTest {
                 ArgumentCaptor.forClass(ScmCheckoutInfo.class);
         listener.onCheckout(build, scm, filePath, taskListener, file, scmRevisionState);
 
-        PowerMockito.verifyStatic();
+        PowerMockito.verifyStatic(RestClientUtil.class);
         RestClientUtil.postToService(anyString(), scmCheckoutInfoArgumentCaptor.capture());
 
         ScmCheckoutInfo buildStepStats = scmCheckoutInfoArgumentCaptor.getValue();
@@ -76,6 +76,6 @@ public class ScmStatsListenerTest {
         SCMRevisionState scmRevisionState = Mockito.mock(SCMRevisionState.class);
         listener.onCheckout(build, scm, filePath, taskListener, file, scmRevisionState);
         PowerMockito.mockStatic(RestClientUtil.class);
-        PowerMockito.verifyStatic(Mockito.never());
+        PowerMockito.verifyStatic(RestClientUtil.class, Mockito.never());
     }
 }

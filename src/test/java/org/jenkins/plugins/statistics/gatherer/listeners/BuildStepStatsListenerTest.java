@@ -52,7 +52,7 @@ public class BuildStepStatsListenerTest {
                 ArgumentCaptor.forClass(BuildStepStats.class);
         listener.started(build, steps, buildListener);
 
-        PowerMockito.verifyStatic();
+        PowerMockito.verifyStatic(RestClientUtil.class);
         RestClientUtil.postToService(anyString(), buildStepStatsArgumentCaptor.capture());
 
         BuildStepStats buildStepStats = buildStepStatsArgumentCaptor.getValue();
@@ -69,7 +69,7 @@ public class BuildStepStatsListenerTest {
         BuildListener buildListener = Mockito.mock(BuildListener.class);
         listener.started(build, steps, buildListener);
         PowerMockito.mockStatic(RestClientUtil.class);
-        PowerMockito.verifyStatic(Mockito.never());
+        PowerMockito.verifyStatic(RestClientUtil.class, Mockito.never());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class BuildStepStatsListenerTest {
                 ArgumentCaptor.forClass(BuildStepStats.class);
         listener.finished(build, steps, buildListener, true);
 
-        PowerMockito.verifyStatic();
+        PowerMockito.verifyStatic(RestClientUtil.class);
         RestClientUtil.postToService(anyString(), buildStepStatsArgumentCaptor.capture());
 
         BuildStepStats buildStepStats = buildStepStatsArgumentCaptor.getValue();
@@ -108,7 +108,7 @@ public class BuildStepStatsListenerTest {
                 ArgumentCaptor.forClass(BuildStepStats.class);
         listener.finished(build, steps, buildListener, true);
 
-        PowerMockito.verifyStatic();
+        PowerMockito.verifyStatic(SnsClientUtil.class);
         SnsClientUtil.publishToSns(buildStepStatsArgumentCaptor.capture());
 
         BuildStepStats buildStepStats = buildStepStatsArgumentCaptor.getValue();
@@ -126,6 +126,6 @@ public class BuildStepStatsListenerTest {
         BuildListener buildListener = Mockito.mock(BuildListener.class);
         listener.finished(build, steps, buildListener, true);
         PowerMockito.mockStatic(RestClientUtil.class);
-        PowerMockito.verifyStatic(Mockito.never());
+        PowerMockito.verifyStatic(RestClientUtil.class, Mockito.never());
     }
 }

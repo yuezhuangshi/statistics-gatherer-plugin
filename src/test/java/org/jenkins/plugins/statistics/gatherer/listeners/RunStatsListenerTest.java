@@ -54,7 +54,7 @@ public class RunStatsListenerTest {
 
         Build<?, ?> build = triggerNewBuild().get();
 
-        verifyStatic(times(2));
+        verifyStatic(RestClientUtil.class, times(2));
         ArgumentCaptor<BuildStats> captor =
                 ArgumentCaptor.forClass(BuildStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
@@ -71,7 +71,7 @@ public class RunStatsListenerTest {
 
         Build<?, ?> build = triggerNewBuild().get();
 
-        verifyStatic(times(2));
+        verifyStatic(RestClientUtil.class, times(2));
         ArgumentCaptor<BuildStats> captor =
                 ArgumentCaptor.forClass(BuildStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
@@ -88,7 +88,7 @@ public class RunStatsListenerTest {
 
         Build<?, ?> build = triggerNewBuild().get();
 
-        verifyStatic(times(2));
+        verifyStatic(LogbackUtil.class, times(2));
         ArgumentCaptor<BuildStats> captor =
                 ArgumentCaptor.forClass(BuildStats.class);
         LogbackUtil.info(captor.capture());

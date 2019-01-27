@@ -47,7 +47,7 @@ public class ItemStatsListenerTest {
 
         FreeStyleProject project = jenkinsRule.createFreeStyleProject();
 
-        verifyStatic();
+        verifyStatic(RestClientUtil.class);
         ArgumentCaptor<JobStats> captor =
                 ArgumentCaptor.forClass(JobStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
@@ -66,7 +66,7 @@ public class ItemStatsListenerTest {
         FreeStyleProject project = jenkinsRule.createFreeStyleProject();
         project.delete();
 
-        verifyStatic(times(3));
+        verifyStatic(RestClientUtil.class, times(3));
         ArgumentCaptor<JobStats> captor =
                 ArgumentCaptor.forClass(JobStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
