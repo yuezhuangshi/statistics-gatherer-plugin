@@ -38,7 +38,7 @@ f.section(title:_("Statistics Gatherer")) {
     f.advanced(title: _("Advanced Settings")) {
 
         f.entry(title:_("Publish to Amazon SNS Queue"), field:"shouldPublishToAwsSnsQueue") {
-            f.checkbox(default: instance.shouldPublishToAwsSnsQueue == null ? false : instance.shouldPublishToAwsSnsQueue.equals(true));
+            f.checkbox(default: instance.shouldPublishToAwsSnsQueue == true)
         }
 
         f.entry(title:_("AWS Access Key"), field:"awsAccessKey") {
@@ -58,7 +58,7 @@ f.section(title:_("Statistics Gatherer")) {
         }
 
         f.entry(title:_("Enable HTTP publishing?"), field:"shouldSendApiHttpRequests") {
-            f.checkbox(default: instance.shouldSendApiHttpRequests == null ? false : instance.shouldSendApiHttpRequests.equals(true));
+            f.checkbox(default: instance.shouldSendApiHttpRequests == true)
         }
 
         f.entry(title:_("Enable publish of events to LOGBack"), field:"shouldSendToLogback") {
