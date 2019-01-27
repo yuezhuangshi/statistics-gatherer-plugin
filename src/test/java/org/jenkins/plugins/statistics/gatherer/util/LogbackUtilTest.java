@@ -37,7 +37,7 @@ public class LogbackUtilTest {
     public void givenJenkinsWithoutLogback_whenLogging_thenDoNotCreateLogback() throws Exception {
         when(jenkinsMock.getPlugin(LogbackUtil.LOGBACK_PLUGIN_NAME)).thenReturn(null);
 
-        new LogbackUtil().logInfo(new String("foo"));
+        new LogbackUtil().logInfo("foo");
 
         verifyZeroInteractions(LogbackFactory.class);
     }
@@ -47,7 +47,7 @@ public class LogbackUtilTest {
         Plugin pluginMock = mock(Plugin.class);
         when(jenkinsMock.getPlugin(LogbackUtil.LOGBACK_PLUGIN_NAME)).thenReturn(pluginMock);
 
-        new LogbackUtil().logInfo(new String("foo"));
+        new LogbackUtil().logInfo("foo");
 
         verifyStatic(LogbackFactory.class);
     }

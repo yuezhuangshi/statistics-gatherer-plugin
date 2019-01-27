@@ -28,7 +28,7 @@ public class RestClientUtilTest {
         when(PropertyLoader.getShouldSendApiHttpRequests()).thenReturn(true);
 
         try {
-            RestClientUtil.postToService("http://foo", new String("bar"));
+            RestClientUtil.postToService("http://foo", "bar");
         } catch (Throwable e) {
             fail("Should not have thrown any exception here");
         }
