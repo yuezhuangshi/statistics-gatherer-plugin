@@ -39,11 +39,6 @@ public class LogbackImpl implements Logback {
         return loggerSha;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
     private void initLogger(URL configurationUrl, String loggerName) throws JoranException, IOException {
         LoggerContext loggerContext = new LoggerContext();
         ContextInitializer contextInitializer = new ContextInitializer(loggerContext);
