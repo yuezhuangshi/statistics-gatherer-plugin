@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.*;
 
@@ -30,7 +30,7 @@ public class LogbackUtilTest {
         mockStatic(PropertyLoader.class);
         when(Jenkins.getInstance()).thenReturn(jenkinsMock);
         when(PropertyLoader.getShouldSendToLogback()).thenReturn(true);
-        when(LogbackFactory.create(any(String.class))).thenReturn(logbackMock);
+        when(LogbackFactory.create(anyString())).thenReturn(logbackMock);
     }
 
     @Test
@@ -50,5 +50,6 @@ public class LogbackUtilTest {
         new LogbackUtil().logInfo("foo");
 
         verifyStatic(LogbackFactory.class);
+        LogbackFactory.create(anyString());
     }
 }

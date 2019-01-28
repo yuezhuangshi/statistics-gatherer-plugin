@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -44,6 +44,7 @@ public class ItemStatsListenerTest {
     public void whenItemCreated_thenPost() throws Exception {
         mockStatic(RestClientUtil.class);
         when(PropertyLoader.getProjectInfo()).thenReturn(true);
+        when(PropertyLoader.getProjectEndPoint()).thenReturn("http://localhost");
 
         FreeStyleProject project = jenkinsRule.createFreeStyleProject();
 
@@ -62,6 +63,7 @@ public class ItemStatsListenerTest {
     public void whenItemDeleted_thenPost() throws Exception {
         mockStatic(RestClientUtil.class);
         when(PropertyLoader.getProjectInfo()).thenReturn(true);
+        when(PropertyLoader.getProjectEndPoint()).thenReturn("http://localhost");
 
         FreeStyleProject project = jenkinsRule.createFreeStyleProject();
         project.delete();

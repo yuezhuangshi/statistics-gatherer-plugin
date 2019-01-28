@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -51,6 +51,7 @@ public class RunStatsListenerTest {
     public void givenRunWithBuildInfoTrue_whenStarted_thenPostTwice() throws Exception {
         mockStatic(RestClientUtil.class);
         when(PropertyLoader.getBuildInfo()).thenReturn(true);
+        when(PropertyLoader.getBuildEndPoint()).thenReturn("http://localhost");
 
         Build<?, ?> build = triggerNewBuild().get();
 
@@ -68,6 +69,7 @@ public class RunStatsListenerTest {
     public void givenRunWithBuildInfoTrue_whenCompleted_thenPost() throws Exception {
         mockStatic(RestClientUtil.class);
         when(PropertyLoader.getBuildInfo()).thenReturn(true);
+        when(PropertyLoader.getBuildEndPoint()).thenReturn("http://localhost");
 
         Build<?, ?> build = triggerNewBuild().get();
 

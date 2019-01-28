@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 
 /**
  * Created by mcharron on 2016-07-27.
@@ -42,7 +42,7 @@ public class ScmStatsListenerTest {
     public void givenBuildAndBuildInfoTrue_whenStarted_thenPost(){
         PowerMockito.mockStatic(PropertyLoader.class);
         Mockito.when(PropertyLoader.getScmCheckoutInfo()).thenReturn(true);
-        Mockito.when(PropertyLoader.getScmCheckoutEndPoint()).thenReturn("");
+        Mockito.when(PropertyLoader.getScmCheckoutEndPoint()).thenReturn("http://localhost");
         AbstractBuild build = Mockito.mock(AbstractBuild.class);
         Mockito.when(build.getUrl()).thenReturn("aUrl");
         SCM scm = Mockito.mock(SCM.class);
@@ -76,6 +76,6 @@ public class ScmStatsListenerTest {
         SCMRevisionState scmRevisionState = Mockito.mock(SCMRevisionState.class);
         listener.onCheckout(build, scm, filePath, taskListener, file, scmRevisionState);
         PowerMockito.mockStatic(RestClientUtil.class);
-        PowerMockito.verifyStatic(RestClientUtil.class, Mockito.never());
+        PowerMockito.verifyZeroInteractions(RestClientUtil.class);
     }
 }
