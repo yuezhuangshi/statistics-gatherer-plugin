@@ -43,7 +43,7 @@ public class QueueStatsListenerTest {
     private QueueStatsListener listener;
 
     @Before
-    public void setup(){
+    public void setup() {
         listener = new QueueStatsListener();
         mockStatic(PropertyLoader.class);
     }
@@ -152,8 +152,7 @@ public class QueueStatsListenerTest {
 
     private void verifyRestClientCall(Queue.Task project) {
         verifyStatic(RestClientUtil.class, times(1));
-        ArgumentCaptor<QueueStats> captor =
-                ArgumentCaptor.forClass(QueueStats.class);
+        ArgumentCaptor<QueueStats> captor = ArgumentCaptor.forClass(QueueStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
         QueueStats queueStats = captor.getAllValues().get(0);
 

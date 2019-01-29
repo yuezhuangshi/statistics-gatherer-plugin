@@ -1,6 +1,5 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
-
 import hudson.Plugin;
 import jenkins.model.Jenkins;
 import org.junit.Before;
@@ -73,6 +72,4 @@ public class LogbackImplTest extends LogbackAbstractTest {
         Logback logback = logbackUtil.getLogback();
         assertThat(logback, is(nullValue()));
     }
-
-
 }

@@ -63,8 +63,8 @@ public class QueueStatsTest {
         //then
         assertEquals("", queueStats.getCiUrl());
         assertEquals("", queueStats.getJobName());
-        Date compareDate =new Date();
-        assertTrue(queueStats.getEntryTime().before(compareDate)|| queueStats.getEntryTime().equals(compareDate));
+        Date compareDate = new Date();
+        assertTrue(queueStats.getEntryTime().before(compareDate) || queueStats.getEntryTime().equals(compareDate));
         assertTrue(queueStats.getExitTime().before(compareDate) || queueStats.getExitTime().equals(compareDate));
         assertEquals("", queueStats.getStartedBy());
         assertEquals(0, queueStats.getJenkinsQueueId());
@@ -210,6 +210,7 @@ public class QueueStatsTest {
         Date actualEntryTime = queueStats.getEntryTime();
         assertEquals(expectedEntryTime, actualEntryTime);
     }
+
     @Test
     public void givenStatsQueue_whenSetExitTime_thenExitTimeIsSet() {
         //given
@@ -221,6 +222,7 @@ public class QueueStatsTest {
         Date actualExitTime = queueStats.getExitTime();
         assertEquals(expectedExitTime, actualExitTime);
     }
+
     @Test
     public void givenStatsQueue_whenSetStartedBy_thenStartedByIsSet() {
         //given
@@ -232,6 +234,7 @@ public class QueueStatsTest {
         String actualStartedBy = queueStats.getStartedBy();
         assertEquals(expectedStartedBy, actualStartedBy);
     }
+
     @Test
     public void givenStatsQueue_whenSetJenkinsQueueId_thenJenkinsQueueIdIsSet() {
         //given
@@ -255,6 +258,7 @@ public class QueueStatsTest {
         int actualContextId = queueStats.getContextId();
         assertEquals(expectedContextId, actualContextId);
     }
+
     @Test
     public void givenStatsQueue_whenSetStatus_thenStatusIsSet() {
         //given
@@ -266,6 +270,7 @@ public class QueueStatsTest {
         String actualStatus = queueStats.getStatus();
         assertEquals(expectedStatus, actualStatus);
     }
+
     @Test
     public void givenStatsQueue_whenSetDuration_thenDurationIsSet() {
         //given
@@ -277,6 +282,7 @@ public class QueueStatsTest {
         long actualDuration = queueStats.getDuration();
         assertEquals(expectedDuration, actualDuration);
     }
+
     @Test
     public void givenStatsQueue_whenSetJobName_thenJobNameIsSet() {
         //given

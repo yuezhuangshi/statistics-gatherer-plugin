@@ -35,6 +35,7 @@ import static org.hamcrest.CoreMatchers.*;
 @PrepareForTest({PropertyLoader.class, RestClientUtil.class, LogbackUtil.class})
 @PowerMockIgnore({"javax.crypto.*"})
 public class RunStatsListenerTest {
+
     @Rule
     public JenkinsRule j = new JenkinsRule();
 
@@ -56,8 +57,7 @@ public class RunStatsListenerTest {
         Build<?, ?> build = triggerNewBuild().get();
 
         verifyStatic(RestClientUtil.class, times(2));
-        ArgumentCaptor<BuildStats> captor =
-                ArgumentCaptor.forClass(BuildStats.class);
+        ArgumentCaptor<BuildStats> captor = ArgumentCaptor.forClass(BuildStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
         BuildStats buildStats = captor.getAllValues().get(0);
 
@@ -74,8 +74,7 @@ public class RunStatsListenerTest {
         Build<?, ?> build = triggerNewBuild().get();
 
         verifyStatic(RestClientUtil.class, times(2));
-        ArgumentCaptor<BuildStats> captor =
-                ArgumentCaptor.forClass(BuildStats.class);
+        ArgumentCaptor<BuildStats> captor = ArgumentCaptor.forClass(BuildStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
         BuildStats buildStats = captor.getAllValues().get(1);
 
@@ -91,8 +90,7 @@ public class RunStatsListenerTest {
         Build<?, ?> build = triggerNewBuild().get();
 
         verifyStatic(LogbackUtil.class, times(2));
-        ArgumentCaptor<BuildStats> captor =
-                ArgumentCaptor.forClass(BuildStats.class);
+        ArgumentCaptor<BuildStats> captor = ArgumentCaptor.forClass(BuildStats.class);
         LogbackUtil.info(captor.capture());
         List<BuildStats> buildStats = captor.getAllValues();
 

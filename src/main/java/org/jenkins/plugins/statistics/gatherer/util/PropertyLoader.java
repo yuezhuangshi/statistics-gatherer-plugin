@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-
 public class PropertyLoader {
+
     public static final String DEFAULT_PROPERTY_FILE_NAME = "statistics";
     private static PropertyLoader instance = null;
     private final ResourceBundle resourceBundle;
@@ -30,8 +30,7 @@ public class PropertyLoader {
         return instance;
     }
 
-    public static final synchronized void setInstance(
-            final PropertyLoader propertyLoader) {
+    public static final synchronized void setInstance(final PropertyLoader propertyLoader) {
         instance = propertyLoader;
     }
 
@@ -43,8 +42,7 @@ public class PropertyLoader {
         }
     }
 
-    public String getProperty(
-            final String inKey) {
+    public String getProperty(final String inKey) {
         if (inKey == null) {
             return null;
         }
@@ -76,8 +74,7 @@ public class PropertyLoader {
         return getResourceBundleProperty(key.toLowerCase());
     }
 
-    public static String getEnvironmentProperty(
-            final String key) {
+    public static String getEnvironmentProperty(final String key) {
         return getInstance().getProperty(key);
     }
 

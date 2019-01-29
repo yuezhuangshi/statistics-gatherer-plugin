@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Objects;
 
 public class URLSha {
+
     private String value;
 
     public URLSha(URL configurationUrl) throws IOException {

@@ -29,6 +29,7 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 @PrepareForTest({PropertyLoader.class, RestClientUtil.class, LogbackUtil.class})
 @PowerMockIgnore({"javax.crypto.*"})
 public class ItemStatsListenerTest {
+
     @Rule
     public JenkinsRule jenkinsRule = new JenkinsRule();
 
@@ -49,8 +50,7 @@ public class ItemStatsListenerTest {
         FreeStyleProject project = jenkinsRule.createFreeStyleProject();
 
         verifyStatic(RestClientUtil.class);
-        ArgumentCaptor<JobStats> captor =
-                ArgumentCaptor.forClass(JobStats.class);
+        ArgumentCaptor<JobStats> captor = ArgumentCaptor.forClass(JobStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
         JobStats jobStats = captor.getValue();
 
@@ -69,8 +69,7 @@ public class ItemStatsListenerTest {
         project.delete();
 
         verifyStatic(RestClientUtil.class, times(3));
-        ArgumentCaptor<JobStats> captor =
-                ArgumentCaptor.forClass(JobStats.class);
+        ArgumentCaptor<JobStats> captor = ArgumentCaptor.forClass(JobStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
         List<JobStats> jobStats = captor.getAllValues();
 

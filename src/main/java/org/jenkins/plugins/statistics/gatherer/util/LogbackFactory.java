@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LogbackFactory {
+
     private static final Logger logger = Logger.getLogger(LogbackFactory.class.getName());
     private static final int REFRESH_THREADS = 1;
     private static final int REFRESH_INTERVAL_SECS = 60;
@@ -20,14 +21,14 @@ public class LogbackFactory {
 
         activeLogbacks.add(logbackInstance);
 
-        if(refresherTask != null && !refresherTask.isCancelled()) {
+        if (refresherTask != null && !refresherTask.isCancelled()) {
             refresherTask.cancel(true);
         }
 
         refresherTask = refresher.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
-                for (Logback logback: activeLogbacks) {
+                for (Logback logback : activeLogbacks) {
                     try {
                         logback.refresh();
                     } catch (Exception e) {

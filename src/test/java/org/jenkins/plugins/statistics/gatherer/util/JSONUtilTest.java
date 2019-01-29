@@ -23,7 +23,7 @@ public class JSONUtilTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void givenObject_whenToJson_thenReturnJson(){
+    public void givenObject_whenToJson_thenReturnJson() {
         testObject.setUrl("http://test.com");
         testObject.setBranch("blop");
         testObject.setCommit("blopie");
@@ -35,14 +35,14 @@ public class JSONUtilTest {
     }
 
     @Test
-    public void givenInvalidObject_whenToJson_thenReturnEmptyJson(){
+    public void givenInvalidObject_whenToJson_thenReturnEmptyJson() {
         JSONObject object = new JSONObject();
         String json = JSONUtil.convertToJson(object);
         assertEquals("", json);
     }
 
     @Test
-    public void givenJsonArray_whenConvertToList_thenReturnList(){
+    public void givenJsonArray_whenConvertToList_thenReturnList() {
         JSONArray array = new JSONArray();
         array.put("test");
         List<String> result = JSONUtil.convertJsonArrayToList(array);
@@ -51,33 +51,34 @@ public class JSONUtilTest {
     }
 
     @Test
-    public void givenNull_whenConvertToList_thenReturnEmptyList(){
+    public void givenNull_whenConvertToList_thenReturnEmptyList() {
         List<String> result = JSONUtil.convertJsonArrayToList(null);
         assertEquals(0, result.size());
     }
 
     @Test
-    public void givenJsonObjectWithCategories_whenConvertBuildFailureToMap_thenReturnValidMap(){
+    public void givenJsonObjectWithCategories_whenConvertBuildFailureToMap_thenReturnValidMap() {
         JSONArray array = new JSONArray();
         array.put("test");
         JSONObject object = new JSONObject();
         object.put("categories", array);
         Map<String, Object> result = JSONUtil.convertBuildFailureToMap(object);
         assertEquals(1, result.size());
-        assertEquals(1, ((List)result.get("categories")).size());
-        assertEquals("test", ((List)result.get("categories")).get(0));
+        assertEquals(1, ((List) result.get("categories")).size());
+        assertEquals("test", ((List) result.get("categories")).get(0));
     }
 
     @Test
-    public void givenJsonObjectWithoutCategories_whenConvertBuildFailureToMap_thenReturnValidMap(){
+    public void givenJsonObjectWithoutCategories_whenConvertBuildFailureToMap_thenReturnValidMap() {
         JSONObject object = new JSONObject();
         object.put("stuff", "testString");
         Map<String, Object> result = JSONUtil.convertBuildFailureToMap(object);
         assertEquals(1, result.size());
         assertEquals("testString", result.get("stuff"));
     }
-    @Test(expected=IllegalAccessError.class)
-    public void givenProtectedConstructor_whenNew_throwIllegalAccess(){
+
+    @Test(expected = IllegalAccessError.class)
+    public void givenProtectedConstructor_whenNew_throwIllegalAccess() {
         new JSONUtil();
     }
 }

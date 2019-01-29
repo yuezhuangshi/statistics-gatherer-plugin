@@ -21,6 +21,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({PropertyLoader.class})
 public class LogbackFactoryTest extends LogbackAbstractTest {
+
     Path logbackXmlPath;
 
     @Before

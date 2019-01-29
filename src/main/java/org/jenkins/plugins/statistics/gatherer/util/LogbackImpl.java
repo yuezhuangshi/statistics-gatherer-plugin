@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class LogbackImpl implements Logback {
+
     private Logger logger;
     private URLSha loggerSha;
     private String loggerName;

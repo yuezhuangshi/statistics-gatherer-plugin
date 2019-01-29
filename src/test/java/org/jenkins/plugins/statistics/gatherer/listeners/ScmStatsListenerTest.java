@@ -34,12 +34,12 @@ public class ScmStatsListenerTest {
     private ScmStatsListener listener;
 
     @Before
-    public void setup(){
+    public void setup() {
         listener = new ScmStatsListener();
     }
 
     @Test
-    public void givenBuildAndBuildInfoTrue_whenStarted_thenPost(){
+    public void givenBuildAndBuildInfoTrue_whenStarted_thenPost() {
         PowerMockito.mockStatic(PropertyLoader.class);
         Mockito.when(PropertyLoader.getScmCheckoutInfo()).thenReturn(true);
         Mockito.when(PropertyLoader.getScmCheckoutEndPoint()).thenReturn("http://localhost");
@@ -51,8 +51,7 @@ public class ScmStatsListenerTest {
         File file = Mockito.mock(File.class);
         SCMRevisionState scmRevisionState = Mockito.mock(SCMRevisionState.class);
         PowerMockito.mockStatic(RestClientUtil.class);
-        ArgumentCaptor<ScmCheckoutInfo> scmCheckoutInfoArgumentCaptor =
-                ArgumentCaptor.forClass(ScmCheckoutInfo.class);
+        ArgumentCaptor<ScmCheckoutInfo> scmCheckoutInfoArgumentCaptor = ArgumentCaptor.forClass(ScmCheckoutInfo.class);
         listener.onCheckout(build, scm, filePath, taskListener, file, scmRevisionState);
 
         PowerMockito.verifyStatic(RestClientUtil.class);
@@ -61,11 +60,10 @@ public class ScmStatsListenerTest {
         ScmCheckoutInfo buildStepStats = scmCheckoutInfoArgumentCaptor.getValue();
         assertEquals("aUrl", buildStepStats.getBuildUrl());
         assertEquals(new Date(0), buildStepStats.getStartTime());
-
     }
 
     @Test
-    public void givenBuildAndBuildInfoFalse_whenStarted_thenDoNotPost(){
+    public void givenBuildAndBuildInfoFalse_whenStarted_thenDoNotPost() {
         PowerMockito.mockStatic(PropertyLoader.class);
         Mockito.when(PropertyLoader.getScmCheckoutInfo()).thenReturn(false);
         AbstractBuild build = Mockito.mock(AbstractBuild.class);

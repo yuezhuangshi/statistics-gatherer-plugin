@@ -22,8 +22,8 @@ import java.util.logging.Logger;
  */
 @Extension(dynamicLoadable = YesNoMaybe.YES)
 public class QueueStatsListener extends QueueListener {
-    private static final Logger LOGGER = Logger.getLogger(
-            QueueStatsListener.class.getName());
+
+    private static final Logger LOGGER = Logger.getLogger(QueueStatsListener.class.getName());
 
     public QueueStatsListener() {
         //Necessary for jenkins
@@ -55,8 +55,7 @@ public class QueueStatsListener extends QueueListener {
                 " with queue id " + waitingItem.getId() + " using " + getRestUrl(), e);
     }
 
-    private void addEntryQueueCause(String type, Item item,
-                                    QueueStats queue) {
+    private void addEntryQueueCause(String type, Item item, QueueStats queue) {
         QueueCause cause = new QueueCause();
         cause.setType(type);
         cause.setEntryTime(new Date());
@@ -205,7 +204,6 @@ public class QueueStatsListener extends QueueListener {
             }
         }
     }
-
 
     @Override
     public void onLeft(LeftItem leftItem) {
