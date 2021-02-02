@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>3.33</version>
+        <version>4.15</version>
     </parent>
 
     <groupId>org.jenkins.plugins.statistics.gatherer</groupId>
@@ -51,22 +51,22 @@
     </scm>
 
     <properties>
-        <jenkins.version>2.60.1</jenkins.version>
+        <jenkins.version>2.204.1</jenkins.version>
         <java.level>8</java.level>
-        <powermock.version>1.7.4</powermock.version>
+        <powermock.version>2.0.2</powermock.version>
         <findbugs.failOnError>false</findbugs.failOnError>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.mashape.unirest</groupId>
-            <artifactId>unirest-java</artifactId>
-            <version>1.4.9</version>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.14.9</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.8</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.75</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -96,7 +96,7 @@
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito</artifactId>
+            <artifactId>powermock-api-mockito2</artifactId>
             <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
@@ -138,60 +138,9 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.5</version>
                 <configuration>
                     <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>generate-test-resources</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <artifactItems>
-                        <artifactItem>
-                            <groupId>com.sonyericsson.jenkins.plugins.bfa</groupId>
-                            <artifactId>build-failure-analyzer</artifactId>
-                            <version>1.20.0</version>
-                            <type>hpi</type>
-                            <outputDirectory>${project.build.testOutputDirectory}/plugins</outputDirectory>
-                            <destFileName>build-failure-analyzer.hpi</destFileName>
-                        </artifactItem>
-                        <artifactItem>
-                            <groupId>org.jenkins-ci.plugins</groupId>
-                            <artifactId>apache-httpcomponents-client-4-api</artifactId>
-                            <version>4.5.3-2.0</version>
-                            <type>hpi</type>
-                            <outputDirectory>${project.build.testOutputDirectory}/plugins</outputDirectory>
-                            <destFileName>apache-httpcomponents-client-4-api.hpi</destFileName>
-                        </artifactItem>
-                        <artifactItem>
-                            <groupId>org.jenkins-ci.plugins</groupId>
-                            <artifactId>junit</artifactId>
-                            <version>1.6</version>
-                            <type>hpi</type>
-                            <outputDirectory>${project.build.testOutputDirectory}/plugins</outputDirectory>
-                            <destFileName>junit.hpi</destFileName>
-                        </artifactItem>
-                        <artifactItem>
-                            <groupId>org.jenkins-ci.plugins</groupId>
-                            <artifactId>matrix-project</artifactId>
-                            <version>1.4</version>
-                            <type>hpi</type>
-                            <outputDirectory>${project.build.testOutputDirectory}/plugins</outputDirectory>
-                            <destFileName>matrix-project.hpi</destFileName>
-                        </artifactItem>
-                    </artifactItems>
-                    <overWriteReleases>false</overWriteReleases>
-                    <overWriteSnapshots>true</overWriteSnapshots>
                 </configuration>
             </plugin>
         </plugins>

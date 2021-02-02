@@ -1,5 +1,7 @@
 package org.jenkins.plugins.statistics.gatherer.listeners;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import hudson.EnvVars;
 import hudson.Extension;
 import hudson.Launcher;
@@ -15,8 +17,6 @@ import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
 import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
 import org.jenkins.plugins.statistics.gatherer.util.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.*;
@@ -64,7 +64,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 addSlaveInfo(run, build, listener);
                 RestClientUtil.postToService(getRestUrl(), build);
                 LogbackUtil.info(build);
-                LOGGER.log(Level.INFO, "Started build and its status is : " + buildResult +
+                LOGGER.log(Level.FINE, "Started build and its status is : " + buildResult +
                         " and start time is : " + run.getTimestamp().getTime());
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Failed to call API " + getRestUrl() +
@@ -220,7 +220,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 addBuildFailureCauses(build);
                 RestClientUtil.postToService(getRestUrl(), build);
                 LogbackUtil.info(build);
-                LOGGER.log(Level.INFO, run.getParent().getName() + " build is completed " +
+                LOGGER.log(Level.FINE, run.getParent().getName() + " build is completed " +
                         "its status is : " + buildResult +
                         " at time : " + new Date());
             } catch (Exception e) {
@@ -235,16 +235,16 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
         for (PluginWrapper plugin : plugins) {
             if (plugin.getDisplayName().contains("Build Failure Analyzer")) {
                 JSONObject response = RestClientUtil.getJson(build.getCiUrl() + build.getBuildUrl() + BUILD_FAILURE_URL_TO_APPEND);
-                if (response != null && response.has("actions")) {
+                if (response != null && response.containsKey("actions")) {
                     JSONArray actions = response.getJSONArray("actions");
-                    for (int i = 0; i < actions.length(); i++) {
+                    for (int i = 0; i < actions.size(); i++) {
                         JSONObject failureResponse = actions.getJSONObject(i);
                         if (!failureResponse.keySet().isEmpty()) {
-                            List<Map> failureCauses = new ArrayList<>();
-                            if (failureResponse.has("foundFailureCauses")) {
-                                for (int j = 0; j < failureResponse.getJSONArray("foundFailureCauses").length(); j++) {
+                            List<Map<String, Object>> failureCauses = new ArrayList<>();
+                            if (failureResponse.containsKey("foundFailureCauses")) {
+                                for (int j = 0; j < failureResponse.getJSONArray("foundFailureCauses").size(); j++) {
                                     JSONArray foundFailureCauses = failureResponse.getJSONArray("foundFailureCauses");
-                                    Map jsonObject = JSONUtil.convertBuildFailureToMap(foundFailureCauses.getJSONObject(j));
+                                    Map<String, Object> jsonObject = JSONUtil.convertBuildFailureToMap(foundFailureCauses.getJSONObject(j));
                                     failureCauses.add(jsonObject);
                                 }
                             }

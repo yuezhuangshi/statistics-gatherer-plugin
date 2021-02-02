@@ -35,11 +35,11 @@ f.section(title:_("Statistics Gatherer")) {
         f.checkbox(default: true)
     }
 
-    f.advanced(title: _("Advanced Settings")) {
-        f.entry(title:_("Enable HTTP publishing?"), field:"shouldSendApiHttpRequests") {
-            f.checkbox(default: instance.shouldSendApiHttpRequests == true)
-        }
+    f.entry(title:_("Enable HTTP publishing?"), field:"shouldSendApiHttpRequests") {
+        f.checkbox(default: instance.shouldSendApiHttpRequests == true)
+    }
 
+    f.advanced(title: _("Advanced Settings")) {
         f.entry(title:_("Enable publish of events to LOGBack"), field:"shouldSendToLogback") {
             f.checkbox()
         }

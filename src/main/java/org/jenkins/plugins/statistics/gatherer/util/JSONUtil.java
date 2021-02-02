@@ -1,9 +1,8 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -21,23 +20,20 @@ public class JSONUtil {
     }
 
     public static String convertToJson(Object object) {
-        ObjectMapper mapper = new ObjectMapper();
-        String convertedJson = "";
         try {
-            convertedJson = mapper.writeValueAsString(object);
-            return convertedJson;
-        } catch (JsonProcessingException e) {
+            return JSON.toJSONString(object);
+        } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Json conversion failed for object " + object, e);
         }
-        return convertedJson;
+        return "";
     }
 
     public static Map<String, Object> convertBuildFailureToMap(JSONObject jObject) {
-        Map<String, Object> map = new HashMap<>();
-        Iterator<?> keys = jObject.keys();
+        Map<String, Object> map = new HashMap<>(16);
+        Set<Map.Entry<String, Object>> entries = jObject.entrySet();
 
-        while (keys.hasNext()) {
-            String key = (String) keys.next();
+        for (Map.Entry<String, Object> entry : entries) {
+            String key = entry.getKey();
             if ("categories".equals(key)) {
                 List<String> value = convertJsonArrayToList(jObject.getJSONArray(key));
                 map.put(key, value);
@@ -46,16 +42,12 @@ public class JSONUtil {
                 map.put(key, value);
             }
         }
+
         return map;
     }
 
     public static List<String> convertJsonArrayToList(JSONArray jsonArray) {
-        List<String> listdata = new ArrayList<>();
-        if (jsonArray != null) {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                listdata.add(jsonArray.get(i).toString());
-            }
-        }
-        return listdata;
+        String jsonStr = JSON.toJSONString(jsonArray);
+        return JSON.parseArray(jsonStr, String.class);
     }
 }

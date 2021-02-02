@@ -33,7 +33,7 @@ public class BuildStatsTest {
     private static final Map<String, String> PARAMETERS = new HashMap<>();
     private static final String BUILD_URL = "http://url.com/build";
     private static final String BUILD_CAUSE = "This is a cause";
-    private static final List<Map> BUILD_FAILURE_CAUSES = new ArrayList<>();
+    private static final List<Map<String, Object>> BUILD_FAILURE_CAUSES = new ArrayList<>();
     private BuildStats buildStats;
 
     @Before
@@ -481,7 +481,7 @@ public class BuildStatsTest {
         //given
 
         //when
-        List<Map> buildFailureCauses = buildStats.getBuildFailureCauses();
+        List<Map<String, Object>> buildFailureCauses = buildStats.getBuildFailureCauses();
 
         //then
         assertEquals(BUILD_FAILURE_CAUSES, buildFailureCauses);
@@ -490,13 +490,13 @@ public class BuildStatsTest {
     @Test
     public void givenStatsBuild_whenSetBuildFailureCauses_thenBuildFailureCausesIsSet() {
         //given
-        List<Map> expectedBuildFailureCauses = new ArrayList<>();
-        expectedBuildFailureCauses.add(new HashMap());
+        List<Map<String, Object>> expectedBuildFailureCauses = new ArrayList<>();
+        expectedBuildFailureCauses.add(new HashMap<String, Object>());
         //when
         buildStats.setBuildFailureCauses(expectedBuildFailureCauses);
 
         //then
-        List<Map> actualBuildFailureCauses = buildStats.getBuildFailureCauses();
+        List<Map<String, Object>> actualBuildFailureCauses = buildStats.getBuildFailureCauses();
         assertEquals(expectedBuildFailureCauses, actualBuildFailureCauses);
     }
 }

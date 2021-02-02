@@ -24,7 +24,7 @@ public class BuildStats {
     private String buildUrl;
     private int contextId;
     private String buildCause;
-    private List<Map> buildFailureCauses;
+    private List<Map<String, Object>> buildFailureCauses;
 
     public BuildStats(String ciUrl,
                       String jobName,
@@ -43,7 +43,7 @@ public class BuildStats {
                       String buildUrl,
                       int contextId,
                       String buildCause,
-                      List<Map> buildFailureCauses) {
+                      List<Map<String, Object>> buildFailureCauses) {
         this.ciUrl = ciUrl;
         this.jobName = jobName;
         this.fullJobName = fullJobName;
@@ -221,11 +221,11 @@ public class BuildStats {
         this.buildCause = buildCause;
     }
 
-    public List<Map> getBuildFailureCauses() {
+    public List<Map<String, Object>> getBuildFailureCauses() {
         return buildFailureCauses;
     }
 
-    public void setBuildFailureCauses(List<Map> buildFailureCauses) {
+    public void setBuildFailureCauses(List<Map<String, Object>> buildFailureCauses) {
         this.buildFailureCauses = buildFailureCauses;
     }
 }

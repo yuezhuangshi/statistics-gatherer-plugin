@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 2.1 - 2021-02-02
+
+- Remove AwsSns endpoint
+- Change UriRest to OkHttp3
+- Change Jackson to FastJson
+- Upgrade PowerMock version
+
 ## 2.0.3 - 2018-05-11
 
 - [JENKINS-51266](https://issues.jenkins-ci.org/browse/JENKINS-51266) Flag the plugin as dynamically-loadable

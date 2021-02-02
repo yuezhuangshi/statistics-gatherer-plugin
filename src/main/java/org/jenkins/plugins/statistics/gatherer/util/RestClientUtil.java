@@ -1,66 +1,79 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.async.Callback;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import okhttp3.*;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RestClientUtil {
+public final class RestClientUtil {
 
     private static final Logger LOGGER = Logger.getLogger(RestClientUtil.class.getName());
+
     public static final String APPLICATION_JSON = "application/json";
     public static final String ACCEPT = "accept";
     public static final String CONTENT_TYPE = "Content-Type";
 
-    protected RestClientUtil() {
-        throw new IllegalAccessError("Utility class");
-    }
-
     public static void postToService(final String url, Object object) {
         if (PropertyLoader.getShouldSendApiHttpRequests()) {
             try {
-                String jsonToPost = JSONUtil.convertToJson(object);
-                Unirest.post(url)
-                        .header(ACCEPT, APPLICATION_JSON)
-                        .header(CONTENT_TYPE, APPLICATION_JSON)
-                        .body(jsonToPost)
-                        .asJsonAsync(new Callback<JsonNode>() {
+                Request request = new Request.Builder()
+                    .addHeader(ACCEPT, APPLICATION_JSON)
+                    .addHeader(CONTENT_TYPE, APPLICATION_JSON)
+                    .url(url)
+                    .post(RequestBody.create(MediaType.parse(APPLICATION_JSON), JSON.toJSONString(object)))
+                    .build();
 
-                            public void failed(UnirestException e) {
-                                LOGGER.log(Level.WARNING, "The request for url " + url + " has failed.", e);
-                            }
+                ClientHolder.Instance.getClient().newCall(request).enqueue(new okhttp3.Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        LOGGER.log(Level.WARNING, "Statistics gather request for url[POST] " + url + " has failed", e);
+                    }
 
-                            public void completed(HttpResponse<JsonNode> response) {
-                                int responseCode = response.getStatus();
-                                LOGGER.log(Level.INFO, "The request for url " + url + " completed with status " + responseCode);
-                            }
-
-                            public void cancelled() {
-                                LOGGER.log(Level.INFO, "The request for url " + url + " has been cancelled");
-                            }
-
-                        });
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        int responseCode = response.code();
+                        LOGGER.log(Level.FINE, "Statistics gather request for url[POST] " + url + " completed with status " + responseCode);
+                    }
+                });
             } catch (Throwable e) {
-                LOGGER.log(Level.WARNING, "Unable to post event to url " + url, e);
+                LOGGER.log(Level.WARNING, "Unable to request statistics gather url[POST] " + url, e);
             }
         }
     }
 
     public static JSONObject getJson(final String url) {
-        try {
-            HttpResponse<JsonNode> response = Unirest.get(url)
-                    .header(ACCEPT, APPLICATION_JSON)
-                    .header(CONTENT_TYPE, APPLICATION_JSON)
-                    .asJson();
-            return response.getBody().getObject();
-        } catch (UnirestException e) {
-            LOGGER.log(Level.WARNING, "Json call have failed in unirest.", e);
+        Request request = new Request.Builder()
+            .addHeader(ACCEPT, APPLICATION_JSON)
+            .addHeader(CONTENT_TYPE, APPLICATION_JSON)
+            .url(url)
+            .get()
+            .build();
+
+        try(Response response = ClientHolder.Instance.getClient().newCall(request).execute()) {
+            return JSON.parseObject(response.body().string());
+        }
+        catch (IOException e){
+            LOGGER.log(Level.WARNING, "The request for url[GET] " + url + " has failed", e);
         }
         return null;
     }
+
+    enum ClientHolder {
+        // Singleton
+        Instance;
+
+        private OkHttpClient client;
+
+        ClientHolder(){
+            client = new OkHttpClient();
+        }
+
+        public OkHttpClient getClient() {
+            return client;
+        }
+    }
+
 }

@@ -1,8 +1,8 @@
 package org.jenkins.plugins.statistics.gatherer.util;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by mcharron on 2016-06-27.
@@ -27,7 +28,7 @@ public class JSONUtilTest {
         testObject.setUrl("http://test.com");
         testObject.setBranch("blop");
         testObject.setCommit("blopie");
-        String expectedJson = "{\"url\":\"http://test.com\",\"branch\":\"blop\",\"commit\":\"blopie\"}";
+        String expectedJson = "{\"branch\":\"blop\",\"commit\":\"blopie\",\"url\":\"http://test.com\"}";
 
         String jsonString = JSONUtil.convertToJson(testObject);
 
@@ -38,13 +39,13 @@ public class JSONUtilTest {
     public void givenInvalidObject_whenToJson_thenReturnEmptyJson() {
         JSONObject object = new JSONObject();
         String json = JSONUtil.convertToJson(object);
-        assertEquals("", json);
+        assertEquals("{}", json);
     }
 
     @Test
     public void givenJsonArray_whenConvertToList_thenReturnList() {
         JSONArray array = new JSONArray();
-        array.put("test");
+        array.add("test");
         List<String> result = JSONUtil.convertJsonArrayToList(array);
         assertEquals(1, result.size());
         assertEquals("test", result.get(0));
@@ -53,13 +54,13 @@ public class JSONUtilTest {
     @Test
     public void givenNull_whenConvertToList_thenReturnEmptyList() {
         List<String> result = JSONUtil.convertJsonArrayToList(null);
-        assertEquals(0, result.size());
+        assertNull(result);
     }
 
     @Test
     public void givenJsonObjectWithCategories_whenConvertBuildFailureToMap_thenReturnValidMap() {
         JSONArray array = new JSONArray();
-        array.put("test");
+        array.add("test");
         JSONObject object = new JSONObject();
         object.put("categories", array);
         Map<String, Object> result = JSONUtil.convertBuildFailureToMap(object);
