@@ -7,7 +7,6 @@ import org.jenkins.plugins.statistics.gatherer.model.step.BuildStepStats;
 import org.jenkins.plugins.statistics.gatherer.util.LogbackUtil;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
-import org.jenkins.plugins.statistics.gatherer.util.SnsClientUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +26,7 @@ import static org.mockito.ArgumentMatchers.anyString;
  */
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({PropertyLoader.class, RestClientUtil.class, SnsClientUtil.class, LogbackUtil.class})
+@PrepareForTest({PropertyLoader.class, RestClientUtil.class, LogbackUtil.class})
 public class BuildStepStatsListenerTest {
 
     private BuildStepStatsListener listener;
@@ -85,26 +84,6 @@ public class BuildStepStatsListenerTest {
 
         PowerMockito.verifyStatic(RestClientUtil.class);
         RestClientUtil.postToService(anyString(), buildStepStatsArgumentCaptor.capture());
-
-        BuildStepStats buildStepStats = buildStepStatsArgumentCaptor.getValue();
-        assertEquals("aUrl", buildStepStats.getBuildUrl());
-        assertEquals(new Date(0), buildStepStats.getStartTime());
-    }
-
-    @Test
-    public void givenBuildAndBuildInfoTrue_whenFinished_thenPublishToSns() {
-        PowerMockito.mockStatic(PropertyLoader.class);
-        Mockito.when(PropertyLoader.getBuildStepInfo()).thenReturn(true);
-        AbstractBuild build = Mockito.mock(AbstractBuild.class);
-        Mockito.when(build.getUrl()).thenReturn("aUrl");
-        BuildStep steps = Mockito.mock(BuildStep.class);
-        BuildListener buildListener = Mockito.mock(BuildListener.class);
-        PowerMockito.mockStatic(SnsClientUtil.class);
-        ArgumentCaptor<BuildStepStats> buildStepStatsArgumentCaptor = ArgumentCaptor.forClass(BuildStepStats.class);
-        listener.finished(build, steps, buildListener, true);
-
-        PowerMockito.verifyStatic(SnsClientUtil.class);
-        SnsClientUtil.publishToSns(buildStepStatsArgumentCaptor.capture());
 
         BuildStepStats buildStepStats = buildStepStatsArgumentCaptor.getValue();
         assertEquals("aUrl", buildStepStats.getBuildUrl());

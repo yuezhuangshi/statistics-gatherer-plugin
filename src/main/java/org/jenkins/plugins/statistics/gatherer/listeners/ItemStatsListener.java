@@ -37,7 +37,6 @@ public class ItemStatsListener extends ItemListener {
                 ciJob.setStatus(Constants.ACTIVE);
                 setConfig(project, ciJob);
                 RestClientUtil.postToService(getRestUrl(), ciJob);
-                SnsClientUtil.publishToSns(ciJob);
                 LogbackUtil.info(ciJob);
             } catch (Exception e) {
                 logException(item, e);
@@ -117,7 +116,6 @@ public class ItemStatsListener extends ItemListener {
                 ciJob.setStatus(project.isDisabled() ? Constants.DISABLED : Constants.ACTIVE);
                 setConfig(project, ciJob);
                 RestClientUtil.postToService(getRestUrl(), ciJob);
-                SnsClientUtil.publishToSns(ciJob);
                 LogbackUtil.info(ciJob);
             } catch (Exception e) {
                 logException(item, e);
@@ -134,7 +132,6 @@ public class ItemStatsListener extends ItemListener {
                 ciJob.setUpdatedDate(new Date());
                 ciJob.setStatus(Constants.DELETED);
                 RestClientUtil.postToService(getRestUrl(), ciJob);
-                SnsClientUtil.publishToSns(ciJob);
                 LogbackUtil.info(ciJob);
             } catch (Exception e) {
                 logException(item, e);

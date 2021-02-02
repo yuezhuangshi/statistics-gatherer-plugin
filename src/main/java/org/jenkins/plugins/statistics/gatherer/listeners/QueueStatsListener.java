@@ -73,7 +73,6 @@ public class QueueStatsListener extends QueueListener {
                     addExitQueueCause("waiting", waitingItem, queue);
                 }
                 RestClientUtil.postToService(getRestUrl(), queue);
-                SnsClientUtil.publishToSns(queue);
                 LogbackUtil.info(queue);
             } catch (Exception e) {
                 logExceptionWaiting(waitingItem, e);
@@ -105,7 +104,6 @@ public class QueueStatsListener extends QueueListener {
                     addEntryQueueCause("blocked", blockedItem, queue);
                 }
                 RestClientUtil.postToService(getRestUrl(), queue);
-                SnsClientUtil.publishToSns(queue);
             } catch (Exception e) {
                 logExceptionBlocked(blockedItem, e);
             }
@@ -128,7 +126,6 @@ public class QueueStatsListener extends QueueListener {
                 }
 
                 RestClientUtil.postToService(getRestUrl(), queue);
-                SnsClientUtil.publishToSns(queue);
                 LogbackUtil.info(queue);
             } catch (Exception e) {
                 logExceptionBlocked(blockedItem, e);
@@ -145,7 +142,6 @@ public class QueueStatsListener extends QueueListener {
                     addEntryQueueCause("buildable", buildableItem, queue);
                 }
                 RestClientUtil.postToService(getRestUrl(), queue);
-                SnsClientUtil.publishToSns(queue);
                 LogbackUtil.info(queue);
             } catch (Exception e) {
                 logExceptionLeave(buildableItem, e);
@@ -162,7 +158,6 @@ public class QueueStatsListener extends QueueListener {
                     addExitQueueCause("buildable", buildableItem, queue);
                 }
                 RestClientUtil.postToService(getRestUrl(), queue);
-                SnsClientUtil.publishToSns(queue);
                 LogbackUtil.info(queue);
             } catch (Exception e) {
                 logExceptionLeave(buildableItem, e);
@@ -218,7 +213,6 @@ public class QueueStatsListener extends QueueListener {
                     queue.setContextId(leftItem.outcome.hashCode());
                 }
                 RestClientUtil.postToService(getRestUrl(), queue);
-                SnsClientUtil.publishToSns(queue);
                 LogbackUtil.info(queue);
             } catch (Exception e) {
                 logExceptionLeft(leftItem, e);

@@ -36,27 +36,6 @@ f.section(title:_("Statistics Gatherer")) {
     }
 
     f.advanced(title: _("Advanced Settings")) {
-
-        f.entry(title:_("Publish to Amazon SNS Queue"), field:"shouldPublishToAwsSnsQueue") {
-            f.checkbox(default: instance.shouldPublishToAwsSnsQueue == true)
-        }
-
-        f.entry(title:_("AWS Access Key"), field:"awsAccessKey") {
-            f.textbox()
-        }
-
-        f.entry(title:_("AWS Secret Key"), field:"awsSecretKey") {
-            f.textbox()
-        }
-
-        f.entry(title:_("SNS Topic ARN"), field:"snsTopicArn") {
-            f.textbox()
-        }
-
-        f.entry(title:_("AWS Region"), field:"awsRegion") {
-            f.textbox()
-        }
-
         f.entry(title:_("Enable HTTP publishing?"), field:"shouldSendApiHttpRequests") {
             f.checkbox(default: instance.shouldSendApiHttpRequests == true)
         }
