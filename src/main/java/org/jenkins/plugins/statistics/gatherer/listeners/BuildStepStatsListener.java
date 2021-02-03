@@ -7,11 +7,12 @@ import hudson.model.BuildStepListener;
 import hudson.tasks.BuildStep;
 import jenkins.YesNoMaybe;
 import org.jenkins.plugins.statistics.gatherer.model.step.BuildStepStats;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.jenkins.plugins.statistics.gatherer.util.LogbackUtil;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by mcharron on 2016-07-12.
@@ -26,8 +27,8 @@ public class BuildStepStatsListener extends BuildStepListener {
             buildStepStats.setBuildUrl(build.getUrl());
             buildStepStats.setBuildStepType(bs.getClass().toString().replace("class ", ""));
             buildStepStats.setBuildStepId(bs.toString());
-            buildStepStats.setEndTime(new Date());
-            buildStepStats.setStartTime(new Date(0));
+            buildStepStats.setEndTime(LocalDateTime.now());
+            buildStepStats.setStartTime(Constants.TIME_EPOCH);
             RestClientUtil.postToService(getRestUrl(), buildStepStats);
             LogbackUtil.info(buildStepStats);
         }
@@ -40,8 +41,8 @@ public class BuildStepStatsListener extends BuildStepListener {
             buildStepStats.setBuildUrl(build.getUrl());
             buildStepStats.setBuildStepType(bs.getClass().toString().replace("class ", ""));
             buildStepStats.setBuildStepId(bs.toString());
-            buildStepStats.setStartTime(new Date());
-            buildStepStats.setEndTime(new Date(0));
+            buildStepStats.setStartTime(LocalDateTime.now());
+            buildStepStats.setEndTime(Constants.TIME_EPOCH);
             RestClientUtil.postToService(getRestUrl(), buildStepStats);
             LogbackUtil.info(buildStepStats);
         }

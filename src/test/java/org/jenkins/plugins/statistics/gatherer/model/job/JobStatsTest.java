@@ -4,6 +4,7 @@ import org.jenkins.plugins.statistics.gatherer.model.job.JobStats;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -21,8 +22,8 @@ public class JobStatsTest {
     private static final String CI_URL = "http://url.com";
     private static final String STATUS = "STATUS";
     private static final String CONFIG_FILE = "aConfigFile";
-    private static final Date CREATED_DATE = new Date(0);
-    private static final Date UPDATED_DATE = new Date(1000000);
+    private static final LocalDateTime CREATED_DATE = Constants.TIME_EPOCH;
+    private static final LocalDateTime UPDATED_DATE = Constants.TIME_EPOCH.plusSeconds(1000);
     private static final String JOB_URL = "http://url.com/job";
     private JobStats jobStats;
 
@@ -44,13 +45,13 @@ public class JobStatsTest {
         //when
         JobStats jobStats = new JobStats();
         //then
-        Date compareDate = new Date();
+        LocalDateTime compareDate = LocalDateTime.now();
         assertEquals("", jobStats.getName());
-        assertTrue(jobStats.getCreatedDate().before(compareDate) || jobStats.getCreatedDate().equals(compareDate));
+        assertTrue(jobStats.getCreatedDate().isBefore(compareDate) || jobStats.getCreatedDate().equals(compareDate));
         assertEquals("", jobStats.getUserId());
         assertEquals("", jobStats.getUserName());
         assertEquals("", jobStats.getCiUrl());
-        assertTrue(jobStats.getUpdatedDate().before(compareDate) || jobStats.getUpdatedDate().equals(compareDate));
+        assertTrue(jobStats.getUpdatedDate().isBefore(compareDate) || jobStats.getUpdatedDate().equals(compareDate));
         assertEquals("", jobStats.getStatus());
         assertEquals("", jobStats.getConfigFile());
         assertEquals("", jobStats.getJobUrl());
@@ -199,7 +200,7 @@ public class JobStatsTest {
         //given
 
         //when
-        Date createdDate = jobStats.getCreatedDate();
+        LocalDateTime createdDate = jobStats.getCreatedDate();
 
         //then
         assertEquals(CREATED_DATE, createdDate);
@@ -208,12 +209,12 @@ public class JobStatsTest {
     @Test
     public void givenStatsJob_whenSetCreatedDate_thenCreatedDateIsSet() {
         //given
-        Date expectedCreatedDate = new Date();
+        LocalDateTime expectedCreatedDate = LocalDateTime.now();
         //when
         jobStats.setCreatedDate(expectedCreatedDate);
 
         //then
-        Date actualCreatedDate = jobStats.getCreatedDate();
+        LocalDateTime actualCreatedDate = jobStats.getCreatedDate();
         assertEquals(expectedCreatedDate, actualCreatedDate);
     }
 
@@ -222,7 +223,7 @@ public class JobStatsTest {
         //given
 
         //when
-        Date updatedDate = jobStats.getUpdatedDate();
+        LocalDateTime updatedDate = jobStats.getUpdatedDate();
 
         //then
         assertEquals(UPDATED_DATE, updatedDate);
@@ -231,12 +232,12 @@ public class JobStatsTest {
     @Test
     public void givenStatsJob_whenSetUpdatedDate_thenUpdatedDateIsSet() {
         //given
-        Date expectedUpdatedDate = new Date();
+        LocalDateTime expectedUpdatedDate = LocalDateTime.now();
         //when
         jobStats.setUpdatedDate(expectedUpdatedDate);
 
         //then
-        Date actualUpdatedDate = jobStats.getUpdatedDate();
+        LocalDateTime actualUpdatedDate = jobStats.getUpdatedDate();
         assertEquals(expectedUpdatedDate, actualUpdatedDate);
     }
 
@@ -248,7 +249,7 @@ public class JobStatsTest {
         jobStats.setCreatedDate(null);
 
         //then
-        Date createdDate = jobStats.getCreatedDate();
+        LocalDateTime createdDate = jobStats.getCreatedDate();
         assertNull(createdDate);
     }
 
@@ -260,7 +261,7 @@ public class JobStatsTest {
         jobStats.setUpdatedDate(null);
 
         //then
-        Date updatedDate = jobStats.getUpdatedDate();
+        LocalDateTime updatedDate = jobStats.getUpdatedDate();
         assertNull(updatedDate);
     }
 

@@ -1,6 +1,8 @@
 package org.jenkins.plugins.statistics.gatherer.model.scm;
 
-import java.util.Date;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by mcharron on 2016-07-18.
@@ -8,18 +10,18 @@ import java.util.Date;
 public class ScmCheckoutInfo {
 
     private String buildUrl;
-    private Date startTime;
-    private Date endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
-    public ScmCheckoutInfo(Date startTime, Date endTime, String buildUrl) {
+    public ScmCheckoutInfo(LocalDateTime startTime, LocalDateTime endTime, String buildUrl) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.buildUrl = buildUrl;
     }
 
     public ScmCheckoutInfo() {
-        this.startTime = new Date(0);
-        this.endTime = new Date(0);
+        this.startTime = Constants.TIME_EPOCH;
+        this.endTime = Constants.TIME_EPOCH;
         this.buildUrl = "";
     }
 
@@ -31,19 +33,19 @@ public class ScmCheckoutInfo {
         this.buildUrl = buildUrl;
     }
 
-    public Date getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 }

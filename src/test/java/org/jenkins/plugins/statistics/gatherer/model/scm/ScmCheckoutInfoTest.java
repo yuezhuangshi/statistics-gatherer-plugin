@@ -3,6 +3,8 @@ package org.jenkins.plugins.statistics.gatherer.model.scm;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -13,8 +15,8 @@ import static org.junit.Assert.assertEquals;
 public class ScmCheckoutInfoTest {
 
     private static final String BUILD_URL = "anUrl";
-    private static final Date START_TIME = new Date(1000);
-    private static final Date END_TIME = new Date(1000000);
+    private static final LocalDateTime START_TIME = Constants.TIME_EPOCH.plusSeconds(1);
+    private static final LocalDateTime END_TIME = Constants.TIME_EPOCH.plusSeconds(1000);
     private ScmCheckoutInfo scmCheckoutInfo;
 
     @Before
@@ -26,8 +28,8 @@ public class ScmCheckoutInfoTest {
     public void givenNothing_whenCreateScmCheckoutInfo_thenItIsInitialized() {
         ScmCheckoutInfo scmCheckout = new ScmCheckoutInfo();
         assertEquals("", scmCheckout.getBuildUrl());
-        assertEquals(new Date(0), scmCheckout.getStartTime());
-        assertEquals(new Date(0), scmCheckout.getEndTime());
+        assertEquals(Constants.TIME_EPOCH, scmCheckout.getStartTime());
+        assertEquals(Constants.TIME_EPOCH, scmCheckout.getEndTime());
     }
 
     @Test
@@ -58,7 +60,7 @@ public class ScmCheckoutInfoTest {
         //given
 
         //when
-        Date startTime = scmCheckoutInfo.getStartTime();
+        LocalDateTime startTime = scmCheckoutInfo.getStartTime();
 
         //then
         assertEquals(START_TIME, startTime);
@@ -67,12 +69,12 @@ public class ScmCheckoutInfoTest {
     @Test
     public void givenScmCheckoutInfo_whenSetStartTime_thenStartTimeIsSet() {
         //given
-        Date expectedStartTime = new Date(123456);
+        LocalDateTime expectedStartTime = Constants.TIME_EPOCH.plusSeconds(123456);
         //when
         scmCheckoutInfo.setStartTime(expectedStartTime);
 
         //then
-        Date actualStartTime = scmCheckoutInfo.getStartTime();
+        LocalDateTime actualStartTime = scmCheckoutInfo.getStartTime();
         assertEquals(expectedStartTime, actualStartTime);
     }
 
@@ -81,7 +83,7 @@ public class ScmCheckoutInfoTest {
         //given
 
         //when
-        Date endTime = scmCheckoutInfo.getEndTime();
+        LocalDateTime endTime = scmCheckoutInfo.getEndTime();
 
         //then
         assertEquals(END_TIME, endTime);
@@ -90,12 +92,13 @@ public class ScmCheckoutInfoTest {
     @Test
     public void givenScmCheckoutInfo_whenSetEndTime_thenEndTimeIsSet() {
         //given
-        Date expectedEndTime = new Date(123456);
+        LocalDateTime expectedEndTime = Constants.TIME_EPOCH.plusSeconds(123456);
+
         //when
         scmCheckoutInfo.setEndTime(expectedEndTime);
 
         //then
-        Date actualEndTime = scmCheckoutInfo.getEndTime();
+        LocalDateTime actualEndTime = scmCheckoutInfo.getEndTime();
         assertEquals(expectedEndTime, actualEndTime);
     }
 }

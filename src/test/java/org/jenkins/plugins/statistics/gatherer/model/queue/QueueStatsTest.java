@@ -5,6 +5,8 @@ import org.jenkins.plugins.statistics.gatherer.model.queue.QueueStats;
 import org.junit.Test;
 import org.junit.Before;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +22,8 @@ public class QueueStatsTest {
 
     private static final String CI_URL = "http://url.com";
     private static final String JOB_NAME = "aName";
-    private static final Date ENTRY_TIME = new Date(0);
-    private static final Date EXIT_TIME = new Date(1000000);
+    private static final LocalDateTime ENTRY_TIME = Constants.TIME_EPOCH;
+    private static final LocalDateTime EXIT_TIME = Constants.TIME_EPOCH.plusSeconds(1000);
     private static final String STARTED_BY = "aUser";
     private static final int JENKINS_QUEUE_ID = 1;
     private static final String STATUS = "COMPLETED";
@@ -63,9 +65,9 @@ public class QueueStatsTest {
         //then
         assertEquals("", queueStats.getCiUrl());
         assertEquals("", queueStats.getJobName());
-        Date compareDate = new Date();
-        assertTrue(queueStats.getEntryTime().before(compareDate) || queueStats.getEntryTime().equals(compareDate));
-        assertTrue(queueStats.getExitTime().before(compareDate) || queueStats.getExitTime().equals(compareDate));
+        LocalDateTime compareDate = LocalDateTime.now();
+        assertTrue(queueStats.getEntryTime().isBefore(compareDate) || queueStats.getEntryTime().equals(compareDate));
+        assertTrue(queueStats.getExitTime().isBefore(compareDate) || queueStats.getExitTime().equals(compareDate));
         assertEquals("", queueStats.getStartedBy());
         assertEquals(0, queueStats.getJenkinsQueueId());
         assertEquals("", queueStats.getStatus());
@@ -90,7 +92,7 @@ public class QueueStatsTest {
         //given
 
         //when
-        Date entryTime = queueStats.getEntryTime();
+        LocalDateTime entryTime = queueStats.getEntryTime();
 
         //then
         assertEquals(ENTRY_TIME, entryTime);
@@ -101,7 +103,7 @@ public class QueueStatsTest {
         //given
 
         //when
-        Date exitTime = queueStats.getExitTime();
+        LocalDateTime exitTime = queueStats.getExitTime();
 
         //then
         assertEquals(EXIT_TIME, exitTime);
@@ -202,24 +204,24 @@ public class QueueStatsTest {
     @Test
     public void givenStatsQueue_whenSetEntryTime_thenEntryTimeIsSet() {
         //given
-        Date expectedEntryTime = new Date(123456789);
+        LocalDateTime expectedEntryTime = Constants.TIME_EPOCH.plusSeconds(123456789);
         //when
         queueStats.setEntryTime(expectedEntryTime);
 
         //then
-        Date actualEntryTime = queueStats.getEntryTime();
+        LocalDateTime actualEntryTime = queueStats.getEntryTime();
         assertEquals(expectedEntryTime, actualEntryTime);
     }
 
     @Test
     public void givenStatsQueue_whenSetExitTime_thenExitTimeIsSet() {
         //given
-        Date expectedExitTime = new Date(123456789);
+        LocalDateTime expectedExitTime = Constants.TIME_EPOCH.plusSeconds(123456789);
         //when
         queueStats.setExitTime(expectedExitTime);
 
         //then
-        Date actualExitTime = queueStats.getExitTime();
+        LocalDateTime actualExitTime = queueStats.getExitTime();
         assertEquals(expectedExitTime, actualExitTime);
     }
 
@@ -303,7 +305,7 @@ public class QueueStatsTest {
         queueStats.setEntryTime(null);
 
         //then
-        Date actualEntryTime = queueStats.getEntryTime();
+        LocalDateTime actualEntryTime = queueStats.getEntryTime();
         assertNull(actualEntryTime);
     }
 
@@ -315,7 +317,7 @@ public class QueueStatsTest {
         queueStats.setExitTime(null);
 
         //then
-        Date actualExitTime = queueStats.getExitTime();
+        LocalDateTime actualExitTime = queueStats.getExitTime();
         assertNull(actualExitTime);
     }
 

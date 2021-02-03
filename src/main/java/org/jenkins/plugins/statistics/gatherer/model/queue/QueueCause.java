@@ -1,19 +1,19 @@
 package org.jenkins.plugins.statistics.gatherer.model.queue;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by hthakkallapally on 4/20/2015.
  */
 public class QueueCause {
 
-    private Date entryTime;
-    private Date exitTime;
+    private LocalDateTime entryTime;
+    private LocalDateTime exitTime;
     private String reasonForWaiting;
     private String type;
 
-    public QueueCause(Date entryTime,
-                      Date exitTime,
+    public QueueCause(LocalDateTime entryTime,
+                      LocalDateTime exitTime,
                       String reasonForWaiting,
                       String type) {
         this.entryTime = entryTime;
@@ -23,25 +23,25 @@ public class QueueCause {
     }
 
     public QueueCause() {
-        this.entryTime = new Date();
-        this.exitTime = new Date();
+        this.entryTime = LocalDateTime.now();
+        this.exitTime = LocalDateTime.now();
         this.reasonForWaiting = "";
         this.type = "";
     }
 
-    public Date getEntryTime() {
+    public LocalDateTime getEntryTime() {
         return entryTime;
     }
 
-    public void setEntryTime(Date entryTime) {
+    public void setEntryTime(LocalDateTime entryTime) {
         this.entryTime = entryTime;
     }
 
-    public Date getExitTime() {
+    public LocalDateTime getExitTime() {
         return exitTime;
     }
 
-    public void setExitTime(Date exitTime) {
+    public void setExitTime(LocalDateTime exitTime) {
         this.exitTime = exitTime;
     }
 

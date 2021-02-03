@@ -3,9 +3,11 @@ package org.jenkins.plugins.statistics.gatherer.model.build;
 import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
 import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
 import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
@@ -23,8 +25,8 @@ public class BuildStatsTest {
     private static final String STARTED_USER_NAME = "USERNAME";
     private static final String RESULT = "SUCCESS";
     private static final int NUMBER = 1;
-    private static final Date START_TIME = new Date(0);
-    private static final Date END_TIME = new Date(1000000);
+    private static final LocalDateTime START_TIME = Constants.TIME_EPOCH;
+    private static final LocalDateTime END_TIME = Constants.TIME_EPOCH.plusSeconds(1000);
     private static final long DURATION = 123456;
     private static final long QUEUE_TIME = 12345678;
     private static final int CONTEXT_ID = 333333333;
@@ -63,9 +65,9 @@ public class BuildStatsTest {
         //when
         BuildStats buildStats = new BuildStats();
         //then
-        Date compareDate = new Date();
-        assertTrue(buildStats.getStartTime().before(compareDate) || buildStats.getStartTime().equals(compareDate));
-        assertTrue(buildStats.getEndTime().before(compareDate) || buildStats.getEndTime().equals(compareDate));
+        LocalDateTime compareDate = LocalDateTime.now();
+        assertTrue(buildStats.getStartTime().isBefore(compareDate) || buildStats.getStartTime().equals(compareDate));
+        assertTrue(buildStats.getEndTime().isBefore(compareDate) || buildStats.getEndTime().equals(compareDate));
         assertEquals("", buildStats.getCiUrl());
         assertEquals("", buildStats.getJobName());
         assertEquals("", buildStats.getFullJobName());
@@ -365,7 +367,7 @@ public class BuildStatsTest {
         //given
 
         //when
-        Date startTime = buildStats.getStartTime();
+        LocalDateTime startTime = buildStats.getStartTime();
 
         //then
         assertEquals(START_TIME, startTime);
@@ -374,12 +376,12 @@ public class BuildStatsTest {
     @Test
     public void givenStatsBuild_whenSetStartTime_thenStartTimeIsSet() {
         //given
-        Date expectedStartTime = new Date();
+        LocalDateTime expectedStartTime = LocalDateTime.now();
         //when
         buildStats.setStartTime(expectedStartTime);
 
         //then
-        Date actualStartTime = buildStats.getStartTime();
+        LocalDateTime actualStartTime = buildStats.getStartTime();
         assertEquals(expectedStartTime, actualStartTime);
     }
 
@@ -388,7 +390,7 @@ public class BuildStatsTest {
         //given
 
         //when
-        Date endTime = buildStats.getEndTime();
+        LocalDateTime endTime = buildStats.getEndTime();
 
         //then
         assertEquals(END_TIME, endTime);
@@ -397,12 +399,12 @@ public class BuildStatsTest {
     @Test
     public void givenStatsBuild_whenSetEndTime_thenEndTimeIsSet() {
         //given
-        Date expectedEndTime = new Date();
+        LocalDateTime expectedEndTime = LocalDateTime.now();
         //when
         buildStats.setEndTime(expectedEndTime);
 
         //then
-        Date actualEndTime = buildStats.getEndTime();
+        LocalDateTime actualEndTime = buildStats.getEndTime();
         assertEquals(expectedEndTime, actualEndTime);
     }
 

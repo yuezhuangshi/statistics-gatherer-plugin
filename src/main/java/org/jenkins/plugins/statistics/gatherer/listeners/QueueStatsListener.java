@@ -12,6 +12,9 @@ import org.jenkins.plugins.statistics.gatherer.model.queue.QueueCause;
 import org.jenkins.plugins.statistics.gatherer.model.queue.QueueStats;
 import org.jenkins.plugins.statistics.gatherer.util.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -35,7 +38,7 @@ public class QueueStatsListener extends QueueListener {
             try {
                 QueueStats queue = getCiQueue(waitingItem);
                 addStartedBy(waitingItem, queue);
-                queue.setEntryTime(new Date());
+                queue.setEntryTime(LocalDateTime.now());
                 queue.setExitTime(null);
                 queue.setStatus(Constants.ENTERED);
                 if (waitingItem.getCauseOfBlockage() != null) {
@@ -58,7 +61,7 @@ public class QueueStatsListener extends QueueListener {
     private void addEntryQueueCause(String type, Item item, QueueStats queue) {
         QueueCause cause = new QueueCause();
         cause.setType(type);
-        cause.setEntryTime(new Date());
+        cause.setEntryTime(LocalDateTime.now());
         cause.setExitTime(null);
         cause.setReasonForWaiting(item.getCauseOfBlockage().getShortDescription());
         queue.addQueueCause(cause);
@@ -84,7 +87,7 @@ public class QueueStatsListener extends QueueListener {
         QueueCause cause = new QueueCause();
         cause.setType(type);
         cause.setEntryTime(null);
-        cause.setExitTime(new Date());
+        cause.setExitTime(LocalDateTime.now());
         cause.setReasonForWaiting(item.getCauseOfBlockage().getShortDescription());
         queue.addQueueCause(cause);
     }
@@ -181,7 +184,9 @@ public class QueueStatsListener extends QueueListener {
         queue.setCiUrl(ciUrl);
         queue.setJobName(item.task.getFullDisplayName());
         queue.setJenkinsQueueId((int) item.getId());
-        queue.setEntryTime(new Date(item.getInQueueSince()));
+        queue.setEntryTime(
+            LocalDateTime.ofInstant(new Date(item.getInQueueSince()).toInstant(), ZoneId.systemDefault())
+        );
         return queue;
     }
 
@@ -205,10 +210,12 @@ public class QueueStatsListener extends QueueListener {
         if (PropertyLoader.getQueueInfo()) {
             try {
                 QueueStats queue = getCiQueue(leftItem);
-                queue.setEntryTime(new Date(leftItem.getInQueueSince()));
-                queue.setExitTime(new Date());
+                queue.setEntryTime(
+                    LocalDateTime.ofInstant(new Date(leftItem.getInQueueSince()).toInstant(), ZoneId.systemDefault())
+                );
+                queue.setExitTime(LocalDateTime.now());
                 queue.setStatus(Constants.LEFT);
-                queue.setDuration(System.currentTimeMillis() - leftItem.getInQueueSince());
+                queue.setDuration(Instant.now().toEpochMilli() - leftItem.getInQueueSince());
                 if (leftItem.outcome != null) {
                     queue.setContextId(leftItem.outcome.hashCode());
                 }

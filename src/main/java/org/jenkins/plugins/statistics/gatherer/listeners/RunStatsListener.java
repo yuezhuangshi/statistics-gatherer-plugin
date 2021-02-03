@@ -19,6 +19,8 @@ import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
 import org.jenkins.plugins.statistics.gatherer.util.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,9 +49,12 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
         if (PropertyLoader.getBuildInfo()) {
             try {
                 final String buildResult = run.getResult() == null ? "INPROGRESS" : run.getResult().toString();
+                final LocalDateTime startTime = LocalDateTime.ofInstant(
+                    run.getTimestamp().getTime().toInstant(), ZoneId.systemDefault()
+                );
                 BuildStats build = new BuildStats();
                 build.setContextId(run.getExecutor() != null && run.getExecutor().getCurrentWorkUnit() != null ? run.getExecutor().getCurrentWorkUnit().context.hashCode() : 0);
-                build.setStartTime(run.getTimestamp().getTime());
+                build.setStartTime(startTime);
                 build.setCiUrl(Jenkins.getInstance().getRootUrl());
                 build.setJobName(run.getParent().getName());
                 build.setFullJobName(run.getParent().getFullName());
@@ -65,7 +70,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 RestClientUtil.postToService(getRestUrl(), build);
                 LogbackUtil.info(build);
                 LOGGER.log(Level.FINE, "Started build and its status is : " + buildResult +
-                        " and start time is : " + run.getTimestamp().getTime());
+                        " and start time is : " + startTime);
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Failed to call API " + getRestUrl() +
                         " for build " + run.getDisplayName(), e);
@@ -207,6 +212,7 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
         if (PropertyLoader.getBuildInfo()) {
             try {
                 final String buildResult = run.getResult() == null ? Constants.UNKNOWN : run.getResult().toString();
+                final LocalDateTime endTime = LocalDateTime.now();
                 BuildStats build = new BuildStats();
                 build.setCiUrl(Jenkins.getInstance().getRootUrl());
                 build.setJobName(run.getParent().getName());
@@ -215,14 +221,14 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 build.setResult(buildResult);
                 build.setBuildUrl(run.getUrl());
                 build.setDuration(run.getDuration());
-                build.setEndTime(Calendar.getInstance().getTime());
+                build.setEndTime(endTime);
                 addSCMInfo(run, SoutTaskListener.INSTANCE, build);
                 addBuildFailureCauses(build);
                 RestClientUtil.postToService(getRestUrl(), build);
                 LogbackUtil.info(build);
                 LOGGER.log(Level.FINE, run.getParent().getName() + " build is completed " +
                         "its status is : " + buildResult +
-                        " at time : " + new Date());
+                        " at time : " + endTime);
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Failed to call API " + getRestUrl() +
                         " for build " + run.getDisplayName(), e);
@@ -263,9 +269,9 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                                         BuildListener listener) throws IOException, InterruptedException {
         if (PropertyLoader.getScmCheckoutInfo()) {
             ScmCheckoutInfo scmCheckoutInfo = new ScmCheckoutInfo();
-            scmCheckoutInfo.setStartTime(Calendar.getInstance().getTime());
+            scmCheckoutInfo.setStartTime(LocalDateTime.now());
             scmCheckoutInfo.setBuildUrl(build.getUrl());
-            scmCheckoutInfo.setEndTime(new Date(0));
+            scmCheckoutInfo.setEndTime(Constants.TIME_EPOCH);
             RestClientUtil.postToService(getScmCheckoutUrl(), scmCheckoutInfo);
             LogbackUtil.info(scmCheckoutInfo);
         }

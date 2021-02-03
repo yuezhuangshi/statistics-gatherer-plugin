@@ -1,5 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.model.build;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -12,8 +13,8 @@ public class BuildStats {
     private String fullJobName;
     private int number;
     private SlaveInfo slaveInfo;
-    private Date startTime;
-    private Date endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String startedUserId;
     private String startedUserName;
     private String result;
@@ -31,8 +32,8 @@ public class BuildStats {
                       String fullJobName,
                       int number,
                       SlaveInfo slaveInfo,
-                      Date startTime,
-                      Date endTime,
+                      LocalDateTime startTime,
+                      LocalDateTime endTime,
                       String startedUserId,
                       String startedUserName,
                       String result,
@@ -70,8 +71,8 @@ public class BuildStats {
         this.fullJobName = "";
         this.number = 0;
         this.slaveInfo = new SlaveInfo();
-        this.startTime = new Date();
-        this.endTime = new Date();
+        this.startTime = LocalDateTime.now();
+        this.endTime = LocalDateTime.now();
         this.startedUserId = "";
         this.startedUserName = "";
         this.result = "";
@@ -125,19 +126,19 @@ public class BuildStats {
         this.slaveInfo = slaveInfo;
     }
 
-    public Date getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 

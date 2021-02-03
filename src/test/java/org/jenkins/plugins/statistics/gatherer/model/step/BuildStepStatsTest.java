@@ -3,6 +3,7 @@ package org.jenkins.plugins.statistics.gatherer.model.step;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -15,8 +16,8 @@ public class BuildStepStatsTest {
     private static final String BUILD_URL = "anUrl";
     private static final String BUILD_STEP_TYPE = "aType";
     private static final String BUILD_STEP_ID = "anId";
-    private static final Date START_TIME = new Date(1000);
-    private static final Date END_TIME = new Date(1000000);
+    private static final LocalDateTime START_TIME = Constants.TIME_EPOCH.plusSeconds(1);
+    private static final LocalDateTime END_TIME = Constants.TIME_EPOCH.plusSeconds(1000);
     private BuildStepStats buildStepStats;
 
     @Before
@@ -32,8 +33,8 @@ public class BuildStepStatsTest {
         assertEquals("", buildStep.getBuildUrl());
         assertEquals("", buildStep.getBuildStepType());
         assertEquals("", buildStep.getBuildStepId());
-        assertEquals(new Date(0), buildStep.getStartTime());
-        assertEquals(new Date(0), buildStep.getEndTime());
+        assertEquals(Constants.TIME_EPOCH, buildStep.getStartTime());
+        assertEquals(Constants.TIME_EPOCH, buildStep.getEndTime());
     }
 
     @Test
@@ -110,7 +111,7 @@ public class BuildStepStatsTest {
         //given
 
         //when
-        Date startTime = buildStepStats.getStartTime();
+        LocalDateTime startTime = buildStepStats.getStartTime();
 
         //then
         assertEquals(START_TIME, startTime);
@@ -119,12 +120,12 @@ public class BuildStepStatsTest {
     @Test
     public void givenBuildStepStats_whenSetStartTime_thenStartTimeIsSet() {
         //given
-        Date expectedStartTime = new Date(123456);
+        LocalDateTime expectedStartTime = Constants.TIME_EPOCH.plusSeconds(123456);
         //when
         buildStepStats.setStartTime(expectedStartTime);
 
         //then
-        Date actualStartTime = buildStepStats.getStartTime();
+        LocalDateTime actualStartTime = buildStepStats.getStartTime();
         assertEquals(expectedStartTime, actualStartTime);
     }
 
@@ -133,7 +134,7 @@ public class BuildStepStatsTest {
         //given
 
         //when
-        Date endTime = buildStepStats.getEndTime();
+        LocalDateTime endTime = buildStepStats.getEndTime();
 
         //then
         assertEquals(END_TIME, endTime);
@@ -142,12 +143,13 @@ public class BuildStepStatsTest {
     @Test
     public void givenBuildStepStats_whenSetEndTime_thenEndTimeIsSet() {
         //given
-        Date expectedEndTime = new Date(123456);
+        LocalDateTime expectedEndTime = Constants.TIME_EPOCH.plusSeconds(123456);
+
         //when
         buildStepStats.setEndTime(expectedEndTime);
 
         //then
-        Date actualEndTime = buildStepStats.getEndTime();
+        LocalDateTime actualEndTime = buildStepStats.getEndTime();
         assertEquals(expectedEndTime, actualEndTime);
     }
 }

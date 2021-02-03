@@ -4,6 +4,7 @@ import org.jenkins.plugins.statistics.gatherer.model.queue.QueueCause;
 import org.junit.Test;
 import org.junit.Before;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -16,8 +17,8 @@ public class QueueCauseTest {
 
     private static final String REASON_FOR_WAITING = "aType";
     private static final String TYPE = "aType";
-    private static final Date ENTRY_TIME = new Date(0);
-    private static final Date EXIT_TIME = new Date(1000000);
+    private static final LocalDateTime ENTRY_TIME = Constants.TIME_EPOCH;
+    private static final LocalDateTime EXIT_TIME = Constants.TIME_EPOCH.plusSeconds(1000);
     private QueueCause queueCause;
 
     @Before
@@ -33,9 +34,9 @@ public class QueueCauseTest {
         //when
         QueueCause queueCause = new QueueCause();
         //then
-        Date compareDate = new Date();
-        assertTrue(queueCause.getEntryTime().before(compareDate) || queueCause.getEntryTime().equals(compareDate));
-        assertTrue(queueCause.getExitTime().before(compareDate) || queueCause.getExitTime().equals(compareDate));
+        LocalDateTime compareDate = LocalDateTime.now();
+        assertTrue(queueCause.getEntryTime().isBefore(compareDate) || queueCause.getEntryTime().equals(compareDate));
+        assertTrue(queueCause.getExitTime().isBefore(compareDate) || queueCause.getExitTime().equals(compareDate));
         assertEquals("", queueCause.getReasonForWaiting());
         assertEquals("", queueCause.getType());
     }
@@ -91,7 +92,7 @@ public class QueueCauseTest {
         //given
 
         //when
-        Date entryTime = queueCause.getEntryTime();
+        LocalDateTime entryTime = queueCause.getEntryTime();
 
         //then
         assertEquals(ENTRY_TIME, entryTime);
@@ -100,12 +101,12 @@ public class QueueCauseTest {
     @Test
     public void givenQueueCause_whenSetEntryTime_thenEntryTimeIsSet() {
         //given
-        Date expectedEntryTime = new Date(123456789);
+        LocalDateTime expectedEntryTime = Constants.TIME_EPOCH.plusSeconds(123456789);
         //when
         queueCause.setEntryTime(expectedEntryTime);
 
         //then
-        Date actualEntryTime = queueCause.getEntryTime();
+        LocalDateTime actualEntryTime = queueCause.getEntryTime();
         assertEquals(expectedEntryTime, actualEntryTime);
     }
 
@@ -114,7 +115,7 @@ public class QueueCauseTest {
         //given
 
         //when
-        Date exitTime = queueCause.getExitTime();
+        LocalDateTime exitTime = queueCause.getExitTime();
 
         //then
         assertEquals(EXIT_TIME, exitTime);
@@ -123,12 +124,12 @@ public class QueueCauseTest {
     @Test
     public void givenQueueCause_whenSetExitTime_thenExitTimeIsSet() {
         //given
-        Date expectedExitTime = new Date(123456789);
+        LocalDateTime expectedExitTime = Constants.TIME_EPOCH.plusSeconds(123456789);
         //when
         queueCause.setExitTime(expectedExitTime);
 
         //then
-        Date actualExitTime = queueCause.getExitTime();
+        LocalDateTime actualExitTime = queueCause.getExitTime();
         assertEquals(expectedExitTime, actualExitTime);
     }
 }

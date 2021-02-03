@@ -1,19 +1,21 @@
 package org.jenkins.plugins.statistics.gatherer.model.step;
 
-import java.util.Date;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by mcharron on 2016-07-12.
  */
 public class BuildStepStats {
 
-    private Date startTime;
-    private Date endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String buildUrl;
     private String buildStepType;
     private String buildStepId;
 
-    public BuildStepStats(Date startTime, Date endTime, String buildUrl, String buildStepType, String buildStepId) {
+    public BuildStepStats(LocalDateTime startTime, LocalDateTime endTime, String buildUrl, String buildStepType, String buildStepId) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.buildUrl = buildUrl;
@@ -22,26 +24,26 @@ public class BuildStepStats {
     }
 
     public BuildStepStats() {
-        this.startTime = new Date(0);
-        this.endTime = new Date(0);
+        this.startTime = Constants.TIME_EPOCH;
+        this.endTime = Constants.TIME_EPOCH;
         this.buildUrl = "";
         this.buildStepType = "";
         this.buildStepId = "";
     }
 
-    public Date getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 

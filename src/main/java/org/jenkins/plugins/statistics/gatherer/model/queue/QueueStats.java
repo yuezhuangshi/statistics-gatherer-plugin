@@ -1,7 +1,7 @@
 package org.jenkins.plugins.statistics.gatherer.model.queue;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,8 +11,8 @@ public class QueueStats {
 
     private String ciUrl;
     private String jobName;
-    private Date entryTime;
-    private Date exitTime;
+    private LocalDateTime entryTime;
+    private LocalDateTime exitTime;
     private String startedBy;
     private int jenkinsQueueId;
     private String status;
@@ -22,8 +22,8 @@ public class QueueStats {
 
     public QueueStats(String ciUrl,
                       String jobName,
-                      Date entryTime,
-                      Date exitTime,
+                      LocalDateTime entryTime,
+                      LocalDateTime exitTime,
                       String startedBy,
                       int jenkinsQueueId,
                       String status,
@@ -45,8 +45,8 @@ public class QueueStats {
     public QueueStats() {
         this.ciUrl = "";
         this.jobName = "";
-        this.entryTime = new Date();
-        this.exitTime = new Date();
+        this.entryTime = LocalDateTime.now();
+        this.exitTime = LocalDateTime.now();
         this.startedBy = "";
         this.jenkinsQueueId = 0;
         this.status = "";
@@ -71,20 +71,20 @@ public class QueueStats {
         this.jobName = jobName;
     }
 
-    public Date getEntryTime() {
-        return entryTime == null ? null : new Date(entryTime.getTime());
+    public LocalDateTime getEntryTime() {
+        return entryTime;
     }
 
-    public void setEntryTime(Date entryTime) {
-        this.entryTime = entryTime == null ? null : new Date(entryTime.getTime());
+    public void setEntryTime(LocalDateTime entryTime) {
+        this.entryTime = entryTime;
     }
 
-    public Date getExitTime() {
-        return exitTime == null ? null : new Date(exitTime.getTime());
+    public LocalDateTime getExitTime() {
+        return exitTime;
     }
 
-    public void setExitTime(Date exitTime) {
-        this.exitTime = exitTime == null ? null : new Date(exitTime.getTime());
+    public void setExitTime(LocalDateTime exitTime) {
+        this.exitTime = exitTime;
     }
 
     public String getStartedBy() {

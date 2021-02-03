@@ -1,6 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.model.job;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by hthakkallapally on 3/16/2015.
@@ -8,21 +8,21 @@ import java.util.Date;
 public class JobStats {
 
     private String name;
-    private Date createdDate;
+    private LocalDateTime createdDate;
     private String userId;
     private String userName;
     private String ciUrl;
-    private Date updatedDate;
+    private LocalDateTime updatedDate;
     private String status;
     private String configFile;
     private String jobUrl;
 
     public JobStats(String name,
-                    Date createdDate,
+                    LocalDateTime createdDate,
                     String userId,
                     String userName,
                     String ciUrl,
-                    Date updatedDate,
+                    LocalDateTime updatedDate,
                     String status,
                     String configFile,
                     String jobUrl) {
@@ -39,11 +39,11 @@ public class JobStats {
 
     public JobStats() {
         this.name = "";
-        this.createdDate = new Date();
+        this.createdDate = LocalDateTime.now();
         this.userId = "";
         this.userName = "";
         this.ciUrl = "";
-        this.updatedDate = new Date();
+        this.updatedDate = LocalDateTime.now();
         this.status = "";
         this.configFile = "";
         this.jobUrl = "";
@@ -57,12 +57,12 @@ public class JobStats {
         this.name = name;
     }
 
-    public Date getCreatedDate() {
-        return createdDate == null ? null : new Date(createdDate.getTime());
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate == null ? null : new Date(createdDate.getTime());
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getUserId() {
@@ -89,12 +89,12 @@ public class JobStats {
         this.ciUrl = ciUrl;
     }
 
-    public Date getUpdatedDate() {
-        return updatedDate == null ? null : new Date(updatedDate.getTime());
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate == null ? null : new Date(updatedDate.getTime());
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     public String getStatus() {

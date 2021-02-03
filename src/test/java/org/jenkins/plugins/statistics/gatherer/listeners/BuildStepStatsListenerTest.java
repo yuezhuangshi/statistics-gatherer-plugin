@@ -4,6 +4,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.tasks.BuildStep;
 import org.jenkins.plugins.statistics.gatherer.model.step.BuildStepStats;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.jenkins.plugins.statistics.gatherer.util.LogbackUtil;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
@@ -15,8 +16,6 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -54,7 +53,7 @@ public class BuildStepStatsListenerTest {
 
         BuildStepStats buildStepStats = buildStepStatsArgumentCaptor.getValue();
         assertEquals("aUrl", buildStepStats.getBuildUrl());
-        assertEquals(new Date(0), buildStepStats.getEndTime());
+        assertEquals(Constants.TIME_EPOCH, buildStepStats.getEndTime());
     }
 
     @Test
@@ -87,7 +86,7 @@ public class BuildStepStatsListenerTest {
 
         BuildStepStats buildStepStats = buildStepStatsArgumentCaptor.getValue();
         assertEquals("aUrl", buildStepStats.getBuildUrl());
-        assertEquals(new Date(0), buildStepStats.getStartTime());
+        assertEquals(Constants.TIME_EPOCH, buildStepStats.getStartTime());
     }
 
     @Test

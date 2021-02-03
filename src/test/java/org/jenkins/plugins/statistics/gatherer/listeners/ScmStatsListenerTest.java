@@ -19,6 +19,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -59,7 +60,7 @@ public class ScmStatsListenerTest {
 
         ScmCheckoutInfo buildStepStats = scmCheckoutInfoArgumentCaptor.getValue();
         assertEquals("aUrl", buildStepStats.getBuildUrl());
-        assertEquals(new Date(0), buildStepStats.getStartTime());
+        assertEquals(Constants.TIME_EPOCH, buildStepStats.getStartTime());
     }
 
     @Test

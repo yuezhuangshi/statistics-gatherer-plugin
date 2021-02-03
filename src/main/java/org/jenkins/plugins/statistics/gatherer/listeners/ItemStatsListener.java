@@ -11,7 +11,7 @@ import org.jenkins.plugins.statistics.gatherer.model.job.JobStats;
 import org.jenkins.plugins.statistics.gatherer.util.*;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +33,7 @@ public class ItemStatsListener extends ItemListener {
             try {
                 AbstractProject<?, ?> project = asProject(item);
                 JobStats ciJob = addCIJobData(project);
-                ciJob.setCreatedDate(new Date());
+                ciJob.setCreatedDate(LocalDateTime.now());
                 ciJob.setStatus(Constants.ACTIVE);
                 setConfig(project, ciJob);
                 RestClientUtil.postToService(getRestUrl(), ciJob);
@@ -112,7 +112,7 @@ public class ItemStatsListener extends ItemListener {
             AbstractProject<?, ?> project = asProject(item);
             try {
                 JobStats ciJob = addCIJobData(project);
-                ciJob.setUpdatedDate(new Date());
+                ciJob.setUpdatedDate(LocalDateTime.now());
                 ciJob.setStatus(project.isDisabled() ? Constants.DISABLED : Constants.ACTIVE);
                 setConfig(project, ciJob);
                 RestClientUtil.postToService(getRestUrl(), ciJob);
@@ -129,7 +129,7 @@ public class ItemStatsListener extends ItemListener {
             AbstractProject<?, ?> project = asProject(item);
             try {
                 JobStats ciJob = addCIJobData(project);
-                ciJob.setUpdatedDate(new Date());
+                ciJob.setUpdatedDate(LocalDateTime.now());
                 ciJob.setStatus(Constants.DELETED);
                 RestClientUtil.postToService(getRestUrl(), ciJob);
                 LogbackUtil.info(ciJob);
