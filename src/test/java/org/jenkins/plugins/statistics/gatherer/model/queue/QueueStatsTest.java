@@ -1,19 +1,14 @@
 package org.jenkins.plugins.statistics.gatherer.model.queue;
 
-import org.jenkins.plugins.statistics.gatherer.model.queue.QueueCause;
-import org.jenkins.plugins.statistics.gatherer.model.queue.QueueStats;
-import org.junit.Test;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.junit.Before;
+import org.junit.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by mcharron on 2016-06-27.

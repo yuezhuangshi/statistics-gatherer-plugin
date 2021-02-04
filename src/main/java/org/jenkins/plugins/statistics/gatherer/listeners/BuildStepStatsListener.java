@@ -8,7 +8,6 @@ import hudson.tasks.BuildStep;
 import jenkins.YesNoMaybe;
 import org.jenkins.plugins.statistics.gatherer.model.step.BuildStepStats;
 import org.jenkins.plugins.statistics.gatherer.util.Constants;
-import org.jenkins.plugins.statistics.gatherer.util.LogbackUtil;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
@@ -30,7 +29,6 @@ public class BuildStepStatsListener extends BuildStepListener {
             buildStepStats.setEndTime(LocalDateTime.now());
             buildStepStats.setStartTime(Constants.TIME_EPOCH);
             RestClientUtil.postToService(getRestUrl(), buildStepStats);
-            LogbackUtil.info(buildStepStats);
         }
     }
 
@@ -44,7 +42,6 @@ public class BuildStepStatsListener extends BuildStepListener {
             buildStepStats.setStartTime(LocalDateTime.now());
             buildStepStats.setEndTime(Constants.TIME_EPOCH);
             RestClientUtil.postToService(getRestUrl(), buildStepStats);
-            LogbackUtil.info(buildStepStats);
         }
     }
 

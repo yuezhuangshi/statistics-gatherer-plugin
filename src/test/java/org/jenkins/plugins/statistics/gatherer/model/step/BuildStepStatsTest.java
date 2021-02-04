@@ -1,10 +1,10 @@
 package org.jenkins.plugins.statistics.gatherer.model.step;
 
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 

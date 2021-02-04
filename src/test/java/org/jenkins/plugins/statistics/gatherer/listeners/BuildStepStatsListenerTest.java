@@ -5,7 +5,6 @@ import hudson.model.BuildListener;
 import hudson.tasks.BuildStep;
 import org.jenkins.plugins.statistics.gatherer.model.step.BuildStepStats;
 import org.jenkins.plugins.statistics.gatherer.util.Constants;
-import org.jenkins.plugins.statistics.gatherer.util.LogbackUtil;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 import org.junit.Before;
@@ -25,7 +24,7 @@ import static org.mockito.ArgumentMatchers.anyString;
  */
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({PropertyLoader.class, RestClientUtil.class, LogbackUtil.class})
+@PrepareForTest({PropertyLoader.class, RestClientUtil.class})
 public class BuildStepStatsListenerTest {
 
     private BuildStepStatsListener listener;

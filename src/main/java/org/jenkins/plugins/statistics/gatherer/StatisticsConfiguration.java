@@ -21,7 +21,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     private String projectUrl;
     private String scmCheckoutUrl;
     private String buildStepUrl;
-    private String logbackConfigXmlUrl;
 
     private Boolean queueInfo;
     private Boolean buildInfo;
@@ -29,8 +28,6 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     private Boolean scmCheckoutInfo;
     private Boolean buildStepInfo;
     private Boolean shouldSendApiHttpRequests;
-
-    private Boolean shouldSendToLogback;
 
     public StatisticsConfiguration() {
         load();
@@ -138,7 +135,7 @@ public class StatisticsConfiguration extends GlobalConfiguration {
     }
 
     @Override
-    public boolean configure(StaplerRequest request, JSONObject json) throws FormException {
+    public boolean configure(StaplerRequest request, JSONObject json) {
         request.bindJSON(this, json);
         return true;
     }
@@ -247,19 +244,4 @@ public class StatisticsConfiguration extends GlobalConfiguration {
         return !(url.startsWith("http://") || url.startsWith("https://"));
     }
 
-    public Boolean getShouldSendToLogback() {
-        return shouldSendToLogback;
-    }
-
-    public void setShouldSendToLogback(Boolean shouldSendToLogback) {
-        this.shouldSendToLogback = shouldSendToLogback;
-    }
-
-    public String getLogbackConfigXmlUrl() {
-        return logbackConfigXmlUrl;
-    }
-
-    public void setLogbackConfigXmlUrl(String logbackConfigXmlUrl) {
-        this.logbackConfigXmlUrl = logbackConfigXmlUrl;
-    }
 }

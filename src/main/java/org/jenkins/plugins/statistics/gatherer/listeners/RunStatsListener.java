@@ -21,7 +21,9 @@ import org.jenkins.plugins.statistics.gatherer.util.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,7 +70,6 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 addParameters(run, build);
                 addSlaveInfo(run, build, listener);
                 RestClientUtil.postToService(getRestUrl(), build);
-                LogbackUtil.info(build);
                 LOGGER.log(Level.FINE, "Started build and its status is : " + buildResult +
                         " and start time is : " + startTime);
             } catch (Exception e) {
@@ -225,7 +226,6 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
                 addSCMInfo(run, SoutTaskListener.INSTANCE, build);
                 addBuildFailureCauses(build);
                 RestClientUtil.postToService(getRestUrl(), build);
-                LogbackUtil.info(build);
                 LOGGER.log(Level.FINE, run.getParent().getName() + " build is completed " +
                         "its status is : " + buildResult +
                         " at time : " + endTime);
@@ -273,7 +273,6 @@ public class RunStatsListener extends RunListener<Run<?, ?>> {
             scmCheckoutInfo.setBuildUrl(build.getUrl());
             scmCheckoutInfo.setEndTime(Constants.TIME_EPOCH);
             RestClientUtil.postToService(getScmCheckoutUrl(), scmCheckoutInfo);
-            LogbackUtil.info(scmCheckoutInfo);
         }
         return super.setUpEnvironment(build, launcher, listener);
 

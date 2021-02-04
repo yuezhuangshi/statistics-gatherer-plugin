@@ -1,15 +1,12 @@
 package org.jenkins.plugins.statistics.gatherer.model.job;
 
-import org.jenkins.plugins.statistics.gatherer.model.job.JobStats;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by mcharron on 2016-06-29.

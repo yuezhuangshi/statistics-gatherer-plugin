@@ -8,7 +8,9 @@ import hudson.model.listeners.ItemListener;
 import jenkins.YesNoMaybe;
 import jenkins.model.Jenkins;
 import org.jenkins.plugins.statistics.gatherer.model.job.JobStats;
-import org.jenkins.plugins.statistics.gatherer.util.*;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
+import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
+import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -37,7 +39,6 @@ public class ItemStatsListener extends ItemListener {
                 ciJob.setStatus(Constants.ACTIVE);
                 setConfig(project, ciJob);
                 RestClientUtil.postToService(getRestUrl(), ciJob);
-                LogbackUtil.info(ciJob);
             } catch (Exception e) {
                 logException(item, e);
             }
@@ -116,7 +117,6 @@ public class ItemStatsListener extends ItemListener {
                 ciJob.setStatus(project.isDisabled() ? Constants.DISABLED : Constants.ACTIVE);
                 setConfig(project, ciJob);
                 RestClientUtil.postToService(getRestUrl(), ciJob);
-                LogbackUtil.info(ciJob);
             } catch (Exception e) {
                 logException(item, e);
             }
@@ -132,7 +132,6 @@ public class ItemStatsListener extends ItemListener {
                 ciJob.setUpdatedDate(LocalDateTime.now());
                 ciJob.setStatus(Constants.DELETED);
                 RestClientUtil.postToService(getRestUrl(), ciJob);
-                LogbackUtil.info(ciJob);
             } catch (Exception e) {
                 logException(item, e);
             }

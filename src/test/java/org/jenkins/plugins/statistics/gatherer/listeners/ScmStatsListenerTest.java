@@ -7,6 +7,7 @@ import hudson.remoting.VirtualChannel;
 import hudson.scm.SCM;
 import hudson.scm.SCMRevisionState;
 import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
+import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 import org.junit.Before;
@@ -19,8 +20,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;

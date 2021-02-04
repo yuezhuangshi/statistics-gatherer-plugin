@@ -23,14 +23,14 @@ public class PropertyLoader {
         resourceBundle = ResourceBundle.getBundle(DEFAULT_PROPERTY_FILE_NAME);
     }
 
-    public static final synchronized PropertyLoader getInstance() {
+    public static synchronized PropertyLoader getInstance() {
         if (instance == null) {
             setInstance(new PropertyLoader());
         }
         return instance;
     }
 
-    public static final synchronized void setInstance(final PropertyLoader propertyLoader) {
+    public static synchronized void setInstance(final PropertyLoader propertyLoader) {
         instance = propertyLoader;
     }
 
@@ -52,7 +52,7 @@ public class PropertyLoader {
         }
         final EnvVars environmentVariables = new EnvVars();
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> globalNodeProperties =
-                Jenkins.getInstance().getGlobalNodeProperties();
+                Jenkins.get().getGlobalNodeProperties();
         List<EnvironmentVariablesNodeProperty> properties =
                 globalNodeProperties.getAll(EnvironmentVariablesNodeProperty.class);
         for (EnvironmentVariablesNodeProperty environmentVariablesNodeProperty : properties) {
@@ -79,7 +79,7 @@ public class PropertyLoader {
     }
 
     public static boolean isTrue(String value) {
-        return value != null && value.toLowerCase().equals("true");
+        return value != null && "true".equals(value.toLowerCase());
     }
 
     public static String getQueueEndPoint() {
@@ -176,19 +176,4 @@ public class PropertyLoader {
         return isTrue(getEnvironmentProperty("statistics.endpoint.shouldSendApiHttpRequests"));
     }
 
-    public static boolean getShouldSendToLogback() {
-        Boolean shouldSendToLogback = StatisticsConfiguration.get().getShouldSendToLogback();
-        if (shouldSendToLogback != null) {
-            return shouldSendToLogback;
-        }
-        return isTrue(getEnvironmentProperty("statistics.endpoint.shouldSendToLogback"));
-    }
-
-    public static String getLogbackConfigXmlUrl() {
-        String logbackConfigXmlUrlString = StatisticsConfiguration.get().getLogbackConfigXmlUrl();
-        if (logbackConfigXmlUrlString == null) {
-            logbackConfigXmlUrlString = getEnvironmentProperty("statistics.endpoint.logbackConfigXmlUrl");
-        }
-        return logbackConfigXmlUrlString;
-    }
 }

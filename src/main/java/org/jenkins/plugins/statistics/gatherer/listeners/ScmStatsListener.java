@@ -11,7 +11,6 @@ import hudson.scm.SCMRevisionState;
 import jenkins.YesNoMaybe;
 import org.jenkins.plugins.statistics.gatherer.model.scm.ScmCheckoutInfo;
 import org.jenkins.plugins.statistics.gatherer.util.Constants;
-import org.jenkins.plugins.statistics.gatherer.util.LogbackUtil;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 
@@ -35,7 +34,6 @@ public class ScmStatsListener extends SCMListener {
             scmCheckoutInfo.setStartTime(Constants.TIME_EPOCH);
             scmCheckoutInfo.setEndTime(LocalDateTime.now());
             RestClientUtil.postToService(getUrl(), scmCheckoutInfo);
-            LogbackUtil.info(scmCheckoutInfo);
         }
     }
 

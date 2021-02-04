@@ -7,7 +7,6 @@ import hudson.model.TaskListener;
 import hudson.model.queue.QueueTaskFuture;
 import hudson.tasks.Shell;
 import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
-import org.jenkins.plugins.statistics.gatherer.util.LogbackUtil;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
 import org.junit.Before;
@@ -21,18 +20,17 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.IOException;
-import java.util.List;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.verifyStatic;
-import static org.hamcrest.CoreMatchers.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({PropertyLoader.class, RestClientUtil.class, LogbackUtil.class})
+@PrepareForTest({PropertyLoader.class, RestClientUtil.class})
 @PowerMockIgnore({"javax.crypto.*"})
 public class RunStatsListenerTest {
 
@@ -80,22 +78,6 @@ public class RunStatsListenerTest {
 
         assertThat(buildStats.getResult(), is(equalTo("SUCCESS")));
         assertBuildInfoEqualsTo(buildStats, build);
-    }
-
-    @Test
-    public void givenRunWithBuildInfoTrue_whenStarted_thenSendTwoEventsToLogback() throws Exception {
-        mockStatic(LogbackUtil.class);
-        when(PropertyLoader.getBuildInfo()).thenReturn(true);
-
-        Build<?, ?> build = triggerNewBuild().get();
-
-        verifyStatic(LogbackUtil.class, times(2));
-        ArgumentCaptor<BuildStats> captor = ArgumentCaptor.forClass(BuildStats.class);
-        LogbackUtil.info(captor.capture());
-        List<BuildStats> buildStats = captor.getAllValues();
-
-        assertThat(buildStats.get(0).getResult(), is(equalTo("INPROGRESS")));
-        assertThat(buildStats.get(1).getResult(), is(equalTo("SUCCESS")));
     }
 
     private void assertBuildInfoEqualsTo(BuildStats buildStats, Build<?, ?> build) {
