@@ -44,9 +44,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:ssh://github.com/jenkinsci/statistics-gatherer-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/statistics-gatherer-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/statistics-gatherer-plugin</url>
+        <connection>scm:git:ssh://github.com/yuezhuangshi/statistics-gatherer-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/yuezhuangshi/statistics-gatherer-plugin.git</developerConnection>
+        <url>https://github.com/yuezhuangshi/statistics-gatherer-plugin</url>
         <tag>HEAD</tag>
     </scm>
 
