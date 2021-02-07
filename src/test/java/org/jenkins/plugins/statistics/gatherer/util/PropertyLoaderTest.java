@@ -94,7 +94,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getQueueEndPoint();
 
@@ -119,7 +119,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getQueueEndPoint();
 
@@ -144,7 +144,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getQueueEndPoint();
 
@@ -163,7 +163,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getQueueEndPoint();
 
@@ -196,7 +196,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getBuildEndPoint();
 
@@ -221,7 +221,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getBuildEndPoint();
 
@@ -246,7 +246,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getBuildEndPoint();
 
@@ -265,7 +265,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getBuildEndPoint();
 
@@ -297,7 +297,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getProjectEndPoint();
 
@@ -322,7 +322,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getProjectEndPoint();
 
@@ -347,7 +347,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getProjectEndPoint();
 
@@ -366,7 +366,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getProjectEndPoint();
 
@@ -416,7 +416,7 @@ public class PropertyLoaderTest {
         DescribableList describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getBuildStepEndPoint();
 
@@ -441,7 +441,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getBuildStepEndPoint();
 
@@ -466,7 +466,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getBuildStepEndPoint();
 
@@ -485,7 +485,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getBuildStepEndPoint();
 
@@ -517,7 +517,7 @@ public class PropertyLoaderTest {
         DescribableList describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getScmCheckoutEndPoint();
 
@@ -542,7 +542,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getScmCheckoutEndPoint();
 
@@ -567,7 +567,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getScmCheckoutEndPoint();
 
@@ -586,7 +586,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         String url = PropertyLoader.getScmCheckoutEndPoint();
 
@@ -618,7 +618,7 @@ public class PropertyLoaderTest {
         DescribableList describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getScmCheckoutInfo();
 
@@ -643,7 +643,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getScmCheckoutInfo();
 
@@ -668,7 +668,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getScmCheckoutInfo();
 
@@ -687,7 +687,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getScmCheckoutInfo();
 
@@ -719,7 +719,7 @@ public class PropertyLoaderTest {
         DescribableList describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getBuildStepInfo();
 
@@ -744,7 +744,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getBuildStepInfo();
 
@@ -769,7 +769,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getBuildStepInfo();
 
@@ -788,7 +788,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getBuildStepInfo();
 
@@ -820,7 +820,7 @@ public class PropertyLoaderTest {
         DescribableList describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getBuildInfo();
 
@@ -845,7 +845,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getBuildInfo();
 
@@ -870,7 +870,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getBuildInfo();
 
@@ -889,7 +889,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getBuildInfo();
 
@@ -921,7 +921,7 @@ public class PropertyLoaderTest {
         DescribableList describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getQueueInfo();
 
@@ -946,7 +946,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getQueueInfo();
 
@@ -971,7 +971,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getQueueInfo();
 
@@ -990,7 +990,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getQueueInfo();
 
@@ -1022,7 +1022,7 @@ public class PropertyLoaderTest {
         DescribableList describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<EnvironmentVariablesNodeProperty>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getProjectInfo();
 
@@ -1047,7 +1047,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getProjectInfo();
 
@@ -1072,7 +1072,7 @@ public class PropertyLoaderTest {
         environmentVariablesNodePropertyList.add(envVar);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(environmentVariablesNodePropertyList);
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getProjectInfo();
 
@@ -1091,7 +1091,7 @@ public class PropertyLoaderTest {
         DescribableList<NodeProperty<?>, NodePropertyDescriptor> describableList = mock(DescribableList.class);
         Mockito.when(describableList.getAll(EnvironmentVariablesNodeProperty.class)).thenReturn(new ArrayList<>());
         Mockito.when(jenkinsMock.getGlobalNodeProperties()).thenReturn(describableList);
-        Mockito.when(Jenkins.getInstance()).thenReturn(jenkinsMock);
+        Mockito.when(Jenkins.get()).thenReturn(jenkinsMock);
         //when
         Boolean info = PropertyLoader.getProjectInfo();
 
