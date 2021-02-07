@@ -1,11 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 2.1 - 2021-02-02
+## 2.1 - 2021-02-07
 
-- Remove AwsSns endpoint
+- Remove AwsSns & Logback endpoint
 - Change UriRest to OkHttp3
 - Change Jackson to FastJson
+- Change Date to LocalDateTime
 - Upgrade PowerMock version
 
 ## 2.0.3 - 2018-05-11
