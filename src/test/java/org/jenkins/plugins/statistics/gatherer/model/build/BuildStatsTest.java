@@ -1,37 +1,30 @@
 package org.jenkins.plugins.statistics.gatherer.model.build;
 
-import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
-import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
-import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
-import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by mcharron on 2016-06-29.
  */
 public class BuildStatsTest {
 
-    private static final String CI_URL = "http://url.com";
+    private static final String ROOT_URL = "http://url.com";
     private static final String JOB_NAME = "JOB";
     private static final String FULL_JOB_NAME = "FULLJOB";
     private static final String STARTED_USER_ID = "USER";
     private static final String STARTED_USER_NAME = "USERNAME";
     private static final String RESULT = "SUCCESS";
-    private static final int NUMBER = 1;
-    private static final LocalDateTime START_TIME = Constants.TIME_EPOCH;
-    private static final LocalDateTime END_TIME = Constants.TIME_EPOCH.plusSeconds(1000);
-    private static final long DURATION = 123456;
-    private static final long QUEUE_TIME = 12345678;
-    private static final int CONTEXT_ID = 333333333;
-    private static final SlaveInfo SLAVE_INFO = new SlaveInfo();
-    private static final SCMInfo SCM_INFO = new SCMInfo();
+    private static final Integer BUILD_NUMBER = 1;
+    private static final Date START_TIME = new Date(0);
+    private static final Date END_TIME = new Date(1000000);
+    private static final Long DURATION = 123456L;
+    private static final Long QUEUE_TIME = 12345678L;
+    private static final BuildStats.SlaveInfo SLAVE_INFO = new BuildStats.SlaveInfo();
+    private static final BuildStats.ScmInfo SCM_INFO = new BuildStats.ScmInfo();
     private static final Map<String, String> PARAMETERS = new HashMap<>();
     private static final String BUILD_URL = "http://url.com/build";
     private static final String BUILD_CAUSE = "This is a cause";
@@ -40,72 +33,47 @@ public class BuildStatsTest {
 
     @Before
     public void initBaseObject() {
-        buildStats = new BuildStats(CI_URL,
-                JOB_NAME,
-                FULL_JOB_NAME,
-                NUMBER,
-                SLAVE_INFO,
-                START_TIME,
-                END_TIME,
-                STARTED_USER_ID,
-                STARTED_USER_NAME,
-                RESULT,
-                DURATION,
-                PARAMETERS,
-                SCM_INFO,
-                QUEUE_TIME,
-                BUILD_URL,
-                CONTEXT_ID,
-                BUILD_CAUSE,
-                BUILD_FAILURE_CAUSES);
+        buildStats = BuildStats.builder()
+            .rootUrl(ROOT_URL)
+            .jobName(JOB_NAME)
+            .fullJobName(FULL_JOB_NAME)
+            .buildNumber(BUILD_NUMBER)
+            .slaveInfo(SLAVE_INFO)
+            .startTime(START_TIME)
+            .endTime(END_TIME)
+            .startedUserId(STARTED_USER_ID)
+            .startedUserName(STARTED_USER_NAME)
+            .result(RESULT)
+            .duration(DURATION)
+            .parameters(PARAMETERS)
+            .scmInfo(SCM_INFO)
+            .queueTime(QUEUE_TIME)
+            .buildUrl(BUILD_URL)
+            .buildCause(BUILD_CAUSE)
+            .buildFailureCauses(BUILD_FAILURE_CAUSES)
+            .build();
     }
 
     @Test
-    public void givenNothing_whenConstruct_thenValuesAreSet() {
-        //when
-        BuildStats buildStats = new BuildStats();
-        //then
-        LocalDateTime compareDate = LocalDateTime.now();
-        assertTrue(buildStats.getStartTime().isBefore(compareDate) || buildStats.getStartTime().equals(compareDate));
-        assertTrue(buildStats.getEndTime().isBefore(compareDate) || buildStats.getEndTime().equals(compareDate));
-        assertEquals("", buildStats.getCiUrl());
-        assertEquals("", buildStats.getJobName());
-        assertEquals("", buildStats.getFullJobName());
-        assertEquals(0, buildStats.getNumber());
-        assertEquals("", buildStats.getSlaveInfo().getSlaveName());
-        assertEquals("", buildStats.getStartedUserId());
-        assertEquals("", buildStats.getStartedUserName());
-        assertEquals("", buildStats.getResult());
-        assertEquals(0, buildStats.getDuration());
-        assertEquals(new HashMap<String, String>(), buildStats.getParameters());
-        assertEquals("", buildStats.getScmInfo().getUrl());
-        assertEquals(0, buildStats.getQueueTime());
-        assertEquals("", buildStats.getBuildUrl());
-        assertEquals(0, buildStats.getContextId());
-        assertEquals("", buildStats.getBuildCause());
-        assertEquals(new ArrayList<>(), buildStats.getBuildFailureCauses());
-    }
-
-    @Test
-    public void givenStatsBuild_whenGetCiUrl_thenReturnCiUrl() {
+    public void givenStatsBuild_whenGetRootUrl_thenReturnCiUrl() {
         //given
 
         //when
-        String ciUrl = buildStats.getCiUrl();
+        String ciUrl = buildStats.getRootUrl();
 
         //then
-        assertEquals(CI_URL, ciUrl);
+        assertEquals(ROOT_URL, ciUrl);
     }
 
     @Test
-    public void givenStatsBuild_whenSetCiUrl_thenCiUrlIsSet() {
+    public void givenStatsBuild_whenSetRootUrl_thenCiUrlIsSet() {
         //given
         String expectedCiUrl = "IHazCiUrl!";
         //when
-        buildStats.setCiUrl(expectedCiUrl);
+        buildStats.setRootUrl(expectedCiUrl);
 
         //then
-        String actualCiUrl = buildStats.getCiUrl();
+        String actualCiUrl = buildStats.getRootUrl();
         assertEquals(expectedCiUrl, actualCiUrl);
     }
 
@@ -225,49 +193,26 @@ public class BuildStatsTest {
     }
 
     @Test
-    public void givenStatsBuild_whenGetNumber_thenReturnNumber() {
+    public void givenStatsBuild_whenGetBuildNumber_thenReturnNumber() {
         //given
 
         //when
-        int number = buildStats.getNumber();
+        Integer number = buildStats.getBuildNumber();
 
         //then
-        assertEquals(NUMBER, number);
+        assertEquals(BUILD_NUMBER, number);
     }
 
     @Test
-    public void givenStatsBuild_whenSetNumber_thenNumberIsSet() {
+    public void givenStatsBuild_whenSetBuildNumber_thenNumberIsSet() {
         //given
-        int expectedNumber = 123456789;
+        Integer expectedNumber = 123456789;
         //when
-        buildStats.setNumber(expectedNumber);
+        buildStats.setBuildNumber(expectedNumber);
 
         //then
-        int actualNumber = buildStats.getNumber();
+        Integer actualNumber = buildStats.getBuildNumber();
         assertEquals(expectedNumber, actualNumber);
-    }
-
-    @Test
-    public void givenStatsBuild_whenGetContextId_thenReturnContextId() {
-        //given
-
-        //when
-        int contextId = buildStats.getContextId();
-
-        //then
-        assertEquals(CONTEXT_ID, contextId);
-    }
-
-    @Test
-    public void givenStatsBuild_whenSetContextId_thenContextIdIsSet() {
-        //given
-        int expectedContextId = 123456789;
-        //when
-        buildStats.setContextId(expectedContextId);
-
-        //then
-        int actualContextId = buildStats.getContextId();
-        assertEquals(expectedContextId, actualContextId);
     }
 
     @Test
@@ -275,7 +220,7 @@ public class BuildStatsTest {
         //given
 
         //when
-        long Duration = buildStats.getDuration();
+        Long Duration = buildStats.getDuration();
 
         //then
         assertEquals(DURATION, Duration);
@@ -298,7 +243,7 @@ public class BuildStatsTest {
         //given
 
         //when
-        long queueTime = buildStats.getQueueTime();
+        Long queueTime = buildStats.getQueueTime();
 
         //then
         assertEquals(QUEUE_TIME, queueTime);
@@ -321,7 +266,7 @@ public class BuildStatsTest {
         //given
 
         //when
-        SlaveInfo slaveInfo = buildStats.getSlaveInfo();
+        BuildStats.SlaveInfo slaveInfo = buildStats.getSlaveInfo();
 
         //then
         assertEquals(SLAVE_INFO, slaveInfo);
@@ -330,12 +275,12 @@ public class BuildStatsTest {
     @Test
     public void givenStatsBuild_whenSetSlaveInfo_thenSlaveInfoIsSet() {
         //given
-        SlaveInfo expectedSlaveInfo = new SlaveInfo();
+        BuildStats.SlaveInfo expectedSlaveInfo = new BuildStats.SlaveInfo();
         //when
         buildStats.setSlaveInfo(expectedSlaveInfo);
 
         //then
-        SlaveInfo actualSlaveInfo = buildStats.getSlaveInfo();
+        BuildStats.SlaveInfo actualSlaveInfo = buildStats.getSlaveInfo();
         assertEquals(expectedSlaveInfo, actualSlaveInfo);
     }
 
@@ -344,7 +289,7 @@ public class BuildStatsTest {
         //given
 
         //when
-        SCMInfo scmInfo = buildStats.getScmInfo();
+        BuildStats.ScmInfo scmInfo = buildStats.getScmInfo();
 
         //then
         assertEquals(SCM_INFO, scmInfo);
@@ -353,12 +298,12 @@ public class BuildStatsTest {
     @Test
     public void givenStatsBuild_whenSetSCMInfo_thenSCMInfoIsSet() {
         //given
-        SCMInfo expectedSCMInfo = new SCMInfo();
+        BuildStats.ScmInfo expectedSCMInfo = new BuildStats.ScmInfo();
         //when
         buildStats.setScmInfo(expectedSCMInfo);
 
         //then
-        SCMInfo actualSCMInfo = buildStats.getScmInfo();
+        BuildStats.ScmInfo actualSCMInfo = buildStats.getScmInfo();
         assertEquals(expectedSCMInfo, actualSCMInfo);
     }
 
@@ -367,7 +312,7 @@ public class BuildStatsTest {
         //given
 
         //when
-        LocalDateTime startTime = buildStats.getStartTime();
+        Date startTime = buildStats.getStartTime();
 
         //then
         assertEquals(START_TIME, startTime);
@@ -376,12 +321,12 @@ public class BuildStatsTest {
     @Test
     public void givenStatsBuild_whenSetStartTime_thenStartTimeIsSet() {
         //given
-        LocalDateTime expectedStartTime = LocalDateTime.now();
+        Date expectedStartTime = new Date();
         //when
         buildStats.setStartTime(expectedStartTime);
 
         //then
-        LocalDateTime actualStartTime = buildStats.getStartTime();
+        Date actualStartTime = buildStats.getStartTime();
         assertEquals(expectedStartTime, actualStartTime);
     }
 
@@ -390,7 +335,7 @@ public class BuildStatsTest {
         //given
 
         //when
-        LocalDateTime endTime = buildStats.getEndTime();
+        Date endTime = buildStats.getEndTime();
 
         //then
         assertEquals(END_TIME, endTime);
@@ -399,12 +344,12 @@ public class BuildStatsTest {
     @Test
     public void givenStatsBuild_whenSetEndTime_thenEndTimeIsSet() {
         //given
-        LocalDateTime expectedEndTime = LocalDateTime.now();
+        Date expectedEndTime = new Date();
         //when
         buildStats.setEndTime(expectedEndTime);
 
         //then
-        LocalDateTime actualEndTime = buildStats.getEndTime();
+        Date actualEndTime = buildStats.getEndTime();
         assertEquals(expectedEndTime, actualEndTime);
     }
 
@@ -493,7 +438,7 @@ public class BuildStatsTest {
     public void givenStatsBuild_whenSetBuildFailureCauses_thenBuildFailureCausesIsSet() {
         //given
         List<Map<String, Object>> expectedBuildFailureCauses = new ArrayList<>();
-        expectedBuildFailureCauses.add(new HashMap<String, Object>());
+        expectedBuildFailureCauses.add(new HashMap<>());
         //when
         buildStats.setBuildFailureCauses(expectedBuildFailureCauses);
 

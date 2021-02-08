@@ -1,24 +1,23 @@
 package org.jenkins.plugins.statistics.gatherer.model.build;
 
-import org.jenkins.plugins.statistics.gatherer.model.build.SCMInfo;
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by mcharron on 2016-06-27.
  */
-public class SCMInfoTest {
+public class ScmInfoTest {
 
     private static final String URL = "http://url.com";
     private static final String BRANCH = "aBranch";
     private static final String COMMIT = "aCommit";
-    private SCMInfo scmInfo;
+    private BuildStats.ScmInfo scmInfo;
 
     @Before
     public void initBaseObject() {
-        scmInfo = new SCMInfo(URL, BRANCH, COMMIT);
+        scmInfo = new BuildStats.ScmInfo(URL, BRANCH, COMMIT);
     }
 
     @Test

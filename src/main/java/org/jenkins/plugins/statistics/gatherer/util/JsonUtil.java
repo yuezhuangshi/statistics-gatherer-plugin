@@ -4,18 +4,21 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by hthakkallapally on 3/17/2015.
+ * @author jasper
  */
-public class JSONUtil {
+public final class JsonUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(JSONUtil.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(JsonUtil.class.getName());
 
-    protected JSONUtil() {
+    protected JsonUtil() {
         throw new IllegalAccessError("Utility class");
     }
 
@@ -50,4 +53,5 @@ public class JSONUtil {
         String jsonStr = JSON.toJSONString(jsonArray);
         return JSON.parseArray(jsonStr, String.class);
     }
+
 }

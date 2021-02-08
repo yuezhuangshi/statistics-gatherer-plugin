@@ -6,7 +6,8 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by mcharron on 2016-06-29.
@@ -14,9 +15,10 @@ import static org.junit.Assert.*;
 public class JobStatsTest {
 
     private static final String NAME = "Job";
-    private static final String USER_ID = "user";
-    private static final String USERNAME = "username";
-    private static final String CI_URL = "http://url.com";
+    private static final String FULL_NAME = "Job";
+    private static final String OPERATOR_ID = "user";
+    private static final String OPERATOR_NAME = "username";
+    private static final String ROOT_URL = "http://url.com";
     private static final String STATUS = "STATUS";
     private static final String CONFIG_FILE = "aConfigFile";
     private static final LocalDateTime CREATED_DATE = Constants.TIME_EPOCH;
@@ -26,15 +28,18 @@ public class JobStatsTest {
 
     @Before
     public void initBaseObject() {
-        jobStats = new JobStats(NAME,
-                CREATED_DATE,
-                USER_ID,
-                USERNAME,
-                CI_URL,
-                UPDATED_DATE,
-                STATUS,
-                CONFIG_FILE,
-                JOB_URL);
+        jobStats = JobStats.builder()
+            .name(NAME)
+            .fullName(FULL_NAME)
+            .operatorId(OPERATOR_ID)
+            .operatorName(OPERATOR_NAME)
+            .rootUrl(ROOT_URL)
+            .jobUrl(JOB_URL)
+            .status(STATUS)
+            .configFile(CONFIG_FILE)
+            .createdDate(CREATED_DATE)
+            .updatedDate(UPDATED_DATE)
+            .build();
     }
 
     @Test
@@ -43,15 +48,15 @@ public class JobStatsTest {
         JobStats jobStats = new JobStats();
         //then
         LocalDateTime compareDate = LocalDateTime.now();
-        assertEquals("", jobStats.getName());
-        assertTrue(jobStats.getCreatedDate().isBefore(compareDate) || jobStats.getCreatedDate().equals(compareDate));
-        assertEquals("", jobStats.getUserId());
-        assertEquals("", jobStats.getUserName());
-        assertEquals("", jobStats.getCiUrl());
-        assertTrue(jobStats.getUpdatedDate().isBefore(compareDate) || jobStats.getUpdatedDate().equals(compareDate));
-        assertEquals("", jobStats.getStatus());
-        assertEquals("", jobStats.getConfigFile());
-        assertEquals("", jobStats.getJobUrl());
+        assertNull(jobStats.getName());
+        assertNull(jobStats.getCreatedDate());
+        assertNull(jobStats.getOperatorId());
+        assertNull(jobStats.getOperatorName());
+        assertNull(jobStats.getRootUrl());
+        assertNull(jobStats.getUpdatedDate());
+        assertNull(jobStats.getStatus());
+        assertNull(jobStats.getConfigFile());
+        assertNull(jobStats.getJobUrl());
     }
 
     @Test
@@ -59,10 +64,10 @@ public class JobStatsTest {
         //given
 
         //when
-        String ciUrl = jobStats.getCiUrl();
+        String ciUrl = jobStats.getRootUrl();
 
         //then
-        assertEquals(CI_URL, ciUrl);
+        assertEquals(ROOT_URL, ciUrl);
     }
 
     @Test
@@ -70,10 +75,10 @@ public class JobStatsTest {
         //given
         String expectedCiUrl = "IHazCiUrl!";
         //when
-        jobStats.setCiUrl(expectedCiUrl);
+        jobStats.setRootUrl(expectedCiUrl);
 
         //then
-        String actualCiUrl = jobStats.getCiUrl();
+        String actualCiUrl = jobStats.getRootUrl();
         assertEquals(expectedCiUrl, actualCiUrl);
     }
 
@@ -105,10 +110,10 @@ public class JobStatsTest {
         //given
 
         //when
-        String userName = jobStats.getUserName();
+        String userName = jobStats.getOperatorName();
 
         //then
-        assertEquals(USERNAME, userName);
+        assertEquals(OPERATOR_NAME, userName);
     }
 
     @Test
@@ -116,10 +121,10 @@ public class JobStatsTest {
         //given
         String expectedFullJobName = "IHazUserName!";
         //when
-        jobStats.setUserName(expectedFullJobName);
+        jobStats.setOperatorName(expectedFullJobName);
 
         //then
-        String actualUserName = jobStats.getUserName();
+        String actualUserName = jobStats.getOperatorName();
         assertEquals(expectedFullJobName, actualUserName);
     }
 
@@ -128,10 +133,10 @@ public class JobStatsTest {
         //given
 
         //when
-        String userId = jobStats.getUserId();
+        String userId = jobStats.getOperatorId();
 
         //then
-        assertEquals(USER_ID, userId);
+        assertEquals(OPERATOR_ID, userId);
     }
 
     @Test
@@ -139,10 +144,10 @@ public class JobStatsTest {
         //given
         String expectedUserId = "IHazUserId!";
         //when
-        jobStats.setUserId(expectedUserId);
+        jobStats.setOperatorId(expectedUserId);
 
         //then
-        String actualUserId = jobStats.getUserId();
+        String actualUserId = jobStats.getOperatorId();
         assertEquals(expectedUserId, actualUserId);
     }
 

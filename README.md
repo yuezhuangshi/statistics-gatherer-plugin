@@ -19,63 +19,64 @@ In this section, you'll see which data is sent when. Please note that adding a f
 Build
 -----
 
-At the start of a build:
-
-```json
-{
-	"queueTime": 29,
-	"result": "INPROGRESS",
-	"ciUrl": "http://localhost:8080/jenkins/",
-	"contextId": 102490963,
-	"fullJobName": "jenkins_test",
-	"parameters": {
-	    "someParams": "someValue"
-	},
-	"buildUrl": "aUrl",
-	"buildCause": "Started by anonymous",
-	"startTime": 1469453903,
-	"number": 252,
-	"startedUserName": "anonymous",
-	"jobName": "jenkins_test",
-	"slaveInfo": {
-		"slaveName": "optimusprime",
-		"executor": "1",
-		"label": "master, windows,"
-	},
-	"scmInfo": {
-		"url": "aGithubUrl",
-		"commit": "aCommitHash",
-		"branch": "origin/master"
-	},
-	"startedUserId": "anonymous"
-}
-```
-
 On the finalize part of a build:
 
 ```json
 {
-	"result": "ABORTED",
-	"endTime": 1469453903,
-	"ciUrl": "http://localhost:8080/jenkins/",
-	"fullJobName": "jenkins_test",
-	"buildUrl": "aUrl",
-	"number": 252,
-	"jobName": "jenkins_test",
-	"duration": 9452
+    "buildCause": "Started by user anonymous",
+    "buildNumber": 64,
+    "buildUrl": "job/Clone/64/",
+    "declarativePipeline": true,
+    "duration": 26677,
+    "endTime": "2021-02-08 12:36:42",
+    "fullJobName": "Clone",
+    "jobName": "Clone",
+    "parameters": {
+        "abc": "123",
+        "test": "false"
+    },
+    "queueTime": 8,
+    "result": "SUCCESS",
+    "rootUrl": "http://localhost:8080/jenkins/",
+    "scmInfo": {
+        "url": "xxx",
+        "branch": "yyy",
+        "commit": "zzz"
+    },
+    "slaveInfo": {
+        "executor": "-1",
+        "label": "master",
+        "slaveName": "master"
+    },
+    "stages": {
+        "Echo": {
+            "duration": 15355,
+            "name": "Echo",
+            "passed": true,
+            "stage": true,
+            "state": "CompletedSuccess"
+        },
+        "Clone": {
+            "duration": 1942,
+            "name": "Clone",
+            "passed": true,
+            "stage": true,
+            "state": "CompletedSuccess"
+        }
+    },
+    "startTime": "2021-02-08 12:36:16",
+    "startedUserId": "anonymous",
+    "startedUserName": "anonymous"
 }
 ```
 
-The field `result` can contain "INPROGRESS", "ABORTED", "SUCCESS" or "FAILURE".
+The field `result` can contain "SUCCESS", "UNSTABLE", "FAILURE", "ABORTED" or "NOT_BUILT".
 
 If the [Build Failure Analyzer](https://plugins.jenkins.io/build-failure-analyzer) plugin is installed and the build failed:
 
 ```json
 {
-    "result": "ABORTED",
-    "endTime": 1469453903,
-    "ciUrl": "http://localhost:8080/jenkins/",
-    "fullJobName": "jenkins_test",
+    "buildCause": "Started by user anonymous",
     "buildFailureCauses": [
         {
             "name": "aborted",
@@ -87,93 +88,51 @@ If the [Build Failure Analyzer](https://plugins.jenkins.io/build-failure-analyze
         },
         {...}
     ],
-    "buildUrl": "job/jenkins_test/252/",
-    "number": 252,
-    "jobName": "jenkins_test",
-    "duration": 9452
-}
-```
-
-Queue
------
-
-When a job enters in the queue:
-
-```json
-{
-    "entryTime": 1469455391674,
-    "jenkinsQueueId": 191277,
-    "jobName": "Projects » AProject » Blop » Foo » OnCommit",
-    "queueCauses": [
-        {
-            "reasonForWaiting": "In the quiet period. Expires in 4.9 sec",
-            "exitTime": null,
-            "entryTime": 1469455391674,
-            "type": "waiting"
+    "buildNumber": 64,
+    "buildUrl": "job/Clone/64/",
+    "declarativePipeline": true,
+    "duration": 26677,
+    "endTime": "2021-02-08 12:36:42",
+    "fullJobName": "Clone",
+    "jobName": "Clone",
+    "parameters": {
+        "abc": "123",
+        "test": "false"
+    },
+    "queueTime": 8,
+    "result": "ABORTED",
+    "rootUrl": "http://localhost:8080/jenkins/",
+    "scmInfo": {
+        "url": "xxx",
+        "branch": "yyy",
+        "commit": "zzz"
+    },
+    "slaveInfo": {
+        "executor": "-1",
+        "label": "master",
+        "slaveName": "master"
+    },
+    "stages": {
+        "Echo": {
+            "duration": 15355,
+            "name": "Echo",
+            "passed": true,
+            "stage": true,
+            "state": "CompletedSuccess"
+        },
+        "Clone": {
+            "duration": 1942,
+            "name": "Clone",
+            "passed": true,
+            "stage": true,
+            "state": "CompletedSuccess"
         }
-    ],
-    "ciUrl": "http://jenkins.localhost/"
+    },
+    "startTime": "2021-02-08 12:36:16",
+    "startedUserId": "anonymous",
+    "startedUserName": "anonymous"
 }
 ```
-
-When a job enters a new state in the queue:
-
-```json
-{
-    "entryTime": 1469455391674,
-    "jenkinsQueueId": 191277,
-    "jobName": "Projects » AProject » Blop » Foo » OnCommit",
-    "queueCauses": [
-        {
-            "reasonForWaiting": "In the quiet period. Expires in 4.9 sec",
-            "exitTime": 1469455391674,
-            "entryTime": null,
-            "type": "waiting"
-        }
-    ],
-    "ciUrl": "http://jenkins.localhost/"
-}
-```
-
-When a job leaves a state in the queue:
-
-```json
-{
-    "startedBy": "SCM",
-    "status": "ENTERED",
-    "entryTime": 1469455391674,
-    "duration": 0,
-    "jenkinsQueueId": 191277,
-    "jobName": "Projects » AProject » Blop » Foo » OnCommit",
-    "queueCauses": [
-        {
-            "reasonForWaiting": "In the quiet period. Expires in 4.9 sec",
-            "exitTime": null,
-            "entryTime": 1469455391674,
-            "type": "waiting"
-        }
-    ],
-    "ciUrl": "http://jenkins.localhost/"
-}
-```
-
-When a job leaves the queue:
-
-```json
-{
-    "startedBy": "SCM",
-    "status": "LEFT",
-    "duration": 15,
-    "entryTime": 1469455391674,
-    "jobName": "Projects » AProject » Blop » Foo » OnCommit",
-    "jenkinsQueueId": 191283,
-    "contextId": 12343,
-    "ciUrl": "http://jenkins.localhost/",
-    "exitTime": 1469455391674
-}
-```
-
-Note that the `contextId` can be used to link job in the queues with the corresponding build.
 
 Project/Job
 -----------
@@ -182,13 +141,14 @@ When a job is created:
 
 ```json
 {
-   "name": "aJob",
-   "createdDate": 1469455391674,
-   "userId": "anonymous",
-   "userName": "anonymous",
-   "ciUrl": "http://localhost:9090/jenkins/",
-   "status": "ACTIVE",
-   "configFile": "<?xml version='1.0' encoding='UTF-8'?>\n<project>\n  <keepDependencies>false<\/keepDependencies>\n  <properties/>\n  <scm class=\"hudson.scm.NullSCM\"/>\n  <canRoam>false<\/canRoam>\n  <disabled>false<\/disabled>\n  <blockBuildWhenDownstreamBuilding>false<\/blockBuildWhenDownstreamBuilding>\n  <blockBuildWhenUpstreamBuilding>false<\/blockBuildWhenUpstreamBuilding>\n  <triggers/>\n  <concurrentBuild>false<\/concurrentBuild>\n  <builders/>\n  <publishers/>\n  <buildWrappers/>\n<\/project>"
+    "configFile": "<?xml version='1.1' encoding='UTF-8'?>\n<flow-definition plugin=\"workflow-job@2.40\">\n  <keepDependencies>false</keepDependencies>\n  <properties/>\n  <triggers/>\n  <disabled>false</disabled>\n</flow-definition>",
+    "createdDate": "2021-02-08T12:45:18.325",
+    "fullName": "234",
+    "jobUrl": "job/234/",
+    "name": "234",
+    "rootUrl": "http://localhost:8080/jenkins/",
+    "status": "ACTIVE",
+    "updatedDate": "2021-02-08T12:45:18.325"
 }
 ```
 
@@ -198,13 +158,13 @@ When a job is updated:
 
 ```json
 {
-   "name": "aJob",
-   "updatedDate": 1469455391674,
-   "userId": "anonymous",
-   "userName": "anonymous",
-   "ciUrl": "http://localhost:9090/jenkins/",
-   "status": "ACTIVE",
-   "configFile": "<?xml version='1.0' encoding='UTF-8'?>\n<project>\n  <keepDependencies>false<\/keepDependencies>\n  <properties/>\n  <scm class=\"hudson.scm.NullSCM\"/>\n  <canRoam>false<\/canRoam>\n  <disabled>false<\/disabled>\n  <blockBuildWhenDownstreamBuilding>false<\/blockBuildWhenDownstreamBuilding>\n  <blockBuildWhenUpstreamBuilding>false<\/blockBuildWhenUpstreamBuilding>\n  <triggers/>\n  <concurrentBuild>false<\/concurrentBuild>\n  <builders/>\n  <publishers/>\n  <buildWrappers/>\n<\/project>"
+    "configFile": "<?xml version='1.1' encoding='UTF-8'?>\n<flow-definition plugin=\"workflow-job@2.40\">\n  <actions>\n    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin=\"pipeline-model-definition@1.8.0\"/>\n    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin=\"pipeline-model-definition@1.8.0\">\n      <jobProperties/>\n      <triggers/>\n      <parameters/>\n      <options/>\n    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>\n  </actions>\n  <description>12312</description>\n  <keepDependencies>false</keepDependencies>\n  <properties>\n    <com.sonyericsson.jenkins.plugins.bfa.model.ScannerJobProperty plugin=\"build-failure-analyzer@1.27.1\">\n      <doNotScan>false</doNotScan>\n    </com.sonyericsson.jenkins.plugins.bfa.model.ScannerJobProperty>\n    <hudson.model.ParametersDefinitionProperty>\n      <parameterDefinitions>\n        <hudson.model.BooleanParameterDefinition>\n          <name>test</name>\n          <description>123</description>\n          <defaultValue>false</defaultValue>\n        </hudson.model.BooleanParameterDefinition>\n        <hudson.model.StringParameterDefinition>\n          <name>abc</name>\n          <description>123</description>\n          <defaultValue>123</defaultValue>\n          <trim>false</trim>\n        </hudson.model.StringParameterDefinition>\n      </parameterDefinitions>\n    </hudson.model.ParametersDefinitionProperty>\n    <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty/>\n  </properties>\n  <definition class=\"org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition\" plugin=\"workflow-cps@2.87\">\n    <script>pipeline {\n    agent any\n\n    stages {\n        stage(&apos;Clone&apos;) {\n            steps {\n                git branch: &apos;master&apos;, credentialsId: &apos;gitee&apos;, poll: false, url: &apos;git@gitee.com:jasperyue/test-repo.git&apos;\n            }\n        }\n        stage(&apos;Echo&apos;) {\n            steps {\n                sh &apos;printenv | sort&apos;\n                sleep 15\n            }\n        }\n    }\n}\n</script>\n    <sandbox>true</sandbox>\n  </definition>\n  <triggers/>\n  <disabled>false</disabled>\n</flow-definition>",
+    "fullName": "Clone",
+    "jobUrl": "job/Clone/",
+    "name": "Clone",
+    "rootUrl": "http://localhost:8080/jenkins/",
+    "status": "ACTIVE",
+    "updatedDate": "2021-02-08T12:43:01.750"
 }
 ```
 
@@ -212,71 +172,16 @@ When a job is deleted:
 
 ```json
 {
-   "name": "aJob",
-   "updatedDate": 1469455391674,
-   "userId": "anonymous",
-   "userName": "anonymous",
-   "ciUrl": "http://localhost:9090/jenkins/",
-   "status": "DELETED",
-   "configFile": "<?xml version='1.0' encoding='UTF-8'?>\n<project>\n  <keepDependencies>false<\/keepDependencies>\n  <properties/>\n  <scm class=\"hudson.scm.NullSCM\"/>\n  <canRoam>false<\/canRoam>\n  <disabled>false<\/disabled>\n  <blockBuildWhenDownstreamBuilding>false<\/blockBuildWhenDownstreamBuilding>\n  <blockBuildWhenUpstreamBuilding>false<\/blockBuildWhenUpstreamBuilding>\n  <triggers/>\n  <concurrentBuild>false<\/concurrentBuild>\n  <builders/>\n  <publishers/>\n  <buildWrappers/>\n<\/project>"
+    "fullName": "Checkout",
+    "jobUrl": "job/Checkout/",
+    "name": "Checkout",
+    "rootUrl": "http://localhost:8080/jenkins/",
+    "status": "DELETED",
+    "updatedDate": "2021-02-08T12:44:19.419"
 }
 ```
 
 The field `status` can contain "ACTIVE", "DISABLED" or "DELETED".
-
-Build Steps
------------
-
-On the start of a build step:
-
-```json
-{
-    "startTime": 1469453903,
-    "endTime": 0,
-    "buildStepType": "hudson.tasks.Shell",
-    "buildStepId": "hudson.tasks.Shell@1234",
-    "buildUrl": "aUrl"
-}
-```
-
-On the end of a build step:
-
-```json
-{
-    "startTime": 0,
-    "endTime": 1469453903,
-    "buildStepType": "hudson.tasks.Shell",
-    "buildStepId": "hudson.tasks.Shell@1234",
-    "buildUrl": "aUrl"
-}
-```
-
-The `buildStepId` is unique within a given build. So `buildUrl` and `buildStepId` can be used to merge the information from the start and the end of the build step.
-
-Scm Checkout Information
-------------------------
-
-At the start of the checkout:
-
-```json
-{
-    "startTime": 1469453903,
-    "endTime": 0,
-    "buildUrl": "aUrl"
-}
-```
-
-At the end of the checkout:
-
-```json
-{
-    "startTime": 0,
-    "endTime": 1469453903,
-    "buildUrl": "aUrl"
-}
-```
-
-If the checkout fails, there will be no second JSON.
 
 Development
 ===========

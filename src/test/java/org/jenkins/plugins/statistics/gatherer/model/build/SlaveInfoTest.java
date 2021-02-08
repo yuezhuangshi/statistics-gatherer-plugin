@@ -1,6 +1,5 @@
 package org.jenkins.plugins.statistics.gatherer.model.build;
 
-import org.jenkins.plugins.statistics.gatherer.model.build.SlaveInfo;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,11 +13,11 @@ public class SlaveInfoTest {
     private static final String SLAVE_NAME = "slave";
     private static final String EXECUTOR = "executor";
     private static final String LABEL = "aLabel";
-    private SlaveInfo slaveInfo;
+    private BuildStats.SlaveInfo slaveInfo;
 
     @Before
     public void initBaseObject() {
-        slaveInfo = new SlaveInfo(SLAVE_NAME, EXECUTOR, LABEL);
+        slaveInfo = new BuildStats.SlaveInfo(SLAVE_NAME, EXECUTOR, LABEL);
     }
 
     @Test

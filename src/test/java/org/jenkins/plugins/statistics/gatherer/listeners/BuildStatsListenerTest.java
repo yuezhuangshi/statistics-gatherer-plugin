@@ -3,7 +3,6 @@ package org.jenkins.plugins.statistics.gatherer.listeners;
 import hudson.model.Build;
 import hudson.model.FreeStyleBuild;
 import hudson.model.FreeStyleProject;
-import hudson.model.TaskListener;
 import hudson.model.queue.QueueTaskFuture;
 import hudson.tasks.Shell;
 import org.jenkins.plugins.statistics.gatherer.model.build.BuildStats;
@@ -32,34 +31,35 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({PropertyLoader.class, RestClientUtil.class})
 @PowerMockIgnore({"javax.crypto.*"})
-public class RunStatsListenerTest {
+public class BuildStatsListenerTest {
 
     @Rule
     public JenkinsRule j = new JenkinsRule();
 
-    private RunStatsListener listener;
-    private TaskListener soutListener = new SoutTaskListener();
+    private BuildStatsListener listener;
 
     @Before
     public void setup() {
-        listener = new RunStatsListener();
+        listener = new BuildStatsListener();
         mockStatic(PropertyLoader.class);
     }
 
     @Test
-    public void givenRunWithBuildInfoTrue_whenStarted_thenPostTwice() throws Exception {
+    public void givenRunWithBuildInfoTrue_whenStarted_thenPostOnce() throws Exception {
         mockStatic(RestClientUtil.class);
         when(PropertyLoader.getBuildInfo()).thenReturn(true);
         when(PropertyLoader.getBuildEndPoint()).thenReturn("http://localhost");
 
         Build<?, ?> build = triggerNewBuild().get();
 
-        verifyStatic(RestClientUtil.class, times(2));
+        verifyStatic(RestClientUtil.class, times(1));
         ArgumentCaptor<BuildStats> captor = ArgumentCaptor.forClass(BuildStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
         BuildStats buildStats = captor.getAllValues().get(0);
 
-        assertThat(buildStats.getResult(), is(equalTo("INPROGRESS")));
+        assertThat(buildStats.getResult(), is(equalTo("SUCCESS")));
+        assertThat(buildStats.getStartTime(), is(notNullValue()));
+        assertThat(buildStats.getBuildCause(), is(notNullValue()));
         assertBuildInfoEqualsTo(buildStats, build);
     }
 
@@ -71,22 +71,22 @@ public class RunStatsListenerTest {
 
         Build<?, ?> build = triggerNewBuild().get();
 
-        verifyStatic(RestClientUtil.class, times(2));
+        verifyStatic(RestClientUtil.class, times(1));
         ArgumentCaptor<BuildStats> captor = ArgumentCaptor.forClass(BuildStats.class);
         RestClientUtil.postToService(anyString(), captor.capture());
-        BuildStats buildStats = captor.getAllValues().get(1);
+        BuildStats buildStats = captor.getAllValues().get(0);
 
         assertThat(buildStats.getResult(), is(equalTo("SUCCESS")));
+        assertThat(buildStats.getStartTime(), is(notNullValue()));
+        assertThat(buildStats.getBuildCause(), is(notNullValue()));
         assertBuildInfoEqualsTo(buildStats, build);
     }
 
     private void assertBuildInfoEqualsTo(BuildStats buildStats, Build<?, ?> build) {
         assertThat(buildStats.getBuildUrl(), is(build.getUrl()));
-        assertThat(buildStats.getStartTime(), is(notNullValue()));
-        assertThat(buildStats.getBuildCause(), is(notNullValue()));
         assertThat(buildStats.getFullJobName(), is(build.getParent().getFullName()));
         assertThat(buildStats.getJobName(), is(build.getParent().getName()));
-        assertThat(buildStats.getNumber(), is(build.getNumber()));
+        assertThat(buildStats.getBuildNumber(), is(build.getNumber()));
     }
 
     private QueueTaskFuture<FreeStyleBuild> triggerNewBuild() throws IOException {

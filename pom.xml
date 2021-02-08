@@ -10,7 +10,7 @@
 
     <groupId>org.jenkins.plugins.statistics.gatherer</groupId>
     <artifactId>statistics-gatherer</artifactId>
-    <version>2.1-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
     <name>Statistics Gatherer Plugin</name>
@@ -51,13 +51,30 @@
     </scm>
 
     <properties>
-        <jenkins.version>2.204.1</jenkins.version>
+        <jenkins.version>2.204.6</jenkins.version>
         <java.level>8</java.level>
         <powermock.version>2.0.2</powermock.version>
-        <findbugs.failOnError>false</findbugs.failOnError>
+        <spotbugs.failOnError>false</spotbugs.failOnError>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.jenkins.tools.bom</groupId>
+                <artifactId>bom-2.204.x</artifactId>
+                <version>18</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.18</version>
+        </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
@@ -68,7 +85,14 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.75</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-job</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkinsci.plugins</groupId>
+            <artifactId>pipeline-model-definition</artifactId>
+        </dependency>
         <!-- Test dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -128,14 +152,6 @@
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.2.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.5</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
             </plugin>
         </plugins>
     </build>

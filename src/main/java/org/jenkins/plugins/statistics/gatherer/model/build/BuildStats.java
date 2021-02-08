@@ -1,232 +1,148 @@
 package org.jenkins.plugins.statistics.gatherer.model.build;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import com.alibaba.fastjson.annotation.JSONField;
+import hudson.model.Result;
+import hudson.model.Run;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.jenkins.plugins.statistics.gatherer.model.stage.StageStats;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Created by hthakkallapally on 3/16/2015.
+ * Build Stats
+ * @author jasper
  */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BuildStats {
 
-    private String ciUrl;
-    private String jobName;
-    private String fullJobName;
-    private int number;
-    private SlaveInfo slaveInfo;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String startedUserId;
-    private String startedUserName;
-    private String result;
-    private long duration;
-    private Map<String, String> parameters;
-    private SCMInfo scmInfo;
-    private long queueTime;
+    /**
+     * Global jenkins root url
+     */
+    private String rootUrl;
+    /**
+     * build url
+     */
     private String buildUrl;
-    private int contextId;
+    /**
+     * job name
+     */
+    private String jobName;
+    /**
+     * full job name
+     */
+    private String fullJobName;
+    /**
+     * declare or script pipeline
+     */
+    private boolean isDeclarativePipeline;
+    /**
+     * build number
+     */
+    private Integer buildNumber;
+    /**
+     * build result, eg: success, failure and etc.
+     * @see {@link Result}
+     */
+    private String result;
+    /**
+     * not use LocalDateTime because of security reason
+     * build schedule time
+     * see difference between {@link Run#getTime()} and {@link Run#getStartTimeInMillis()}
+     */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date startTime;
+    /**
+     * not use LocalDateTime because of security reason
+     * build end time
+     */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
+    /**
+     * build duration
+     */
+    private Long duration;
+    /**
+     * the number of milli-seconds the currently executing job spent in the queue
+     * waiting for an available executor. This excludes the quiet period time of the job.
+     */
+    private Long queueTime;
+    /**
+     * slave info
+     */
+    private SlaveInfo slaveInfo;
+    /**
+     * build scm info
+     */
+    private ScmInfo scmInfo;
+    /**
+     * build parameters
+     */
+    private Map<String, String> parameters;
+    /**
+     * build stage stats
+     */
+    private Map<String, StageStats> stages;
+    /**
+     * trigger user id
+     */
+    private String startedUserId;
+    /**
+     * trigger user name
+     */
+    private String startedUserName;
+    /**
+     * build cause
+     */
     private String buildCause;
+    /**
+     * build failure cause
+     */
     private List<Map<String, Object>> buildFailureCauses;
 
-    public BuildStats(String ciUrl,
-                      String jobName,
-                      String fullJobName,
-                      int number,
-                      SlaveInfo slaveInfo,
-                      LocalDateTime startTime,
-                      LocalDateTime endTime,
-                      String startedUserId,
-                      String startedUserName,
-                      String result,
-                      long duration,
-                      Map<String, String> parameters,
-                      SCMInfo scmInfo,
-                      long queueTime,
-                      String buildUrl,
-                      int contextId,
-                      String buildCause,
-                      List<Map<String, Object>> buildFailureCauses) {
-        this.ciUrl = ciUrl;
-        this.jobName = jobName;
-        this.fullJobName = fullJobName;
-        this.number = number;
-        this.slaveInfo = slaveInfo;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.startedUserId = startedUserId;
-        this.startedUserName = startedUserName;
-        this.result = result;
-        this.duration = duration;
-        this.parameters = parameters;
-        this.scmInfo = scmInfo;
-        this.queueTime = queueTime;
-        this.buildUrl = buildUrl;
-        this.contextId = contextId;
-        this.buildCause = buildCause;
-        this.buildFailureCauses = buildFailureCauses;
+    /**
+     * build scm info
+     */
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ScmInfo {
+
+        /**
+         * scm url, eg: git url
+         */
+        private String url;
+        /**
+         * scm branch, eg: git branch
+         */
+        private String branch;
+        /**
+         * scm commit, eg: git commit
+         */
+        private String commit;
+
     }
 
-    public BuildStats() {
-        this.ciUrl = "";
-        this.jobName = "";
-        this.fullJobName = "";
-        this.number = 0;
-        this.slaveInfo = new SlaveInfo();
-        this.startTime = LocalDateTime.now();
-        this.endTime = LocalDateTime.now();
-        this.startedUserId = "";
-        this.startedUserName = "";
-        this.result = "";
-        this.duration = 0;
-        this.parameters = new HashMap<>();
-        this.scmInfo = new SCMInfo();
-        this.queueTime = 0;
-        this.buildUrl = "";
-        this.contextId = 0;
-        this.buildCause = "";
-        this.buildFailureCauses = new ArrayList<>();
+    /**
+     * build slave info
+     */
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SlaveInfo {
+
+        private String slaveName;
+        private String executor;
+        private String label;
+
     }
 
-    public String getCiUrl() {
-        return ciUrl;
-    }
-
-    public void setCiUrl(String ciUrl) {
-        this.ciUrl = ciUrl;
-    }
-
-    public String getJobName() {
-        return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
-
-    public String getFullJobName() {
-        return fullJobName;
-    }
-
-    public void setFullJobName(String fullJobName) {
-        this.fullJobName = fullJobName;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public SlaveInfo getSlaveInfo() {
-        return slaveInfo;
-    }
-
-    public void setSlaveInfo(SlaveInfo slaveInfo) {
-        this.slaveInfo = slaveInfo;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getStartedUserId() {
-        return startedUserId;
-    }
-
-    public void setStartedUserId(String startedUserId) {
-        this.startedUserId = startedUserId;
-    }
-
-    public String getStartedUserName() {
-        return startedUserName;
-    }
-
-    public void setStartedUserName(String startedUserName) {
-        this.startedUserName = startedUserName;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-
-    public Map<String, String> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
-    }
-
-    public SCMInfo getScmInfo() {
-        return scmInfo;
-    }
-
-    public void setScmInfo(SCMInfo scmInfo) {
-        this.scmInfo = scmInfo;
-    }
-
-    public long getQueueTime() {
-        return queueTime;
-    }
-
-    public void setQueueTime(long queueTime) {
-        this.queueTime = queueTime;
-    }
-
-    public String getBuildUrl() {
-        return buildUrl;
-    }
-
-    public void setBuildUrl(String buildUrl) {
-        this.buildUrl = buildUrl;
-    }
-
-    public int getContextId() {
-        return contextId;
-    }
-
-    public void setContextId(int contextId) {
-        this.contextId = contextId;
-    }
-
-    public String getBuildCause() {
-        return buildCause;
-    }
-
-    public void setBuildCause(String buildCause) {
-        this.buildCause = buildCause;
-    }
-
-    public List<Map<String, Object>> getBuildFailureCauses() {
-        return buildFailureCauses;
-    }
-
-    public void setBuildFailureCauses(List<Map<String, Object>> buildFailureCauses) {
-        this.buildFailureCauses = buildFailureCauses;
-    }
 }

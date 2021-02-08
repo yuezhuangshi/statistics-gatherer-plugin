@@ -82,15 +82,6 @@ public class PropertyLoader {
         return value != null && "true".equals(value.toLowerCase());
     }
 
-    public static String getQueueEndPoint() {
-        String endPoint = StatisticsConfiguration.get().getQueueUrl();
-        if (endPoint != null && !endPoint.isEmpty()) {
-            return endPoint;
-        }
-        endPoint = getEnvironmentProperty("statistics.endpoint.queueUrl");
-        return endPoint == null ? "" : endPoint;
-    }
-
     public static String getBuildEndPoint() {
         String endPoint = StatisticsConfiguration.get().getBuildUrl();
         if (endPoint != null && !endPoint.isEmpty()) {
@@ -109,33 +100,6 @@ public class PropertyLoader {
         return endPoint == null ? "" : endPoint;
     }
 
-    public static String getBuildStepEndPoint() {
-        String endPoint = StatisticsConfiguration.get().getBuildStepUrl();
-        if (endPoint != null && !endPoint.isEmpty()) {
-            return endPoint;
-        }
-        endPoint = getEnvironmentProperty("statistics.endpoint.buildStepUrl");
-        return endPoint == null ? "" : endPoint;
-    }
-
-    public static String getScmCheckoutEndPoint() {
-        String endPoint = StatisticsConfiguration.get().getScmCheckoutUrl();
-        if (endPoint != null && !endPoint.isEmpty()) {
-            return endPoint;
-        }
-        endPoint = getEnvironmentProperty("statistics.endpoint.scmCheckoutUrl");
-        return endPoint == null ? "" : endPoint;
-    }
-
-    public static Boolean getQueueInfo() {
-        Boolean queueInfo = StatisticsConfiguration.get().getQueueInfo();
-        if (queueInfo != null) {
-            return queueInfo;
-        }
-        String queueInfoEnv = getEnvironmentProperty("statistics.endpoint.queueInfo");
-        return isTrue(queueInfoEnv);
-    }
-
     public static Boolean getBuildInfo() {
         Boolean buildInfo = StatisticsConfiguration.get().getBuildInfo();
         if (buildInfo != null) {
@@ -150,22 +114,6 @@ public class PropertyLoader {
             return projectInfo;
         }
         return isTrue(getEnvironmentProperty("statistics.endpoint.projectInfo"));
-    }
-
-    public static Boolean getBuildStepInfo() {
-        Boolean buildStepInfo = StatisticsConfiguration.get().getBuildStepInfo();
-        if (buildStepInfo != null) {
-            return buildStepInfo;
-        }
-        return isTrue(getEnvironmentProperty("statistics.endpoint.buildStepInfo"));
-    }
-
-    public static Boolean getScmCheckoutInfo() {
-        Boolean scmCheckoutInfo = StatisticsConfiguration.get().getScmCheckoutInfo();
-        if (scmCheckoutInfo != null) {
-            return scmCheckoutInfo;
-        }
-        return isTrue(getEnvironmentProperty("statistics.endpoint.scmCheckoutInfo"));
     }
 
     public static Boolean getShouldSendApiHttpRequests() {

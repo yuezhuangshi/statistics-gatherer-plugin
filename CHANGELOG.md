@@ -1,12 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 2.1 - 2021-02-07
+## 3.0.0 - 2021-02-07
 
-- Remove AwsSns & Logback endpoint
+- Remove ScmStatsListener due to RunListener#setUpEnvironment not compatible with pipeline project,
+  and we use GraphListener to retrieve scm information instead
+- Remove QueueStatsListener due to most valuable queue time are already include in BuildStats
+- Remove AwsSns & logback endpoint
+- Refine and remove useless code
 - Change UriRest to OkHttp3
 - Change Jackson to FastJson
-- Change Date to LocalDateTime
+- Change Date to LocalDateTime as possible
 - Upgrade PowerMock version
 
 ## 2.0.3 - 2018-05-11

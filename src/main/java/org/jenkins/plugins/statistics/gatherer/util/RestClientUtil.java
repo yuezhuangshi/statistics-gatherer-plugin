@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author jasper
+ */
 public final class RestClientUtil {
 
     private static final Logger LOGGER = Logger.getLogger(RestClientUtil.class.getName());
@@ -15,6 +18,10 @@ public final class RestClientUtil {
     public static final String APPLICATION_JSON = "application/json";
     public static final String ACCEPT = "accept";
     public static final String CONTENT_TYPE = "Content-Type";
+
+    protected RestClientUtil() {
+        throw new IllegalAccessError("Utility class");
+    }
 
     public static void postToService(final String url, Object object) {
         if (PropertyLoader.getShouldSendApiHttpRequests()) {
@@ -36,6 +43,7 @@ public final class RestClientUtil {
                     public void onResponse(Call call, Response response) {
                         int responseCode = response.code();
                         LOGGER.log(Level.FINE, "Statistics gather request for url[POST] " + url + " completed with status " + responseCode);
+                        response.close();
                     }
                 });
             } catch (Throwable e) {
@@ -65,7 +73,7 @@ public final class RestClientUtil {
         // Singleton
         Instance;
 
-        private OkHttpClient client;
+        private transient OkHttpClient client;
 
         ClientHolder(){
             client = new OkHttpClient();
