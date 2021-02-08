@@ -10,7 +10,7 @@
 
     <groupId>org.jenkins.plugins.statistics.gatherer</groupId>
     <artifactId>statistics-gatherer</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.0</version>
     <packaging>hpi</packaging>
 
     <name>Statistics Gatherer Plugin</name>
@@ -47,7 +47,7 @@
         <connection>scm:git:ssh://github.com/yuezhuangshi/statistics-gatherer-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/yuezhuangshi/statistics-gatherer-plugin.git</developerConnection>
         <url>https://github.com/yuezhuangshi/statistics-gatherer-plugin</url>
-        <tag>HEAD</tag>
+        <tag>statistics-gatherer-3.0.0</tag>
     </scm>
 
     <properties>
