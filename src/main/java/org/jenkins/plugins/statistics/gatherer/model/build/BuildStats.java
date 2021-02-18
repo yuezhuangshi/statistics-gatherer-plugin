@@ -57,13 +57,13 @@ public class BuildStats {
      * build schedule time
      * see difference between {@link Run#getTime()} and {@link Run#getStartTimeInMillis()}
      */
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss.SSS")
     private Date startTime;
     /**
      * not use LocalDateTime because of security reason
      * build end time
      */
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss.SSS")
     private Date endTime;
     /**
      * build duration

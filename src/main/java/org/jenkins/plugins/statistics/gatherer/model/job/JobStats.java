@@ -1,5 +1,6 @@
 package org.jenkins.plugins.statistics.gatherer.model.job;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -51,10 +52,12 @@ public class JobStats {
     /**
      * job create date
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss.SSS")
     private LocalDateTime createdDate;
     /**
      * job update date
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss.SSS")
     private LocalDateTime updatedDate;
 
 }
