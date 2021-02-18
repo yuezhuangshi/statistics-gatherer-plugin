@@ -17,6 +17,7 @@ import org.jenkins.plugins.statistics.gatherer.util.Constants;
 import org.jenkins.plugins.statistics.gatherer.util.JsonUtil;
 import org.jenkins.plugins.statistics.gatherer.util.PropertyLoader;
 import org.jenkins.plugins.statistics.gatherer.util.RestClientUtil;
+import org.jenkinsci.plugins.workflow.cps.replay.ReplayCause;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -194,6 +195,9 @@ public class BuildStatsListener extends RunListener<Run<?, ?>> {
                 buildStats.setStartedUserName(Constants.SYSTEM);
             } else if (cause instanceof TimerTrigger.TimerTriggerCause) {
                 buildStats.setStartedUserId(Constants.TIMER);
+                buildStats.setStartedUserName(Constants.SYSTEM);
+            } else if (cause instanceof ReplayCause) {
+                buildStats.setStartedUserId(Constants.REPLAY);
                 buildStats.setStartedUserName(Constants.SYSTEM);
             } else {
                 buildStats.setStartedUserId(Constants.UNKNOWN);

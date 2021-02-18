@@ -19,6 +19,7 @@ public interface Constants {
     String UPSTREAM = "UPSTREAM";
     String SCM = "SCM";
     String TIMER = "TIMER";
+    String REPLAY = "REPLAY";
 
     String GITLAB_URL = "gitlabSourceRepoURL";
     String GITLAB_BRANCH = "gitlabBranch";
