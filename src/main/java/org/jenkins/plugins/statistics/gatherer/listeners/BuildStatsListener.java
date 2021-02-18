@@ -148,25 +148,29 @@ public class BuildStatsListener extends RunListener<Run<?, ?>> {
      */
     private void addScmInfo(Run<?, ?> run, TaskListener listener, BuildStats build) {
         EnvVars environment = getEnvVars(run, listener);
-        BuildStats.ScmInfo scmInfo = new BuildStats.ScmInfo();
         if (environment != null) {
-            if (environment.get(Constants.GIT_URL) != null) {
-                scmInfo.setUrl(environment.get(Constants.GIT_URL));
-            } else if (environment.get(Constants.SVN_URL) != null) {
-                scmInfo.setUrl(environment.get(Constants.SVN_URL));
+            BuildStats.ScmInfo scmInfo = new BuildStats.ScmInfo();
+            if (environment.get(Constants.GITLAB_ACTION) != null) {
+                scmInfo.setAction(environment.get(Constants.GITLAB_ACTION).toLowerCase());
             }
-            if (environment.get(Constants.GIT_BRANCH) != null) {
-                scmInfo.setBranch(environment.get(Constants.GIT_BRANCH));
-            } else if (environment.get(Constants.BRANCH) != null) {
-                scmInfo.setBranch(environment.get(Constants.BRANCH));
+
+            if (environment.get(Constants.GITLAB_URL) != null) {
+                scmInfo.setUrl(environment.get(Constants.GITLAB_URL));
             }
-            if (environment.get(Constants.GIT_COMMIT) != null) {
-                scmInfo.setCommit(environment.get(Constants.GIT_COMMIT));
-            } else if (environment.get(Constants.SVN_REVISION) != null) {
-                scmInfo.setCommit(environment.get(Constants.SVN_REVISION));
+
+            if (environment.get(Constants.GITLAB_BRANCH) != null) {
+                scmInfo.setBranch(environment.get(Constants.GITLAB_BRANCH));
             }
+
+            if (environment.get(Constants.GITLAB_COMMIT) != null) {
+                scmInfo.setCommit(environment.get(Constants.GITLAB_COMMIT));
+            }
+
+            if (environment.get(Constants.GITLAB_USERNAME) != null) {
+                scmInfo.setAuthor(environment.get(Constants.GITLAB_USERNAME));
+            }
+            build.setScmInfo(scmInfo);
         }
-        build.setScmInfo(scmInfo);
     }
 
     /**

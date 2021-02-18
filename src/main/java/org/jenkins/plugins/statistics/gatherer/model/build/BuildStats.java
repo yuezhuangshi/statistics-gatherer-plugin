@@ -116,6 +116,10 @@ public class BuildStats {
     public static class ScmInfo {
 
         /**
+         * scm action type, eg: push / merge
+         */
+        private String action;
+        /**
          * scm url, eg: git url
          */
         private String url;
@@ -127,6 +131,11 @@ public class BuildStats {
          * scm commit, eg: git commit
          */
         private String commit;
+
+        /**
+         * scm commit author
+         */
+        private String author;
 
     }
 

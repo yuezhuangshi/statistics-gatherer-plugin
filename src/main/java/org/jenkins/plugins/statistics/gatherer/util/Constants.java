@@ -20,12 +20,11 @@ public interface Constants {
     String SCM = "SCM";
     String TIMER = "TIMER";
 
-    String GIT_URL = "GIT_URL";
-    String SVN_URL = "SVN_URL";
-    String GIT_BRANCH = "GIT_BRANCH";
-    String BRANCH = "Branch";
-    String GIT_COMMIT = "GIT_COMMIT";
-    String SVN_REVISION = "SVN_REVISION";
+    String GITLAB_URL = "gitlabSourceRepoURL";
+    String GITLAB_BRANCH = "gitlabBranch";
+    String GITLAB_COMMIT = "gitlabMergeRequestLastCommit";
+    String GITLAB_USERNAME = "gitlabUserName";
+    String GITLAB_ACTION = "gitlabActionType";
 
     String NODE_NAME = "NODE_NAME";
     String NODE_LABELS = "NODE_LABELS";
