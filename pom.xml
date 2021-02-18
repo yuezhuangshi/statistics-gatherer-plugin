@@ -88,10 +88,12 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-job</artifactId>
+            <version>2.39</version>
         </dependency>
         <dependency>
             <groupId>org.jenkinsci.plugins</groupId>
             <artifactId>pipeline-model-definition</artifactId>
+            <version>1.7.0</version>
         </dependency>
         <!-- Test dependencies -->
         <dependency>
