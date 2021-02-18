@@ -21,8 +21,6 @@ public class JobStatsTest {
     private static final String ROOT_URL = "http://url.com";
     private static final String STATUS = "STATUS";
     private static final String CONFIG_FILE = "aConfigFile";
-    private static final LocalDateTime CREATED_DATE = Constants.TIME_EPOCH;
-    private static final LocalDateTime UPDATED_DATE = Constants.TIME_EPOCH.plusSeconds(1000);
     private static final String JOB_URL = "http://url.com/job";
     private JobStats jobStats;
 
@@ -37,8 +35,6 @@ public class JobStatsTest {
             .jobUrl(JOB_URL)
             .status(STATUS)
             .configFile(CONFIG_FILE)
-            .createdDate(CREATED_DATE)
-            .updatedDate(UPDATED_DATE)
             .build();
     }
 
@@ -47,7 +43,6 @@ public class JobStatsTest {
         //when
         JobStats jobStats = new JobStats();
         //then
-        LocalDateTime compareDate = LocalDateTime.now();
         assertNull(jobStats.getName());
         assertNull(jobStats.getCreatedDate());
         assertNull(jobStats.getOperatorId());
@@ -205,7 +200,7 @@ public class JobStatsTest {
         LocalDateTime createdDate = jobStats.getCreatedDate();
 
         //then
-        assertEquals(CREATED_DATE, createdDate);
+        assertNull(createdDate);
     }
 
     @Test
@@ -228,7 +223,7 @@ public class JobStatsTest {
         LocalDateTime updatedDate = jobStats.getUpdatedDate();
 
         //then
-        assertEquals(UPDATED_DATE, updatedDate);
+        assertNull(updatedDate);
     }
 
     @Test

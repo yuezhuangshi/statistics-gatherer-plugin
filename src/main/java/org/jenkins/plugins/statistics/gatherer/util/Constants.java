@@ -33,6 +33,5 @@ public interface Constants {
     String BUILD_FAILURE_ANALYZER_PLUGIN = "Build Failure Analyzer";
     String FOUND_FAILURE_CAUSES = "foundFailureCauses";
     String BUILD_FAILURE_URL_TO_APPEND = "api/json?depth=2&tree=actions[foundFailureCauses[categories,description,id,name]]";
-    LocalDateTime TIME_EPOCH = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
 
 }
