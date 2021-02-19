@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 3.0.2
+
+- Correct datetime field format
+- Add replay cause resolve logic
+
+## 3.0.1 - 2021-02-18
+
+- Fix dependency issue to avoid workflow & pipeline plugin version upgrade
+- Correct scm info extract logic when using GitLab
+
 ## 3.0.0 - 2021-02-07
 
 - Remove ScmStatsListener due to RunListener#setUpEnvironment not compatible with pipeline project,
